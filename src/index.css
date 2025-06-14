@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Black and White Color System */
+/* Pure Black and White Color System */
 
 @layer base {
   :root {
@@ -37,13 +37,10 @@
 
     --radius: 0.75rem;
 
-    /* Black and White Theme Colors */
+    /* Pure Black and White Theme Colors */
     --brand-black: 0 0% 0%;
     --brand-gray: 0 0% 50%;
     --brand-light-gray: 0 0% 90%;
-    --success: 142 76% 36%;
-    --warning: 38 92% 50%;
-    --error: 0 84% 60%;
     
     /* Surface colors */
     --surface: 0 0% 98%;
@@ -100,13 +97,15 @@
 }
 
 @layer utilities {
-  /* Black and White Gradients */
-  .gradient-black-white {
-    background: linear-gradient(90deg, hsl(var(--brand-black)) 0%, hsl(var(--brand-gray)) 100%);
+  /* Pure Black and White Utilities */
+  .bg-black-white {
+    background: black;
+    color: white;
   }
   
-  .gradient-gray {
-    background: linear-gradient(90deg, hsl(var(--brand-gray)) 0%, hsl(var(--brand-light-gray)) 100%);
+  .bg-white-black {
+    background: white;
+    color: black;
   }
 
   /* Glass morphism effect */

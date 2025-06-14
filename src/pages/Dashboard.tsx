@@ -53,29 +53,23 @@ const Dashboard = () => {
       label: 'Today',
       value: todayTasks.length,
       icon: Calendar,
-      color: 'text-black',
-      bgColor: 'bg-gray-100'
     },
     {
       label: 'Active',
       value: activeTasks.length,
       icon: Clock,
-      color: 'text-black',
-      bgColor: 'bg-gray-100'
     },
     {
       label: 'Completed',
       value: completedTasks.length,
       icon: CheckCircle,
-      color: 'text-black',
-      bgColor: 'bg-gray-100'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pb-20">
+    <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
+      <div className="bg-white border-b border-black sticky top-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -87,7 +81,7 @@ const Dashboard = () => {
             <Button 
               onClick={() => setShowAddTask(true)} 
               size="sm" 
-              className="gradient-black-white text-white rounded-full w-10 h-10 p-0 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800"
             >
               <Plus className="w-5 h-5" />
             </Button>
@@ -100,7 +94,7 @@ const Dashboard = () => {
               placeholder="Search tasks..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 rounded-xl bg-gray-50 border-0"
+              className="pl-10 h-12 rounded-xl bg-gray-50 border border-gray-300"
             />
           </div>
         </div>
@@ -113,12 +107,12 @@ const Dashboard = () => {
           {stats.map((stat, index) => (
             <Card 
               key={index} 
-              className="p-4 border-0 bg-white/80 backdrop-blur-sm animate-slide-up"
+              className="p-4 border border-black bg-white animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="flex flex-col items-center text-center space-y-2">
-                <div className={`w-10 h-10 rounded-full ${stat.bgColor} flex items-center justify-center`}>
-                  <stat.icon className={`w-5 h-5 ${stat.color}`} />
+                <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center">
+                  <stat.icon className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-black">{stat.value}</div>
@@ -144,16 +138,16 @@ const Dashboard = () => {
               onClick={() => setFilter(tab.key as any)}
               className={`flex-shrink-0 rounded-full ${
                 filter === tab.key 
-                  ? 'gradient-black-white text-white' 
-                  : 'bg-white text-gray-600 border-gray-200'
+                  ? 'bg-black text-white' 
+                  : 'bg-white text-black border-black hover:bg-black hover:text-white'
               }`}
             >
               {tab.label}
               {tab.count > 0 && (
                 <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
                   filter === tab.key 
-                    ? 'bg-white/20 text-white' 
-                    : 'bg-gray-100 text-gray-600'
+                    ? 'bg-white text-black' 
+                    : 'bg-black text-white'
                 }`}>
                   {tab.count}
                 </span>
@@ -165,7 +159,7 @@ const Dashboard = () => {
         {/* Task List */}
         <div className="space-y-4">
           {getFilteredTasks().length === 0 ? (
-            <Card className="p-8 text-center border-0 bg-white/80 backdrop-blur-sm">
+            <Card className="p-8 text-center border border-black bg-white">
               <Star className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-600 mb-2">
                 {searchQuery ? 'No tasks found' : filter === 'completed' ? 'No completed tasks yet' : 'No tasks yet'}
@@ -176,7 +170,7 @@ const Dashboard = () => {
               {!searchQuery && (
                 <Button 
                   onClick={() => setShowAddTask(true)} 
-                  className="gradient-black-white text-white rounded-xl"
+                  className="bg-black text-white rounded-xl hover:bg-gray-800"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Your First Task

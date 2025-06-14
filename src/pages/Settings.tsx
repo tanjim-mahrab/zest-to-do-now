@@ -1,7 +1,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
 import { User, Bell, Palette, Download, LogOut, Trash2 } from 'lucide-react';
@@ -108,11 +107,11 @@ const Settings = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50/30 via-blue-50/30 to-pink-50/30 pb-20">
+    <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-10">
+      <div className="bg-white border-b border-black sticky top-0 z-10">
         <div className="px-6 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+          <h1 className="text-2xl font-bold text-black">Settings</h1>
           <p className="text-gray-600">Manage your account and preferences</p>
         </div>
       </div>
@@ -120,12 +119,12 @@ const Settings = () => {
       {/* Content */}
       <div className="px-6 py-6 space-y-6">
         {/* User Stats */}
-        <Card className="p-6 border-0 bg-white/60 backdrop-blur-sm animate-scale-in">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Progress</h2>
+        <Card className="p-6 border border-black bg-white animate-scale-in">
+          <h2 className="text-lg font-semibold text-black mb-4">Your Progress</h2>
           <div className="grid grid-cols-3 gap-4">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-2xl font-bold text-purple-600">{stat.value}</div>
+                <div className="text-2xl font-bold text-black">{stat.value}</div>
                 <div className="text-sm text-gray-600">{stat.label}</div>
               </div>
             ))}
@@ -136,28 +135,28 @@ const Settings = () => {
         {settingsSections.map((section, sectionIndex) => (
           <Card 
             key={section.title}
-            className="border-0 bg-white/60 backdrop-blur-sm animate-slide-up"
+            className="border border-black bg-white animate-slide-up"
             style={{ animationDelay: `${sectionIndex * 0.1}s` }}
           >
             <div className="p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">{section.title}</h2>
+              <h2 className="text-lg font-semibold text-black mb-4">{section.title}</h2>
               <div className="space-y-1">
                 {section.items.map((item, itemIndex) => (
                   <Button
                     key={itemIndex}
                     variant="ghost"
                     onClick={item.action}
-                    className={`w-full justify-start h-auto p-4 rounded-xl hover:bg-gray-50 ${
+                    className={`w-full justify-start h-auto p-4 rounded-xl hover:bg-gray-100 ${
                       item.danger ? 'hover:text-red-600 hover:bg-red-50' : ''
                     }`}
                   >
                     <div className="flex items-center gap-3 w-full">
                       <item.icon className={`w-5 h-5 ${
-                        item.danger ? 'text-red-500' : 'text-gray-500'
+                        item.danger ? 'text-red-500' : 'text-black'
                       }`} />
                       <div className="flex-1 text-left">
                         <div className={`font-medium ${
-                          item.danger ? 'text-red-600' : 'text-gray-900'
+                          item.danger ? 'text-red-600' : 'text-black'
                         }`}>
                           {item.label}
                         </div>
@@ -172,7 +171,7 @@ const Settings = () => {
         ))}
 
         {/* Logout Button */}
-        <Card className="border-0 bg-white/60 backdrop-blur-sm animate-slide-up">
+        <Card className="border border-black bg-white animate-slide-up">
           <div className="p-6">
             <Button
               onClick={handleLogout}

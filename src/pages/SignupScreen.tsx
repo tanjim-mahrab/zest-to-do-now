@@ -50,14 +50,14 @@ const SignupScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-6">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={() => navigate('/welcome')}
-          className="flex items-center gap-2 text-gray-600"
+          className="flex items-center gap-2 text-black hover:bg-gray-100"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -66,11 +66,11 @@ const SignupScreen = () => {
 
       {/* Form */}
       <div className="flex-1 flex items-center justify-center px-6">
-        <Card className="w-full max-w-md p-8 border-0 bg-white/80 backdrop-blur-sm shadow-xl animate-scale-in">
+        <Card className="w-full max-w-md p-8 border border-black bg-white shadow-xl animate-scale-in">
           <div className="space-y-6">
             {/* Title */}
             <div className="text-center space-y-2">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold text-black">
                 Create Account
               </h1>
               <p className="text-gray-600">Join thousands of productive users</p>
@@ -86,7 +86,7 @@ const SignupScreen = () => {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="h-12 rounded-xl"
+                  className="h-12 rounded-xl border-black"
                   required
                 />
               </div>
@@ -100,14 +100,14 @@ const SignupScreen = () => {
                     placeholder="Create a password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="h-12 rounded-xl pr-10"
+                    className="h-12 rounded-xl pr-10 border-black"
                     required
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-black hover:bg-gray-100"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -120,11 +120,11 @@ const SignupScreen = () => {
                     {passwordRequirements.map((req, index) => (
                       <div key={index} className="flex items-center gap-2 text-sm">
                         <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
-                          req.met ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+                          req.met ? 'bg-black text-white' : 'bg-gray-200 text-gray-400'
                         }`}>
                           {req.met && <Check className="w-3 h-3" />}
                         </div>
-                        <span className={req.met ? 'text-green-600' : 'text-gray-500'}>
+                        <span className={req.met ? 'text-black' : 'text-gray-500'}>
                           {req.text}
                         </span>
                       </div>
@@ -136,7 +136,7 @@ const SignupScreen = () => {
               <Button
                 type="submit"
                 disabled={isLoading || !isPasswordValid}
-                className="w-full h-12 gradient-purple-blue text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-12 bg-black text-white font-semibold rounded-xl shadow-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating Account...' : 'Create Account'}
               </Button>
@@ -148,7 +148,7 @@ const SignupScreen = () => {
                 Already have an account?{' '}
                 <Link 
                   to="/login" 
-                  className="text-purple-600 hover:text-purple-700 font-medium"
+                  className="text-black hover:text-gray-600 font-medium"
                 >
                   Sign in
                 </Link>

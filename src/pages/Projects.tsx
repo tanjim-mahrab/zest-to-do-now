@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useTask } from '@/contexts/TaskContext';
-import { Plus, FolderOpen, Trash2, Search, MoreHorizontal } from 'lucide-react';
+import { Plus, FolderOpen, Trash2, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '@/components/BottomNavigation';
 import AddProjectModal from '@/components/AddProjectModal';
@@ -36,9 +36,9 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pb-20">
+    <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
+      <div className="bg-white border-b border-black sticky top-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -48,7 +48,7 @@ const Projects = () => {
             <Button
               onClick={() => setShowAddProject(true)}
               size="sm"
-              className="gradient-black-white text-white rounded-full w-10 h-10 p-0 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800"
             >
               <Plus className="w-5 h-5" />
             </Button>
@@ -61,7 +61,7 @@ const Projects = () => {
               placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 rounded-xl bg-gray-50 border-0"
+              className="pl-10 h-12 rounded-xl bg-gray-50 border border-gray-300"
             />
           </div>
         </div>
@@ -70,9 +70,9 @@ const Projects = () => {
       {/* Content */}
       <div className="px-6 py-6">
         {filteredProjects.length === 0 ? (
-          <Card className="p-12 text-center border-0 bg-white/90 backdrop-blur-sm shadow-sm">
-            <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
-              <FolderOpen className="w-10 h-10 text-gray-400" />
+          <Card className="p-12 text-center border border-black bg-white shadow-sm">
+            <div className="w-20 h-20 mx-auto mb-6 bg-black rounded-full flex items-center justify-center">
+              <FolderOpen className="w-10 h-10 text-white" />
             </div>
             <h3 className="text-xl font-bold text-black mb-3">
               {searchQuery ? 'No projects found' : 'Create Your First Project'}
@@ -85,7 +85,7 @@ const Projects = () => {
             {!searchQuery && (
               <Button
                 onClick={() => setShowAddProject(true)}
-                className="gradient-black-white text-white rounded-xl px-8 py-3 text-base font-medium"
+                className="bg-black text-white rounded-xl px-8 py-3 text-base font-medium hover:bg-gray-800"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Create Project
@@ -103,24 +103,18 @@ const Projects = () => {
               return (
                 <Card 
                   key={project.id}
-                  className="group relative p-6 border-0 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300 animate-slide-up cursor-pointer hover:shadow-lg hover:-translate-y-1"
+                  className="group relative p-6 border border-black bg-white hover:shadow-lg transition-all duration-300 animate-slide-up cursor-pointer hover:-translate-y-1"
                   style={{ animationDelay: `${index * 0.1}s` }}
                   onClick={() => navigate(`/?project=${project.id}`)}
                 >
                   {/* Project Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div 
-                        className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm"
-                        style={{ backgroundColor: `${project.color}20` }}
-                      >
-                        <div 
-                          className="w-6 h-6 rounded-full" 
-                          style={{ backgroundColor: project.color }}
-                        />
+                      <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-sm">
+                        <div className="w-6 h-6 rounded-full bg-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg text-black group-hover: transition-colors">
+                        <h3 className="font-bold text-lg text-black group-hover:text-black transition-colors">
                           {project.name}
                         </h3>
                         <p className="text-sm text-gray-500">
@@ -158,11 +152,8 @@ const Projects = () => {
                       <div className="space-y-2">
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
-                            className="h-2 rounded-full transition-all duration-500 ease-out"
-                            style={{ 
-                              width: `${completionPercentage}%`,
-                              backgroundColor: project.color
-                            }}
+                            className="bg-black h-2 rounded-full transition-all duration-500 ease-out"
+                            style={{ width: `${completionPercentage}%` }}
                           />
                         </div>
                         <div className="text-right">
