@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -23,7 +22,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task })
   const [dueDate, setDueDate] = useState(task?.dueDate ? task.dueDate.toISOString().split('T')[0] : '');
   const [dueTime, setDueTime] = useState(task?.dueDate ? task.dueDate.toTimeString().split(':').slice(0, 2).join(':') : '');
   const [priority, setPriority] = useState<Task['priority']>(task?.priority || 'medium');
-  const [projectId, setProjectId] = useState(task?.projectId || '');
+  const [projectId, setProjectId] = useState(task?.projectId || 'none');
   const [tags, setTags] = useState<string[]>(task?.tags || []);
   const [newTag, setNewTag] = useState('');
 
@@ -48,7 +47,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task })
           : undefined,
       priority,
       tags,
-      projectId: projectId || undefined,
+      projectId: projectId === 'none' ? undefined : projectId,
       subtasks: task?.subtasks || [],
     };
 
@@ -69,7 +68,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task })
     setDueDate('');
     setDueTime('');
     setPriority('medium');
-    setProjectId('');
+    setProjectId('none');
     setTags([]);
     setNewTag('');
     onOpenChange(false);
@@ -194,7 +193,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task })
                   <SelectValue placeholder="Select project" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No Project</SelectItem>
+                  <SelectItem value="none">No Project</SelectItem>
                   {projects.map((project) => (
                     <SelectItem key={project.id} value={project.id}>
                       <div className="flex items-center gap-2">
