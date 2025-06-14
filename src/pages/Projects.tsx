@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useTask } from '@/contexts/TaskContext';
-import { Plus, FolderOpen, MoreVertical, Edit, Trash2 } from 'lucide-react';
+import { Plus, FolderOpen, Trash2, Search, MoreHorizontal } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '@/components/BottomNavigation';
 import AddProjectModal from '@/components/AddProjectModal';
@@ -36,19 +36,19 @@ const Projects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50/30 via-blue-50/30 to-pink-50/30 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pb-20">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-10">
+      <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Projects</h1>
+              <h1 className="text-2xl font-bold text-black">Projects</h1>
               <p className="text-gray-600">Organize your tasks by projects</p>
             </div>
             <Button
               onClick={() => setShowAddProject(true)}
               size="sm"
-              className="gradient-purple-blue text-white rounded-full w-10 h-10 p-0 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+              className="gradient-black-white text-white rounded-full w-10 h-10 p-0 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
             >
               <Plus className="w-5 h-5" />
             </Button>
@@ -56,11 +56,12 @@ const Projects = () => {
 
           {/* Search Bar */}
           <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <Input
               placeholder="Search projects..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-12 rounded-xl bg-gray-50 border-0"
+              className="pl-10 h-12 rounded-xl bg-gray-50 border-0"
             />
           </div>
         </div>
@@ -69,82 +70,114 @@ const Projects = () => {
       {/* Content */}
       <div className="px-6 py-6">
         {filteredProjects.length === 0 ? (
-          <Card className="p-8 text-center border-0 bg-white/60 backdrop-blur-sm">
-            <FolderOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-600 mb-2">
-              {searchQuery ? 'No projects found' : 'No projects yet'}
+          <Card className="p-12 text-center border-0 bg-white/90 backdrop-blur-sm shadow-sm">
+            <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+              <FolderOpen className="w-10 h-10 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-bold text-black mb-3">
+              {searchQuery ? 'No projects found' : 'Create Your First Project'}
             </h3>
-            <p className="text-gray-500 mb-4">
+            <p className="text-gray-500 mb-6 max-w-sm mx-auto">
               {searchQuery 
-                ? 'Try adjusting your search terms' 
-                : 'Create your first project to organize your tasks'}
+                ? 'Try adjusting your search terms to find what you\'re looking for' 
+                : 'Organize your tasks into projects to stay focused and productive'}
             </p>
             {!searchQuery && (
               <Button
                 onClick={() => setShowAddProject(true)}
-                className="gradient-purple-blue text-white rounded-xl"
+                className="gradient-black-white text-white rounded-xl px-8 py-3 text-base font-medium"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                Create Your First Project
+                <Plus className="w-5 h-5 mr-2" />
+                Create Project
               </Button>
             )}
           </Card>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredProjects.map((project, index) => {
               const activeCount = getTaskCount(project.id);
               const completedCount = getCompletedCount(project.id);
               const totalCount = activeCount + completedCount;
+              const completionPercentage = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
               return (
                 <Card 
                   key={project.id}
-                  className="p-4 border-0 bg-white/60 backdrop-blur-sm hover:bg-white/80 transition-all duration-200 animate-slide-up cursor-pointer"
+                  className="group relative p-6 border-0 bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300 animate-slide-up cursor-pointer hover:shadow-lg hover:-translate-y-1"
                   style={{ animationDelay: `${index * 0.1}s` }}
                   onClick={() => navigate(`/?project=${project.id}`)}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 flex-1">
+                  {/* Project Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
                       <div 
-                        className="w-4 h-4 rounded-full flex-shrink-0" 
-                        style={{ backgroundColor: project.color }}
-                      />
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-1">
+                        className="w-12 h-12 rounded-xl flex items-center justify-center shadow-sm"
+                        style={{ backgroundColor: `${project.color}20` }}
+                      >
+                        <div 
+                          className="w-6 h-6 rounded-full" 
+                          style={{ backgroundColor: project.color }}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg text-black group-hover: transition-colors">
                           {project.name}
                         </h3>
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
-                          <span>{activeCount} active</span>
-                          <span>{completedCount} completed</span>
-                          {totalCount > 0 && (
-                            <div className="flex-1 max-w-32">
-                              <div className="w-full bg-gray-200 rounded-full h-2">
-                                <div 
-                                  className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                                  style={{ 
-                                    width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` 
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                        <p className="text-sm text-gray-500">
+                          {totalCount} {totalCount === 1 ? 'task' : 'tasks'}
+                        </p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteProject(project.id);
-                        }}
-                        className="w-8 h-8 p-0 text-gray-400 hover:text-red-500 hover:bg-red-50"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteProject(project.id);
+                      }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8 p-0 text-gray-400 hover:text-red-500 hover:bg-red-50"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">
+                        <span className="font-semibold text-black">{activeCount}</span> active
+                      </span>
+                      <span className="text-gray-600">
+                        <span className="font-semibold text-black">{completedCount}</span> completed
+                      </span>
                     </div>
+                    
+                    {/* Progress Bar */}
+                    {totalCount > 0 && (
+                      <div className="space-y-2">
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="h-2 rounded-full transition-all duration-500 ease-out"
+                            style={{ 
+                              width: `${completionPercentage}%`,
+                              backgroundColor: project.color
+                            }}
+                          />
+                        </div>
+                        <div className="text-right">
+                          <span className="text-xs font-medium text-gray-600">
+                            {Math.round(completionPercentage)}% complete
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {totalCount === 0 && (
+                      <div className="text-center py-4">
+                        <p className="text-sm text-gray-400">No tasks yet</p>
+                      </div>
+                    )}
                   </div>
                 </Card>
               );

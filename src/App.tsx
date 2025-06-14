@@ -11,6 +11,7 @@ import WelcomeScreen from "./pages/WelcomeScreen";
 import LoginScreen from "./pages/LoginScreen";
 import SignupScreen from "./pages/SignupScreen";
 import Dashboard from "./pages/Dashboard";
+import Calendar from "./pages/Calendar";
 import Projects from "./pages/Projects";
 import TaskDetail from "./pages/TaskDetail";
 import Settings from "./pages/Settings";
@@ -33,6 +34,11 @@ const App = () => (
               <Route path="/" element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/calendar" element={
+                <ProtectedRoute>
+                  <Calendar />
                 </ProtectedRoute>
               } />
               <Route path="/projects" element={

@@ -3,90 +3,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AI-Inspired Color System with Purple-Blue Gradients */
+/* Black and White Color System */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 247 61% 51%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 247 61% 51%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
 
     --radius: 0.75rem;
 
-    /* Custom AI App Colors */
-    --brand-purple: 247 61% 40%;
-    --brand-purple-light: 247 61% 51%;
-    --brand-blue: 200 100% 50%;
-    --brand-pink: 320 100% 70%;
+    /* Black and White Theme Colors */
+    --brand-black: 0 0% 0%;
+    --brand-gray: 0 0% 50%;
+    --brand-light-gray: 0 0% 90%;
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
     --error: 0 84% 60%;
     
     /* Surface colors */
-    --surface: 247 20% 98%;
-    --surface-secondary: 247 15% 96%;
+    --surface: 0 0% 98%;
+    --surface-secondary: 0 0% 95%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 247 61% 60%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 247 61% 60%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 95%;
 
-    /* Dark mode custom colors */
-    --brand-purple: 247 61% 60%;
-    --brand-purple-light: 247 61% 70%;
-    --brand-blue: 200 100% 60%;
-    --brand-pink: 320 100% 75%;
-    --surface: 222 84% 6%;
-    --surface-secondary: 222 84% 8%;
+    /* Dark mode colors */
+    --brand-black: 0 0% 95%;
+    --brand-gray: 0 0% 60%;
+    --brand-light-gray: 0 0% 20%;
+    --surface: 0 0% 10%;
+    --surface-secondary: 0 0% 12%;
   }
 }
 
@@ -102,24 +100,20 @@
 }
 
 @layer utilities {
-  /* AI-Inspired Gradients */
-  .gradient-purple-blue {
-    background: linear-gradient(90deg, hsl(var(--brand-purple)) 0%, hsl(var(--brand-blue)) 100%);
+  /* Black and White Gradients */
+  .gradient-black-white {
+    background: linear-gradient(90deg, hsl(var(--brand-black)) 0%, hsl(var(--brand-gray)) 100%);
   }
   
-  .gradient-purple-pink {
-    background: linear-gradient(90deg, hsl(var(--brand-purple)) 0%, hsl(var(--brand-pink)) 100%);
-  }
-  
-  .gradient-radial-purple {
-    background: radial-gradient(circle at 20% 20%, hsla(var(--brand-purple), 0.2), transparent);
+  .gradient-gray {
+    background: linear-gradient(90deg, hsl(var(--brand-gray)) 0%, hsl(var(--brand-light-gray)) 100%);
   }
 
   /* Glass morphism effect */
   .glass {
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   /* Smooth animations */
