@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
-import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info, ChevronRight } from 'lucide-react';
+import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -158,7 +157,6 @@ const Settings = () => {
                           <p className="text-sm text-gray-500">{item.description}</p>
                         </div>
                       </div>
-                      {!item.danger && <ChevronRight className="w-5 h-5 text-gray-400" />}
                     </div>
                   ))}
                 </div>
