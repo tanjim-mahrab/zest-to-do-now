@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -62,7 +61,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-sm bg-white border border-black rounded-2xl">
+      <DialogContent className="sm:max-w-xs bg-white border border-black rounded-2xl">
         <DialogHeader className="pb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
