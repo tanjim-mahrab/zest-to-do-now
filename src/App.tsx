@@ -15,6 +15,7 @@ import Calendar from "./pages/Calendar";
 import Projects from "./pages/Projects";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import TaskPage from "./pages/TaskPage";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,11 @@ const App = () => (
               <Route path="/settings" element={
                 <ProtectedRoute>
                   <Settings />
+                </ProtectedRoute>
+              } />
+              <Route path="/task/:taskId" element={
+                <ProtectedRoute>
+                  <TaskPage />
                 </ProtectedRoute>
               } />
               <Route path="*" element={<NotFound />} />
