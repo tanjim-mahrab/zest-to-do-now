@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTask, Task } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import AddTaskModal from '@/components/AddTaskModal';
 import { Badge } from '@/components/ui/badge';
+import Icon from '@/components/Icon';
 
 interface TaskListProps {
   tasks: Task[];
@@ -90,9 +90,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 <div className="pl-9 pt-3 mt-3 border-t border-gray-100 space-y-3 animate-slide-up" style={{animationDuration: '0.2s'}}>
                   {project && (
                     <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
-                          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: project.color }}></div>
-                      </div>
+                      <Icon name={project.icon} className="w-4 h-4 text-gray-500 flex-shrink-0" />
                       <span>{project.name}</span>
                     </div>
                   )}

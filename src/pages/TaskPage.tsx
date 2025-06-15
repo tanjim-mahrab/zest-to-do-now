@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTask } from '@/contexts/TaskContext';
@@ -9,6 +8,7 @@ import { format } from 'date-fns';
 import AddTaskModal from '@/components/AddTaskModal';
 import BottomNavigation from '@/components/BottomNavigation';
 import { Badge } from '@/components/ui/badge';
+import Icon from '@/components/Icon';
 
 const TaskPage = () => {
   const { taskId } = useParams<{ taskId: string }>();
@@ -88,9 +88,7 @@ const TaskPage = () => {
                 
                 {project && (
                    <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: project.color }}></div>
-                    </div>
+                    <Icon name={project.icon} className="h-5 w-5 text-gray-400 flex-shrink-0" />
                     <div>
                       <p className="text-sm text-gray-500">Project</p>
                       <p className="font-medium text-black">{project.name}</p>
