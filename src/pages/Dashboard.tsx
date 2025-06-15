@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -124,7 +123,7 @@ const Dashboard = () => {
 
             {/* Task List */}
             <div className="space-y-4">
-              {getFilteredTasks().length === 0 ? <Card className="p-12 text-center bg-white border border-gray-200 shadow-sm">
+              {getFilteredTasks().length === 0 ? <Card className="p-12 text-center bg-white border border-gray-200 shadow-sm -mt-4">
                   <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Star className="w-10 h-10 text-gray-400" />
                   </div>
