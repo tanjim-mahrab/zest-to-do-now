@@ -24,7 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
-import React from 'react';
+import React, { useState } from 'react';
 
 type SettingsItem = {
   icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
@@ -37,6 +37,7 @@ type SettingsItem = {
 const Settings = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   const handleLogout = () => {
     logout();
@@ -97,7 +98,13 @@ const Settings = () => {
           return (
             <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
                {itemContent}
-              <Switch checked disabled />
+              <Switch
+                checked={notificationsEnabled}
+                onCheckedChange={(checked) => {
+                  setNotificationsEnabled(checked);
+                  toast.info(`Notifications ${checked ? 'enabled' : 'disabled'}.`);
+                }}
+              />
             </div>
           );
         }
