@@ -1,7 +1,16 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { useAuth } from './AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Database } from '@/integrations/supabase/types';
 
+type DbTask = Database['public']['Tables']['tasks']['Row'];
+type DbProject = Database['public']['Tables']['projects']['Row'];
+type NewDbTask = Database['public']['Tables']['tasks']['Insert'];
+type NewDbProject = Database['public']['Tables']['projects']['Insert'];
+
+// Frontend interfaces - kept for backward compatibility
 export interface Task {
   id: string;
   title: string;
@@ -30,6 +39,31 @@ export interface Project {
   taskCount: number;
 }
 
+
+// Mapping functions
+const dbTaskToTask = (dbTask: DbTask): Task => ({
+  id: dbTask.id,
+  title: dbTask.title,
+  description: dbTask.description ?? undefined,
+  completed: dbTask.completed,
+  dueDate: dbTask.due_date ? new Date(dbTask.due_date) : undefined,
+  priority: dbTask.priority,
+  tags: dbTask.tags ?? [],
+  projectId: dbTask.project_id ?? undefined,
+  subtasks: (dbTask.subtasks as any as SubTask[]) ?? [],
+  createdAt: new Date(dbTask.created_at),
+  updatedAt: new Date(dbTask.updated_at),
+});
+
+const dbProjectToProject = (dbProject: DbProject, tasks: Task[]): Project => ({
+    id: dbProject.id,
+    name: dbProject.name,
+    color: dbProject.color ?? '',
+    icon: dbProject.icon ?? '',
+    taskCount: tasks.filter(task => task.projectId === dbProject.id && !task.completed).length,
+});
+
+
 interface TaskContextType {
   tasks: Task[];
   projects: Project[];
@@ -43,6 +77,7 @@ interface TaskContextType {
   getTasksByProject: (projectId?: string) => Task[];
   getTodayTasks: () => Task[];
   getUpcomingTasks: () => Task[];
+  isLoading: boolean;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -57,113 +92,141 @@ export const useTask = () => {
 
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const queryClient = useQueryClient();
 
-  // Load data from localStorage on user change
-  useEffect(() => {
-    if (user) {
-      const savedTasks = localStorage.getItem(`tasks_${user.id}`);
-      const savedProjects = localStorage.getItem(`projects_${user.id}`);
-      
-      if (savedTasks) {
-        const parsedTasks = JSON.parse(savedTasks).map((task: any) => ({
-          ...task,
-          dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
-          createdAt: new Date(task.createdAt),
-          updatedAt: new Date(task.updatedAt),
-        }));
-        setTasks(parsedTasks);
-      } else {
-        setTasks([]);
+  const { data: dbTasks, isLoading: isLoadingTasks } = useQuery({
+    queryKey: ['tasks', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      const { data, error } = await supabase.from('tasks').select('*').eq('user_id', user.id);
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user,
+  });
+
+  const { data: dbProjects, isLoading: isLoadingProjects } = useQuery({
+    queryKey: ['projects', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      const { data, error } = await supabase.from('projects').select('*').eq('user_id', user.id);
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user,
+  });
+
+  const tasks = useMemo(() => (dbTasks ?? []).map(dbTaskToTask), [dbTasks]);
+  const projects = useMemo(() => (dbProjects ?? []).map(p => dbProjectToProject(p, tasks)), [dbProjects, tasks]);
+  
+  const addTaskMutation = useMutation({
+    mutationFn: async (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
+        if (!user) throw new Error("User not authenticated");
+        const newDbTask: Omit<NewDbTask, 'user_id' | 'id' | 'created_at' | 'updated_at'> = {
+            title: task.title,
+            description: task.description,
+            completed: task.completed,
+            due_date: task.dueDate?.toISOString(),
+            priority: task.priority,
+            tags: task.tags,
+            project_id: task.projectId,
+            subtasks: task.subtasks as any,
+        };
+        const { error } = await supabase.from('tasks').insert({ ...newDbTask, user_id: user.id });
+        if (error) throw error;
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['tasks', user?.id] });
+        queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
+    },
+  });
+
+  const updateTaskMutation = useMutation({
+    mutationFn: async ({ id, updates }: { id: string; updates: Partial<Task> }) => {
+        const dbUpdates: Partial<NewDbTask> = {};
+        if (updates.title !== undefined) dbUpdates.title = updates.title;
+        if (updates.description !== undefined) dbUpdates.description = updates.description;
+        if (updates.completed !== undefined) dbUpdates.completed = updates.completed;
+        if (updates.dueDate !== undefined) dbUpdates.due_date = updates.dueDate?.toISOString() ?? null;
+        if (updates.priority !== undefined) dbUpdates.priority = updates.priority;
+        if (updates.tags !== undefined) dbUpdates.tags = updates.tags;
+        if (updates.projectId !== undefined) dbUpdates.project_id = updates.projectId;
+        if (updates.subtasks !== undefined) dbUpdates.subtasks = updates.subtasks as any;
+
+        const { error } = await supabase.from('tasks').update(dbUpdates).eq('id', id);
+        if (error) throw error;
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['tasks', user?.id] });
+        queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
+    },
+  });
+
+  const deleteTaskMutation = useMutation({
+    mutationFn: async (id: string) => {
+        const { error } = await supabase.from('tasks').delete().eq('id', id);
+        if (error) throw error;
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['tasks', user?.id] });
+        queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
+    },
+  });
+
+  const addProjectMutation = useMutation({
+    mutationFn: async (project: Omit<Project, 'id' | 'taskCount'>) => {
+        if (!user) throw new Error("User not authenticated");
+        const newDbProject: Omit<NewDbProject, 'user_id' | 'id' | 'created_at'> = {
+            name: project.name,
+            color: project.color,
+            icon: project.icon,
+        };
+        const { error } = await supabase.from('projects').insert({ ...newDbProject, user_id: user.id });
+        if(error) throw error;
+    },
+    onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
+    },
+  });
+  
+  const updateProjectMutation = useMutation({
+      mutationFn: async ({ id, updates }: {id: string, updates: Partial<Project>}) => {
+          const dbUpdates: Partial<NewDbProject> = {};
+          if (updates.name !== undefined) dbUpdates.name = updates.name;
+          if (updates.color !== undefined) dbUpdates.color = updates.color;
+          if (updates.icon !== undefined) dbUpdates.icon = updates.icon;
+          const { error } = await supabase.from('projects').update(dbUpdates).eq('id', id);
+          if (error) throw error;
+      },
+      onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
       }
-      
-      if (savedProjects) {
-        setProjects(JSON.parse(savedProjects));
-      } else {
-        // If no projects for this user, create default ones
-        setProjects([
-          { id: '1', name: 'Personal', color: '#6C47FF', icon: 'User', taskCount: 0 },
-          { id: '2', name: 'Work', color: '#00B5FF', icon: 'Briefcase', taskCount: 0 },
-          { id: '3', name: 'Shopping', color: '#FF68F0', icon: 'ShoppingCart', taskCount: 0 },
-        ]);
+  });
+
+  const deleteProjectMutation = useMutation({
+      mutationFn: async (id: string) => {
+          const { error } = await supabase.from('projects').delete().eq('id', id);
+          if (error) throw error;
+      },
+      onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['projects', user?.id] });
+          queryClient.invalidateQueries({ queryKey: ['tasks', user?.id] });
       }
-    } else {
-      // No user, clear data
-      setTasks([]);
-      setProjects([]);
-    }
-  }, [user]);
+  });
 
-  // Save to localStorage whenever tasks or projects change
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(tasks));
-    }
-  }, [tasks, user]);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(`projects_${user.id}`, JSON.stringify(projects));
-    }
-  }, [projects, user]);
-
-  const addTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
-    const newTask: Task = {
-      ...taskData,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setTasks(prev => [newTask, ...prev]);
-    updateProjectTaskCount();
-  };
-
-  const updateTask = (id: string, updates: Partial<Task>) => {
-    setTasks(prev => prev.map(task => 
-      task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task
-    ));
-    updateProjectTaskCount();
-  };
-
-  const deleteTask = (id: string) => {
-    setTasks(prev => prev.filter(task => task.id !== id));
-    updateProjectTaskCount();
-  };
-
+  const addTask = (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => addTaskMutation.mutate(task);
+  const updateTask = (id: string, updates: Partial<Task>) => updateTaskMutation.mutate({ id, updates });
+  const deleteTask = (id: string) => deleteTaskMutation.mutate(id);
   const toggleTask = (id: string) => {
-    setTasks(prev => prev.map(task => 
-      task.id === id ? { ...task, completed: !task.completed, updatedAt: new Date() } : task
-    ));
+    const task = tasks.find(t => t.id === id);
+    if(task) {
+      updateTask(id, { completed: !task.completed });
+    }
   };
-
-  const addProject = (projectData: Omit<Project, 'id' | 'taskCount'>) => {
-    const newProject: Project = {
-      ...projectData,
-      id: Date.now().toString(),
-      taskCount: 0,
-    };
-    setProjects(prev => [...prev, newProject]);
-  };
-
-  const updateProject = (id: string, updates: Partial<Project>) => {
-    setProjects(prev => prev.map(project => 
-      project.id === id ? { ...project, ...updates } : project
-    ));
-  };
-
-  const deleteProject = (id: string) => {
-    setProjects(prev => prev.filter(project => project.id !== id));
-    // Also delete tasks in this project
-    setTasks(prev => prev.filter(task => task.projectId !== id));
-  };
-
-  const updateProjectTaskCount = () => {
-    setProjects(prev => prev.map(project => ({
-      ...project,
-      taskCount: tasks.filter(task => task.projectId === project.id && !task.completed).length
-    })));
-  };
+  const addProject = (project: Omit<Project, 'id' | 'taskCount'>) => addProjectMutation.mutate(project);
+  const updateProject = (id: string, updates: Partial<Project>) => updateProjectMutation.mutate({id, updates});
+  const deleteProject = (id: string) => deleteProjectMutation.mutate(id);
 
   const getTasksByProject = (projectId?: string) => {
     return tasks.filter(task => task.projectId === projectId);
@@ -191,22 +254,25 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return new Date(task.dueDate) > today;
     }).sort((a, b) => new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime());
   };
+  
+  const value = {
+    tasks,
+    projects,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleTask,
+    addProject,
+    updateProject,
+    deleteProject,
+    getTasksByProject,
+    getTodayTasks,
+    getUpcomingTasks,
+    isLoading: isLoadingTasks || isLoadingProjects,
+  };
 
   return (
-    <TaskContext.Provider value={{
-      tasks,
-      projects,
-      addTask,
-      updateTask,
-      deleteTask,
-      toggleTask,
-      addProject,
-      updateProject,
-      deleteProject,
-      getTasksByProject,
-      getTodayTasks,
-      getUpcomingTasks,
-    }}>
+    <TaskContext.Provider value={value}>
       {children}
     </TaskContext.Provider>
   );
