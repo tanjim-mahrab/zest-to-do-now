@@ -76,7 +76,7 @@ const Dashboard = () => {
               placeholder="Search your tasks..." 
               value={searchQuery} 
               onChange={(e) => setSearchQuery(e.target.value)} 
-              className="pl-12 pr-4 h-14 rounded-2xl bg-gray-50 border-2 border-gray-200 focus:border-black text-base transition-colors" 
+              className="pl-12 pr-4 h-14 rounded-2xl bg-gray-100 border-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" 
             />
           </div>
         </div>
