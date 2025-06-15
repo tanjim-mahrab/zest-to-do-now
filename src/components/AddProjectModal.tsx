@@ -10,7 +10,7 @@ import { FolderPlus, X } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
-const iconList: string[] = ['Home', 'Briefcase', 'Dumbbell', 'ShoppingCart', 'Book', 'Plane', 'Heartbeat', 'DollarSign', 'ShoppingBag', 'User', 'Stethoscope', 'Users', 'Folder'];
+const iconList: string[] = ['Home', 'Briefcase', 'Dumbbell', 'ShoppingCart', 'Book', 'Plane', 'Health', 'DollarSign', 'ShoppingBag', 'User', 'Stethoscope', 'Users', 'Folder'];
 
 interface AddProjectModalProps {
   open: boolean;
