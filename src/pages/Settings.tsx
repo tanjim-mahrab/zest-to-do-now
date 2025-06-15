@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
@@ -5,6 +6,7 @@ import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info } from 'lucide-r
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { Switch } from '@/components/ui/switch';
 
 const Settings = () => {
   const { user, logout } = useAuth();
@@ -63,7 +65,7 @@ const Settings = () => {
           icon: Bell,
           label: 'Notifications',
           description: 'Push notifications & reminders',
-          action: () => toast.info('Notification settings coming soon!'),
+          action: () => {},
         },
       ],
     },
@@ -92,13 +94,13 @@ const Settings = () => {
           icon: HelpCircle,
           label: 'Help & Support',
           description: 'Get help with using TaskFlow',
-          action: () => toast.info('Help center coming soon!'),
+          action: () => navigate('/help'),
         },
         {
           icon: Info,
           label: 'About TaskFlow',
           description: 'Version 1.0.0',
-          action: () => toast.info('TaskFlow - Built for productivity enthusiasts'),
+          action: () => navigate('/about'),
         },
       ],
     },
@@ -126,16 +128,8 @@ const Settings = () => {
               </CardHeader>
               <CardContent className="p-0">
                 <div className="divide-y divide-gray-200">
-                  {section.items.map((item) => (
-                    <button
-                      key={item.label}
-                      onClick={item.action}
-                      className={`flex items-center justify-between w-full p-4 text-left transition-colors ${
-                        item.danger
-                          ? 'hover:bg-red-50'
-                          : 'hover:bg-gray-50'
-                      }`}
-                    >
+                  {section.items.map((item) => {
+                    const itemContent = (
                       <div className="flex items-center gap-4">
                         <div
                           className={`flex h-10 w-10 items-center justify-center rounded-lg ${
@@ -157,8 +151,31 @@ const Settings = () => {
                           <p className="text-sm text-gray-500">{item.description}</p>
                         </div>
                       </div>
-                    </button>
-                  ))}
+                    );
+
+                    if (item.label === 'Notifications') {
+                      return (
+                        <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
+                           {itemContent}
+                          <Switch checked disabled />
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <button
+                        key={item.label}
+                        onClick={item.action}
+                        className={`flex items-center justify-between w-full p-4 text-left transition-colors ${
+                          item.danger
+                            ? 'hover:bg-red-50'
+                            : 'hover:bg-gray-50'
+                        }`}
+                      >
+                        {itemContent}
+                      </button>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>

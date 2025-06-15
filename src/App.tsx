@@ -16,6 +16,8 @@ import Projects from "./pages/Projects";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import TaskPage from "./pages/TaskPage";
+import AboutPage from "./pages/About";
+import HelpPage from "./pages/Help";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +51,16 @@ const App = () => (
               <Route path="/settings" element={
                 <ProtectedRoute>
                   <Settings />
+                </ProtectedRoute>
+              } />
+              <Route path="/about" element={
+                <ProtectedRoute>
+                  <AboutPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/help" element={
+                <ProtectedRoute>
+                  <HelpPage />
                 </ProtectedRoute>
               } />
               <Route path="/task/:taskId" element={
