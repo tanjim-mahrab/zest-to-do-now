@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -151,7 +152,7 @@ const Dashboard = () => {
       {/* Floating Action Button */}
       <Button 
         onClick={() => setShowAddTask(true)} 
-        className="fixed z-30 bottom-20 right-6 bg-black text-white rounded-full w-16 h-16 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center animate-scale-in"
+        className="fixed z-30 top-6 right-6 bg-black text-white rounded-full w-16 h-16 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center animate-scale-in"
         aria-label="Add new task"
       >
         <Plus className="w-8 h-8" />
