@@ -1,3 +1,4 @@
+
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
 import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
@@ -72,7 +73,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
               <div className="flex justify-between items-start gap-2">
                  <div className="flex-1 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
                     <p className={`font-medium text-gray-800 break-words ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
-                    {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
+                    {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 break-words ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
                  </div>
                  <div className="flex-shrink-0 -mt-1 -mr-2">
                     <DropdownMenu>
