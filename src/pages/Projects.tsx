@@ -62,7 +62,7 @@ const Projects = () => {
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-6 pr-12 h-12 rounded-full bg-white border-0 shadow-sm focus-visible:ring-1 focus-visible:ring-black"
+              className="pl-6 pr-12 h-12 rounded-full bg-muted shadow-sm focus-visible:ring-1 focus-visible:ring-black"
             />
           </div>
         </div>
