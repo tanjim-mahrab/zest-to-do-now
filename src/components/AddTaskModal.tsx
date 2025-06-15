@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useTask, Task } from '@/contexts/TaskContext';
 import { Calendar, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
+import Icon from '@/components/Icon';
 
 interface AddTaskModalProps {
   open: boolean;
@@ -28,6 +29,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
   const [newTag, setNewTag] = useState('');
 
   const isEditing = !!task;
+  const selectedProject = projects.find((p) => p.id === projectId);
 
   useEffect(() => {
     // When the modal opens, synchronize the form state
@@ -226,18 +228,20 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
               <Label>Project</Label>
               <Select value={projectId} onValueChange={setProjectId}>
                 <SelectTrigger className="h-12 rounded-xl">
-                  <SelectValue placeholder="Select project" />
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    {selectedProject && (
+                      <Icon name={selectedProject.icon} className="h-4 w-4 flex-shrink-0" />
+                    )}
+                    <SelectValue placeholder="Select project" />
+                  </div>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">No Project</SelectItem>
                   {projects.map((project) => (
                     <SelectItem key={project.id} value={project.id}>
                       <div className="flex items-center gap-2">
-                        <div 
-                          className="w-3 h-3 rounded-full" 
-                          style={{ backgroundColor: project.color }}
-                        />
-                        {project.name}
+                        <Icon name={project.icon} className="w-4 h-4" />
+                        <span>{project.name}</span>
                       </div>
                     </SelectItem>
                   ))}
