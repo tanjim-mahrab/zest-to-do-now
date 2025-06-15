@@ -122,16 +122,13 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                     </div>
                   ))}
                   
-                  <div 
-                    className="flex items-center gap-2 min-w-0 px-2 py-1 rounded-full"
-                    style={{ backgroundColor: `${projectColor}1A` }}
-                  >
+                  <div className="flex items-center gap-2 min-w-0 border border-gray-200/80 px-2 py-1 rounded-full hover:bg-gray-50 transition-colors">
                     {project ? (
-                      <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0" style={{ color: projectColor }} />
+                      <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
                     ) : (
-                      <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: projectColor }}></div>
+                      <div className="w-2 h-2 rounded-full flex-shrink-0 bg-gray-500"></div>
                     )}
-                    <p className="truncate" style={{ color: projectColor }}>{projectName}</p>
+                    <p className="truncate text-gray-700">{projectName}</p>
                   </div>
                 </div>
               </div>
