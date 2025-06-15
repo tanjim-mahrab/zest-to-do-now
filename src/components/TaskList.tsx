@@ -1,4 +1,3 @@
-
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
 import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
@@ -98,38 +97,6 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                </div>
-              </div>
-              
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium">
-                {dueDateInfo && (
-                  <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full transition-colors ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'border border-gray-200/80 hover:bg-gray-50'}`}>
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>{dueDateInfo.date}</span>
-                    {dueDateInfo.time && (
-                      <>
-                        <div className="w-px h-3 bg-gray-300 mx-0.5"></div>
-                        <Clock className="w-3.5 h-3.5" />
-                        <span>{dueDateInfo.time}</span>
-                      </>
-                    )}
-                  </div>
-                )}
-
-                {task.tags.map(tag => (
-                  <div key={tag} className="flex items-center gap-1.5 border border-gray-200/80 px-2 py-0.5 rounded-full hover:bg-gray-50 transition-colors">
-                    <Tag className="w-3.5 h-3.5" />
-                    <span>{tag}</span>
-                  </div>
-                ))}
-                
-                <div className="flex items-center gap-2 min-w-0 border border-gray-200/80 px-2 py-1 rounded-full hover:bg-gray-50 transition-colors">
-                  {project ? (
-                    <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0" style={{ color: projectColor }} />
-                  ) : (
-                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: projectColor }}></div>
-                  )}
-                  <p className="truncate">{projectName}</p>
                 </div>
               </div>
             </div>
