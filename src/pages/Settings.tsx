@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
+import { User, Bell, LogOut, Info, HelpCircle, Send, type LucideProps } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -165,10 +165,12 @@ const Settings = () => {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button
-                className="w-full flex items-center justify-center rounded-lg bg-red-500 text-white p-4 transition-colors hover:bg-red-600"
+                className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white py-2 pr-2 pl-6 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700"
               >
-                <LogOut className="w-5 h-5 mr-2" />
                 <span className="font-medium">Sign Out</span>
+                <div className="bg-white rounded-full p-2">
+                  <Send className="w-5 h-5 text-black" />
+                </div>
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent>
