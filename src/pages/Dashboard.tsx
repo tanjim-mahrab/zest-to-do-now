@@ -64,12 +64,6 @@ const Dashboard = () => {
               </h1>
               <p className="text-gray-600 text-lg">Let's make today productive</p>
             </div>
-            <Button 
-              onClick={() => setShowAddTask(true)} 
-              className="bg-black text-white rounded-full w-14 h-14 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <Plus className="w-6 h-6" />
-            </Button>
           </div>
 
           {/* Modern Search Bar */}
@@ -153,6 +147,15 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      {/* Floating Action Button */}
+      <Button 
+        onClick={() => setShowAddTask(true)} 
+        className="fixed z-30 bottom-20 right-6 bg-black text-white rounded-full w-16 h-16 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center animate-scale-in"
+        aria-label="Add new task"
+      >
+        <Plus className="w-8 h-8" />
+      </Button>
 
       <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} />
       <BottomNavigation />
