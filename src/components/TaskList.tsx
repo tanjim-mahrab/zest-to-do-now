@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +58,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
           return (
             <div
               key={task.id}
-              className={`group relative bg-white border border-gray-200/80 rounded-xl shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-start p-4 gap-4 ${task.completed ? 'bg-zinc-50/70 opacity-70' : 'hover:shadow-md hover:border-gray-300/80'}`}
+              onClick={() => navigate(`/task/${task.id}`)}
+              className={`group relative bg-white border border-gray-200/80 rounded-xl shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-start p-4 gap-4 cursor-pointer ${task.completed ? 'bg-zinc-50/70 opacity-70' : 'hover:shadow-md hover:border-gray-300/80'}`}
               style={{
                 animationDelay: `${index * 0.05}s`
               }}
@@ -75,7 +75,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
 
               <div className="flex-1 min-w-0" >
                 <div className="flex justify-between items-start gap-2">
-                   <div className="flex-1">
+                   <div className="flex-1" onClick={(e) => e.stopPropagation()}>
                       <p className={`font-medium text-gray-800 break-all ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
                       {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 break-all ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
                    </div>
@@ -101,7 +101,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                   </div>
                 </div>
                 
-                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium">
+                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium" onClick={(e) => e.stopPropagation()}>
                   {dueDateInfo && (
                     <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full transition-colors ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'border border-gray-200/80 hover:bg-gray-50'}`}>
                       <Calendar className="w-3.5 h-3.5" />

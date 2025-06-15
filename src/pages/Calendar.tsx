@@ -1,20 +1,18 @@
-
 import { useState } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday, startOfWeek, endOfWeek } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useTask } from '@/contexts/TaskContext';
-import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, Clock } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import AddTaskModal from '@/components/AddTaskModal';
-import { useNavigate } from 'react-router-dom';
+import TaskList from '@/components/TaskList';
 
 const Calendar = () => {
   const { tasks } = useTask();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showAddTask, setShowAddTask] = useState(false);
-  const navigate = useNavigate();
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -178,50 +176,7 @@ const Calendar = () => {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-3">
-                {selectedDateTasks.map(task => (
-                  <div 
-                    key={task.id}
-                    onClick={() => navigate(`/task/${task.id}`)}
-                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-sm transition-shadow duration-200 cursor-pointer"
-                  >
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      task.completed 
-                        ? 'bg-green-100 text-green-600' 
-                        : 'bg-gray-100 text-gray-600'
-                    }`}>
-                      {task.completed ? (
-                        <CheckCircle2 className="w-5 h-5" />
-                      ) : (
-                        <AlertCircle className="w-5 h-5" />
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className={`font-semibold text-base ${
-                        task.completed ? 'line-through text-gray-500' : 'text-black'
-                      }`}>
-                        {task.title}
-                      </h4>
-                      {task.description && (
-                        <p className={`text-sm mt-1 ${
-                          task.completed ? 'text-gray-400' : 'text-gray-600'
-                        }`}>
-                          {task.description}
-                        </p>
-                      )}
-                    </div>
-                    {task.priority !== 'low' && (
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        task.priority === 'high' 
-                          ? 'bg-red-100 text-red-700' 
-                          : 'bg-orange-100 text-orange-700'
-                      }`}>
-                        {task.priority}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <TaskList tasks={selectedDateTasks} />
             )}
           </div>
         </Card>
