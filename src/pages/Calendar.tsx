@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday, startOfWeek, endOfWeek } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -87,8 +86,8 @@ const Calendar = () => {
           <div>
             {/* Week Day Headers */}
             <div className="grid grid-cols-7 gap-1 mb-2">
-              {weekDays.map(day => (
-                <div key={day} className="py-2 text-center text-xs font-semibold text-gray-400 uppercase">
+              {weekDays.map((day, index) => (
+                <div key={index} className="py-2 text-center text-xs font-semibold text-gray-400 uppercase">
                   {day}
                 </div>
               ))}
@@ -112,25 +111,27 @@ const Calendar = () => {
                         }
                       }}
                       className={`
-                        h-11 w-11 flex flex-col items-center justify-center gap-1 text-sm relative rounded-full transition-colors duration-200
+                        h-11 w-11 relative rounded-full transition-colors duration-200
                         ${!isCurrentMonth ? 'text-gray-300 pointer-events-none' : ''}
                         ${isSelected ? 'bg-black text-white' : ''}
                         ${!isSelected && isCurrentMonth ? 'hover:bg-gray-100 text-gray-800' : ''}
                       `}
                     >
-                      <span className={`w-8 h-8 flex items-center justify-center rounded-full ${isTodayDate && !isSelected ? 'bg-sky-100 text-sky-700 font-semibold' : ''}`}>
-                        {format(day, 'd')}
-                      </span>
-                      <div className="flex items-center justify-center space-x-0.5 h-1">
-                        {dayTasks.length > 0 && isCurrentMonth && (
-                          <>
-                            {dayTasks.slice(0, 3).map((task) => (
-                              <div key={task.id} className={`w-1.5 h-1.5 rounded-full ${
-                                isSelected ? 'bg-white' : 'bg-gray-400'
-                              }`} />
-                            ))}
-                          </>
-                        )}
+                      <div className="flex flex-col items-center justify-center h-full w-full gap-0.5">
+                        <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${isTodayDate && !isSelected ? 'bg-sky-100 text-sky-700 font-semibold' : ''}`}>
+                          {format(day, 'd')}
+                        </span>
+                        <div className="flex items-center justify-center space-x-0.5 h-1">
+                          {dayTasks.length > 0 && isCurrentMonth && (
+                            <>
+                              {dayTasks.slice(0, 3).map((task) => (
+                                <div key={task.id} className={`w-1.5 h-1.5 rounded-full ${
+                                  isSelected ? 'bg-white' : 'bg-gray-400'
+                                }`} />
+                              ))}
+                            </>
+                          )}
+                        </div>
                       </div>
                     </button>
                   </div>
