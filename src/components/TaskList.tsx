@@ -1,8 +1,8 @@
 
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
-import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar } from 'lucide-react';
-import { format } from 'date-fns';
+import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
+import { format, isToday } from 'date-fns';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,94 +27,116 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
     return projects.find(p => p.id === projectId);
   };
   
+  const formatDueDate = (date: Date) => {
+    const hasTime = date.getHours() !== 23 || date.getMinutes() !== 59;
+    let dateText = '';
+    if (isToday(date)) {
+      dateText = 'Today';
+    } else {
+      dateText = format(date, 'MMM d');
+    }
+
+    return {
+      date: dateText,
+      time: hasTime ? format(date, 'h:mm a') : null,
+      isUrgent: isToday(date)
+    };
+  };
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {tasks.map((task, index) => {
         const project = getProject(task.projectId);
         const projectColor = project?.color || '#6C47FF';
         const projectName = project?.name || 'No Project';
         const projectIcon = project?.icon || 'Folder';
+        const dueDateInfo = task.dueDate ? formatDueDate(task.dueDate) : null;
 
         return (
           <div
             key={task.id}
-            className={`group relative bg-white border border-gray-200/80 rounded-lg shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-center p-3 gap-3 ${task.completed ? 'bg-zinc-50/70' : 'hover:shadow-md hover:border-gray-300/80'}`}
+            className={`group relative bg-white border border-gray-200/80 rounded-xl shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-start p-4 gap-4 ${task.completed ? 'bg-zinc-50/70 opacity-70' : 'hover:shadow-md hover:border-gray-300/80'}`}
             style={{
               animationDelay: `${index * 0.05}s`
             }}
           >
             <div 
-              className="w-1 flex-shrink-0 self-stretch rounded-full" 
+              className="w-1.5 flex-shrink-0 self-stretch rounded-full" 
               style={{ backgroundColor: projectColor }}
             />
 
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleTask(task.id);
-              }}
-            >
+            <div className="flex-shrink-0 pt-0.5">
               <Checkbox
                 id={`task-${task.id}`}
                 checked={task.completed}
+                onCheckedChange={() => toggleTask(task.id)}
                 className="w-5 h-5 rounded-full data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600 focus:ring-offset-2 focus:ring-purple-400 transition-all"
               />
             </div>
 
-            <div className="flex-1 min-w-0 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
-              <p className={`font-medium text-gray-800 truncate ${task.completed ? 'line-through text-gray-500' : ''}`}>{task.title}</p>
-              {task.description && <p className={`text-sm text-gray-500 mt-0.5 line-clamp-1 ${task.completed ? 'line-through' : ''}`}>{task.description}</p>}
-            </div>
-
-            <div className="flex items-center gap-4 text-gray-500 text-xs font-medium ml-auto pl-2">
-              {task.tags.slice(0, 1).map(tag => (
-                <div key={tag} className="hidden lg:flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5" />
-                  <span>{tag}</span>
+            <div className="flex-1 min-w-0" >
+              <div className="flex justify-between items-start gap-2">
+                 <div className="flex-1 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
+                    <p className={`font-medium text-gray-800 break-words ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
+                    {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
+                 </div>
+                 <div className="flex-shrink-0 -mt-1 -mr-2">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
+                          <MoreHorizontal className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                        <DropdownMenuItem onClick={() => toggleTask(task.id)}>
+                          <Check className="mr-2 h-4 w-4" />
+                          <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate(`/task/${task.id}`)}>
+                          <Edit className="mr-2 h-4 w-4" />
+                          <span>Edit</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={() => deleteTask(task.id)} className="text-red-600 focus:text-red-600">
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          <span>Delete</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
-              ))}
-
-              {task.dueDate && (
-                <div className="hidden sm:flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{format(new Date(task.dueDate), 'MMM d')}</span>
-                </div>
-              )}
-
-              <div className="hidden xs:flex items-center gap-2 min-w-[80px] bg-gray-100/60 px-2 py-1 rounded-full">
-                {project ? (
-                  <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0" style={{ color: projectColor }} />
-                ) : (
-                  <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: projectColor }}></div>
-                )}
-                <p className="truncate">{projectName}</p>
               </div>
-            </div>
-            
-            <div className="flex-shrink-0">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
-                    <MoreHorizontal className="w-4 h-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                  <DropdownMenuItem onClick={() => toggleTask(task.id)}>
-                    <Check className="mr-2 h-4 w-4" />
-                    <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate(`/task/${task.id}`)}>
-                    <Edit className="mr-2 h-4 w-4" />
-                    <span>Edit</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => deleteTask(task.id)} className="text-red-600 focus:text-red-600">
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    <span>Delete</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-600 font-medium">
+                {dueDateInfo && (
+                  <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{dueDateInfo.date}</span>
+                    {dueDateInfo.time && (
+                      <>
+                        <div className="w-px h-3 bg-gray-300 mx-0.5"></div>
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{dueDateInfo.time}</span>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                {task.tags.map(tag => (
+                  <div key={tag} className="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+                    <Tag className="w-3.5 h-3.5" />
+                    <span>{tag}</span>
+                  </div>
+                ))}
+                
+                <div className="flex items-center gap-2 min-w-0 bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                  {project ? (
+                    <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0" style={{ color: projectColor }} />
+                  ) : (
+                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: projectColor }}></div>
+                  )}
+                  <p className="truncate">{projectName}</p>
+                </div>
+              </div>
             </div>
           </div>
         )
