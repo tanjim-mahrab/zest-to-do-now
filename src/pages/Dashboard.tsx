@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -70,7 +71,7 @@ const Dashboard = () => {
       {/* Modern Header */}
       <header className="bg-white border-b border-gray-200 z-10 shadow-sm flex-shrink-0">
         <div className="px-4 sm:px-6 py-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-start justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
                 Welcome back, {user?.email?.split('@')[0] || 'friend'}!
