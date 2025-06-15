@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -90,38 +89,32 @@ const Dashboard = () => {
 
       {/* Content */}
       <div className="px-6 py-8 space-y-8">
-        {/* Modern Filter Tabs - Fixed UI */}
-        <div className="bg-white rounded-2xl p-1 border border-gray-200 shadow-sm">
-          <div className="grid grid-cols-4 gap-1">
-            {filterTabs.map(tab => (
-              <Button
-                key={tab.key}
-                variant="ghost"
-                onClick={() => setFilter(tab.key as any)}
-                className={`flex flex-col items-center justify-center gap-0.5 p-1 h-auto rounded-lg transition-all duration-200 ${
+        {/* Modern Filter Tabs - Segmented Control */}
+        <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm">
+          {filterTabs.map(tab => (
+            <Button
+              key={tab.key}
+              variant="ghost"
+              onClick={() => setFilter(tab.key as any)}
+              className={`flex-1 flex items-center justify-center gap-2 px-2 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out ${
+                filter === tab.key 
+                  ? 'bg-white text-black shadow-sm' 
+                  : 'text-gray-500 hover:text-black hover:bg-white/60'
+              }`}
+            >
+              <tab.icon className="w-4 h-4 flex-shrink-0" />
+              <span>{tab.label}</span>
+              {tab.count > 0 && (
+                <span className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
                   filter === tab.key 
-                    ? 'bg-black text-white shadow-sm' 
-                    : 'text-black hover:bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center justify-center w-6 h-6">
-                  <tab.icon className="w-4 h-4 flex-shrink-0" />
-                </div>
-                <div className="text-center space-y-0.5">
-                  <div className="text-xs font-medium leading-tight">{tab.label}</div>
-                  {tab.count > 0 && (
-                    <div className={`text-xs px-1 py-0.5 rounded-full min-w-[16px] flex items-center justify-center ${
-                      filter === tab.key 
-                        ? 'bg-white text-black' 
-                        : 'bg-gray-100 text-gray-600'
-                    }`}>
-                      {tab.count}
-                    </div>
-                  )}
-                </div>
-              </Button>
-            ))}
-          </div>
+                    ? 'bg-black/5 text-black'
+                    : 'bg-gray-200/70 text-gray-600'
+                }`}>
+                  {tab.count}
+                </span>
+              )}
+            </Button>
+          ))}
         </div>
 
         {/* Task List */}
