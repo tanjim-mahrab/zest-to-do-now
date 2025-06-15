@@ -91,12 +91,12 @@ const Dashboard = () => {
           {/* Modern Search Bar */}
           <div className="relative">
             <Input 
-              placeholder="Search tasks..." 
+              placeholder="Search" 
               value={searchQuery} 
               onChange={e => setSearchQuery(e.target.value)} 
-              className="h-14 w-full rounded-full border bg-gray-50/50 pl-6 pr-16 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring" />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-6 pointer-events-none">
-              <Search className="h-6 w-6 text-gray-400" />
+              className="h-12 w-full rounded-full border bg-background pl-5 pr-12 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring" />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400" />
             </div>
           </div>
         </div>
