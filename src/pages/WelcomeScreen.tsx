@@ -38,7 +38,7 @@ const WelcomeScreen = () => {
           {/* Logo and Title */}
           <div className="space-y-4">
             <div className="mx-auto w-20 h-20 bg-black rounded-2xl flex items-center justify-center shadow-lg">
-              <CheckCircle className="w-10 h-10 text-white" />
+              <img src="/lovable-uploads/912c5a38-b867-4604-96aa-02f2a457e646.png" alt="TaskFlow Logo" className="w-12 h-12" />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-black">
