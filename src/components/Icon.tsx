@@ -29,6 +29,8 @@ const nameMap: Record<string, string> = {
   stethoscope: 'Stethoscope',
   users: 'Users',
   folder: 'Folder',
+  bus: 'Bus',
+  'train-front': 'TrainFront',
 };
 
 const Icon = ({ name, ...props }: IconProps) => {

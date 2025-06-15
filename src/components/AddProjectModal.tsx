@@ -22,6 +22,8 @@ const iconList: { displayName: string; iconName: string }[] = [
   { displayName: 'User', iconName: 'user' },
   { displayName: 'Stethoscope', iconName: 'stethoscope' },
   { displayName: 'Users', iconName: 'users' },
+  { displayName: 'Bus', iconName: 'bus' },
+  { displayName: 'Train', iconName: 'train-front' },
 ];
 
 interface AddProjectModalProps {
