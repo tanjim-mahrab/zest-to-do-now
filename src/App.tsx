@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import WelcomeScreen from "./pages/WelcomeScreen";
 import LoginScreen from "./pages/LoginScreen";
 import SignupScreen from "./pages/SignupScreen";
+import ForgotPasswordScreen from "./pages/ForgotPasswordScreen";
+import UpdatePasswordScreen from "./pages/UpdatePasswordScreen";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Projects from "./pages/Projects";
@@ -33,6 +35,8 @@ const App = () => (
               <Route path="/welcome" element={<WelcomeScreen />} />
               <Route path="/login" element={<LoginScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
+              <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+              <Route path="/update-password" element={<UpdatePasswordScreen />} />
               <Route path="/" element={
                 <ProtectedRoute>
                   <Dashboard />
