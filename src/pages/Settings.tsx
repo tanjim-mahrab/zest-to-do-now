@@ -119,7 +119,7 @@ const Settings = () => {
             <AlertDialogTrigger asChild>
               <button className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white py-2 pr-2 pl-6 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700">
                 <span className="text-center py-0 font-extrabold px-[95px] text-white">Sign Out</span>
-                <div className="bg-white rounded-full p-2">
+                <div className="bg-gradient-to-br from-gray-100 to-gray-300 rounded-full p-2">
                   <LogOut className="w-5 h-5 text-black" />
                 </div>
               </button>
