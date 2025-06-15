@@ -11,23 +11,32 @@ import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
 const iconList: { displayName: string; iconName: string }[] = [
+  // General
   { displayName: 'Home', iconName: 'house' },
-  { displayName: 'Dumbbell', iconName: 'dumbbell' },
-  { displayName: 'Shopping Cart', iconName: 'shopping-cart' },
   { displayName: 'Book', iconName: 'book' },
-  { displayName: 'Plane', iconName: 'plane' },
-  { displayName: 'Health', iconName: 'heart-pulse' },
-  { displayName: 'Dollar Sign', iconName: 'dollar-sign' },
-  { displayName: 'Shopping Bag', iconName: 'shopping-bag' },
   { displayName: 'User', iconName: 'user' },
-  { displayName: 'Stethoscope', iconName: 'stethoscope' },
   { displayName: 'Users', iconName: 'users' },
-  { displayName: 'Bus', iconName: 'bus' },
-  { displayName: 'Train', iconName: 'train-front' },
-  { displayName: 'Baby', iconName: 'baby' },
-  { displayName: 'Fuel', iconName: 'fuel' },
+  
+  // Health & Wellness
+  { displayName: 'Dumbbell', iconName: 'dumbbell' },
+  { displayName: 'Health', iconName: 'heart-pulse' },
+  { displayName: 'Stethoscope', iconName: 'stethoscope' },
   { displayName: 'Meal', iconName: 'meal' },
   { displayName: 'Glass of Water', iconName: 'glass-water' },
+
+  // Travel & Transport
+  { displayName: 'Plane', iconName: 'plane' },
+  { displayName: 'Bus', iconName: 'bus' },
+  { displayName: 'Train', iconName: 'train-front' },
+  { displayName: 'Fuel', iconName: 'fuel' },
+
+  // Shopping & Finance
+  { displayName: 'Shopping Cart', iconName: 'shopping-cart' },
+  { displayName: 'Shopping Bag', iconName: 'shopping-bag' },
+  { displayName: 'Dollar Sign', iconName: 'dollar-sign' },
+  
+  // Family
+  { displayName: 'Baby', iconName: 'baby' },
 ];
 
 interface AddProjectModalProps {
