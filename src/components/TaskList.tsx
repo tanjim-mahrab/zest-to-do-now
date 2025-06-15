@@ -1,7 +1,8 @@
+
 import { useState } from 'react';
 import { useTask, Task } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Trash2, MoreHorizontal, Eye, Calendar, Tag } from 'lucide-react';
+import { Edit, Trash2, MoreHorizontal, Eye, Calendar, Tag, Flag } from 'lucide-react';
 import { format } from 'date-fns';
 import {
   DropdownMenu,
@@ -25,6 +26,12 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
   const navigate = useNavigate();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
+  const priorityColors = {
+    high: 'bg-red-100 text-red-700 border-red-200',
+    medium: 'bg-orange-100 text-orange-700 border-orange-200',
+    low: 'bg-sky-100 text-sky-700 border-sky-200'
+  };
 
   return (
     <>
@@ -97,9 +104,13 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                   {task.dueDate && (
                     <div className="flex items-center gap-3 text-sm text-gray-600">
                       <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                      <span>{format(new Date(task.dueDate), 'MMM d, yyyy')}</span>
+                      <span>{format(new Date(task.dueDate), 'MMM d, yyyy, p')}</span>
                     </div>
                   )}
+                  <div className="flex items-center gap-3 text-sm text-gray-600">
+                    <Flag className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <Badge variant="outline" className={`capitalize border ${priorityColors[task.priority]}`}>{task.priority}</Badge>
+                  </div>
                   {task.tags && task.tags.length > 0 && (
                     <div className="flex items-start gap-3 text-sm text-gray-600">
                       <Tag className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
