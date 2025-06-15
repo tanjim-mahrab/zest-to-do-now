@@ -57,12 +57,12 @@ const Projects = () => {
 
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <Input
-              placeholder="Search projects..."
+              placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 rounded-xl bg-gray-50 border border-gray-300"
+              className="pl-6 pr-12 h-12 rounded-full bg-white border-0 shadow-sm focus-visible:ring-1 focus-visible:ring-black"
             />
           </div>
         </div>
