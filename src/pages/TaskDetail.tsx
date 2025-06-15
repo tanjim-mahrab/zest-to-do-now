@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useTask } from '@/contexts/TaskContext';
-import { ArrowLeft, Edit, Trash2, Calendar, Clock, Tag, CheckCircle, Plus } from 'lucide-react';
+import { ArrowLeft, Edit, Trash2, Calendar, Clock, Tag } from 'lucide-react';
 import { format } from 'date-fns';
 import AddTaskModal from '@/components/AddTaskModal';
 import { toast } from 'sonner';
@@ -33,30 +32,6 @@ const TaskDetail = () => {
       deleteTask(task.id);
       toast.success('Task deleted successfully');
       navigate('/');
-    }
-  };
-
-  const toggleSubtask = (subtaskId: string) => {
-    const updatedSubtasks = task.subtasks.map(subtask =>
-      subtask.id === subtaskId 
-        ? { ...subtask, completed: !subtask.completed }
-        : subtask
-    );
-    updateTask(task.id, { subtasks: updatedSubtasks });
-  };
-
-  const addSubtask = () => {
-    const title = prompt('Enter subtask title:');
-    if (title?.trim()) {
-      const newSubtask = {
-        id: Date.now().toString(),
-        title: title.trim(),
-        completed: false,
-      };
-      updateTask(task.id, { 
-        subtasks: [...task.subtasks, newSubtask] 
-      });
-      toast.success('Subtask added successfully');
     }
   };
 
@@ -190,82 +165,6 @@ const TaskDetail = () => {
               </div>
             )}
           </div>
-        </Card>
-
-        {/* Subtasks */}
-        <Card className="p-6 border-0 bg-white/60 backdrop-blur-sm animate-slide-up">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Subtasks ({task.subtasks.filter(st => st.completed).length}/{task.subtasks.length})
-            </h2>
-            <Button
-              onClick={addSubtask}
-              size="sm"
-              variant="outline"
-              className="rounded-full"
-            >
-              <Plus className="w-4 h-4 mr-1" />
-              Add
-            </Button>
-          </div>
-
-          {task.subtasks.length === 0 ? (
-            <div className="text-center py-8">
-              <CheckCircle className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-500">No subtasks yet</p>
-              <Button
-                onClick={addSubtask}
-                variant="ghost"
-                size="sm"
-                className="mt-2 text-purple-600"
-              >
-                Add your first subtask
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {task.subtasks.map((subtask, index) => (
-                <div
-                  key={subtask.id}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl animate-slide-up"
-                  style={{ animationDelay: `${index * 0.05}s` }}
-                >
-                  <Checkbox
-                    checked={subtask.completed}
-                    onCheckedChange={() => toggleSubtask(subtask.id)}
-                    className="w-4 h-4 rounded data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <span className={`flex-1 ${
-                    subtask.completed 
-                      ? 'text-gray-500 line-through' 
-                      : 'text-gray-900'
-                  }`}>
-                    {subtask.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Progress Bar */}
-          {task.subtasks.length > 0 && (
-            <div className="mt-4">
-              <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-                <span>Progress</span>
-                <span>
-                  {Math.round((task.subtasks.filter(st => st.completed).length / task.subtasks.length) * 100)}%
-                </span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div 
-                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-300"
-                  style={{ 
-                    width: `${(task.subtasks.filter(st => st.completed).length / task.subtasks.length) * 100}%` 
-                  }}
-                />
-              </div>
-            </div>
-          )}
         </Card>
       </div>
 
