@@ -12,7 +12,8 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
 }
 
 // Mapping from PascalCase/custom names from iconList to kebab-case lucide names
-const nameMap: Record<string, DynamicIconName> = {
+// Using Record<string, string> to work around a TypeScript type inference issue.
+const nameMap: Record<string, string> = {
     home: 'home',
     briefcase: 'briefcase',
     dumbbell: 'dumbbell',
@@ -41,8 +42,8 @@ const Icon = ({ name, ...props }: IconProps) => {
   // Normalize name from AddProjectModal: remove spaces, lowercase.
   const normalizedName = name.toLowerCase().replace(/\s+/g, '');
   
-  // Find the kebab-case name, or default to 'folder'
-  const iconName = nameMap[normalizedName] || 'folder';
+  // Find the kebab-case name, or default to 'folder', and cast to the correct type.
+  const iconName = (nameMap[normalizedName] || 'folder') as DynamicIconName;
   
   // Check if the icon name is valid before trying to import
   if (!dynamicIconImports[iconName]) {
