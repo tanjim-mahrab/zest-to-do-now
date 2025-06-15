@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday, startOfWeek, endOfWeek } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -40,7 +39,7 @@ const Calendar = () => {
     });
   };
 
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
@@ -64,48 +63,36 @@ const Calendar = () => {
 
       <div className="px-6 py-8 space-y-8">
         {/* Modern Calendar */}
-        <Card className="bg-white border border-gray-200 shadow-sm overflow-hidden">
+        <Card className="bg-white border border-gray-200 shadow-sm overflow-hidden p-4 sm:p-6">
           {/* Calendar Header */}
-          <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
-            <div className="flex items-center justify-between">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigateMonth('prev')}
-                className="w-10 h-10 p-0 text-black hover:bg-white rounded-full"
-              >
-                <ChevronLeft className="w-5 h-5" />
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-medium text-gray-500">Calendar</h2>
+            <div className="flex items-center gap-1">
+              <h2 className="text-lg font-bold text-black">
+                {format(currentDate, 'MMM yyyy')}
+              </h2>
+              <Button variant="ghost" size="icon" onClick={() => navigateMonth('prev')} className="w-7 h-7">
+                <ChevronLeft className="w-5 h-5 text-gray-400" />
               </Button>
-              <div className="flex items-center gap-3">
-                <CalendarIcon className="w-5 h-5 text-black" />
-                <h2 className="text-xl font-bold text-black">
-                  {format(currentDate, 'MMMM yyyy')}
-                </h2>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigateMonth('next')}
-                className="w-10 h-10 p-0 text-black hover:bg-white rounded-full"
-              >
-                <ChevronRight className="w-5 h-5" />
+              <Button variant="ghost" size="icon" onClick={() => navigateMonth('next')} className="w-7 h-7">
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </Button>
             </div>
           </div>
 
           {/* Calendar Grid */}
-          <div className="p-6">
+          <div>
             {/* Week Day Headers */}
             <div className="grid grid-cols-7 gap-1 mb-2">
               {weekDays.map(day => (
-                <div key={day} className="p-3 text-center text-sm font-semibold text-gray-600">
+                <div key={day} className="py-2 text-center text-xs font-semibold text-gray-400 uppercase">
                   {day}
                 </div>
               ))}
             </div>
 
             {/* Calendar Days */}
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-y-1">
               {calendarDays.map(day => {
                 const dayTasks = getTasksForDate(day);
                 const isSelected = isSameDay(day, selectedDate);
@@ -113,36 +100,37 @@ const Calendar = () => {
                 const isCurrentMonth = isSameMonth(day, currentDate);
                 
                 return (
-                  <Button
-                    key={day.toISOString()}
-                    variant="ghost"
-                    className={`h-16 p-2 flex flex-col items-center justify-center text-sm relative border border-transparent hover:border-gray-200 rounded-lg transition-all duration-200 ${
-                      !isCurrentMonth 
-                        ? 'text-gray-300 hover:text-gray-400' 
-                        : isSelected 
-                        ? 'bg-black text-white border-black shadow-sm' 
-                        : isTodayDate
-                        ? 'bg-gray-100 text-black border-gray-300 font-semibold'
-                        : 'text-black hover:bg-gray-50'
-                    }`}
-                    onClick={() => setSelectedDate(day)}
-                  >
-                    <span className="text-base">{format(day, 'd')}</span>
-                    {dayTasks.length > 0 && (
-                      <div className="flex items-center gap-1 mt-1">
-                        <div className={`w-1.5 h-1.5 rounded-full ${
-                          isSelected ? 'bg-white' : 'bg-black'
-                        }`} />
-                        {dayTasks.length > 1 && (
-                          <span className={`text-xs ${
-                            isSelected ? 'text-white' : 'text-gray-600'
-                          }`}>
-                            +{dayTasks.length - 1}
-                          </span>
+                  <div key={day.toISOString()} className="aspect-square flex items-center justify-center">
+                    <button
+                      onClick={() => {
+                        setSelectedDate(day);
+                        if (!isSameMonth(day, currentDate)) {
+                          setCurrentDate(day);
+                        }
+                      }}
+                      className={`
+                        h-11 w-11 flex flex-col items-center justify-center gap-1 text-sm relative rounded-full transition-colors duration-200
+                        ${!isCurrentMonth ? 'text-gray-300 pointer-events-none' : ''}
+                        ${isSelected ? 'bg-black text-white' : ''}
+                        ${!isSelected && isCurrentMonth ? 'hover:bg-gray-100 text-gray-800' : ''}
+                      `}
+                    >
+                      <span className={`w-8 h-8 flex items-center justify-center rounded-full ${isTodayDate && !isSelected ? 'bg-sky-100 text-sky-700 font-semibold' : ''}`}>
+                        {format(day, 'd')}
+                      </span>
+                      <div className="flex items-center justify-center space-x-0.5 h-1">
+                        {dayTasks.length > 0 && isCurrentMonth && (
+                          <>
+                            {dayTasks.slice(0, 3).map((task) => (
+                              <div key={task.id} className={`w-1.5 h-1.5 rounded-full ${
+                                isSelected ? 'bg-white' : 'bg-gray-400'
+                              }`} />
+                            ))}
+                          </>
                         )}
                       </div>
-                    )}
-                  </Button>
+                    </button>
+                  </div>
                 );
               })}
             </div>
