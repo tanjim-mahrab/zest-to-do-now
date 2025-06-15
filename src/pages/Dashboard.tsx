@@ -109,7 +109,7 @@ const Dashboard = () => {
             {/* Modern Filter Tabs - Segmented Control */}
             <div className="sticky top-0 z-10 bg-gray-50 py-4 -mx-4 px-4 sm:mx-0 sm:px-0 -mt-4">
               <div className="overflow-x-auto scrollbar-hide">
-                <div className="bg-gray-100 p-1 rounded-full flex items-center flex-wrap gap-1 border border-gray-200/80 shadow-sm">
+                <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm min-w-max">
                   {filterTabs.map(tab => <Button key={tab.key} variant="ghost" onClick={() => setFilter(tab.key as any)} className={`flex-shrink-0 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out whitespace-nowrap ${filter === tab.key ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-black hover:bg-white/60'}`}>
                       <tab.icon className="w-4 h-4 flex-shrink-0" />
                       <span className="hidden xs:inline">{tab.label}</span>
