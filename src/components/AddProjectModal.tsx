@@ -62,7 +62,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-white border border-black">
+      <DialogContent className="sm:max-w-sm bg-white border border-black rounded-2xl">
         <DialogHeader className="pb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
