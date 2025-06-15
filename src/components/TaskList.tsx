@@ -42,8 +42,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 animationDelay: `${index * 0.05}s`
               }}
             >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 pt-1" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                   <Checkbox
                     id={`task-${task.id}`}
                     checked={task.completed}
