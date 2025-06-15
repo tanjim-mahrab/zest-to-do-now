@@ -1,3 +1,4 @@
+
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
 import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
@@ -46,7 +47,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
     <div className="space-y-3">
       {tasks.map((task, index) => {
         const project = getProject(task.projectId);
-        const projectColor = project?.color || '#6C47FF';
+        const projectColor = project?.color || '#6b7280';
         const projectName = project?.name || 'No Project';
         const projectIcon = project?.icon || 'Folder';
         const dueDateInfo = task.dueDate ? formatDueDate(task.dueDate) : null;
@@ -64,7 +65,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 id={`task-${task.id}`}
                 checked={task.completed}
                 onCheckedChange={() => toggleTask(task.id)}
-                className="w-5 h-5 rounded-full data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600 focus:ring-offset-2 focus:ring-purple-400 transition-all"
+                className="w-5 h-5 rounded-full data-[state=checked]:bg-black data-[state=checked]:border-black focus:ring-offset-2 focus:ring-black/50 transition-all"
               />
             </div>
 
@@ -100,9 +101,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 </div>
               </div>
               
-              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-600 font-medium">
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium">
                 {dueDateInfo && (
-                  <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600'}`}>
+                  <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full transition-colors ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'border border-gray-200/80 hover:bg-gray-50'}`}>
                     <Calendar className="w-3.5 h-3.5" />
                     <span>{dueDateInfo.date}</span>
                     {dueDateInfo.time && (
@@ -116,13 +117,13 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 )}
 
                 {task.tags.map(tag => (
-                  <div key={tag} className="flex items-center gap-1.5 bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+                  <div key={tag} className="flex items-center gap-1.5 border border-gray-200/80 px-2 py-0.5 rounded-full hover:bg-gray-50 transition-colors">
                     <Tag className="w-3.5 h-3.5" />
                     <span>{tag}</span>
                   </div>
                 ))}
                 
-                <div className="flex items-center gap-2 min-w-0 bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                <div className="flex items-center gap-2 min-w-0 border border-gray-200/80 px-2 py-1 rounded-full hover:bg-gray-50 transition-colors">
                   {project ? (
                     <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0" style={{ color: projectColor }} />
                   ) : (
