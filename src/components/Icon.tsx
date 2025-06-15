@@ -1,68 +1,60 @@
 
-import React, { lazy, Suspense } from 'react';
-import { LucideProps } from 'lucide-react';
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
-
-const fallback = <div className="w-5 h-5 bg-gray-200 rounded-md" />;
-
-type DynamicIconName = keyof typeof dynamicIconImports;
+import React from 'react';
+import { icons, LucideProps } from 'lucide-react';
 
 interface IconProps extends Omit<LucideProps, 'ref'> {
   name: string;
 }
 
-// For backward compatibility with old data ('Home', 'ShoppingCart')
+// Helper to convert kebab-case to PascalCase (e.g., 'shopping-cart' to 'ShoppingCart')
+const kebabToPascalCase = (str: string) => {
+  return str.replace(/(^\w|-\w)/g, (g) => g.replace(/-/, "").toUpperCase());
+};
+
+// Maps old or alternative names to the correct PascalCase component name from `lucide-react`
 const nameMap: Record<string, string> = {
-  home: 'home',
-  briefcase: 'briefcase',
-  dumbbell: 'dumbbell',
-  shoppingcart: 'shopping-cart',
-  book: 'book',
-  plane: 'plane',
-  health: 'heart-pulse',
-  dollarsign: 'dollar-sign',
-  shoppingbag: 'shopping-bag',
-  user: 'user',
-  stethoscope: 'stethoscope',
-  users: 'users',
-  folder: 'folder',
+  home: 'Home',
+  briefcase: 'Briefcase',
+  dumbbell: 'Dumbbell',
+  shoppingcart: 'ShoppingCart',
+  'shopping-cart': 'ShoppingCart',
+  book: 'Book',
+  plane: 'Plane',
+  health: 'HeartPulse',
+  'heart-pulse': 'HeartPulse',
+  dollarsign: 'DollarSign',
+  'dollar-sign': 'DollarSign',
+  shoppingbag: 'ShoppingBag',
+  'shopping-bag': 'ShoppingBag',
+  user: 'User',
+  stethoscope: 'Stethoscope',
+  users: 'Users',
+  folder: 'Folder',
 };
 
 const Icon = ({ name, ...props }: IconProps) => {
+  // Use 'Folder' as a default if no name is provided
   if (!name) {
-    const FallbackIcon = lazy(dynamicIconImports['folder']);
-    return (
-      <Suspense fallback={fallback}>
-        <FallbackIcon {...props} />
-      </Suspense>
-    );
+    const FallbackIcon = icons['Folder'];
+    return <FallbackIcon {...props} />;
+  }
+  
+  // Normalize the name to handle different cases and spacing
+  const normalizedName = name.toLowerCase().replace(/\s+/g, '');
+  
+  // Find the icon component name from our map, or convert it from kebab-case
+  let iconComponentName = nameMap[normalizedName] || kebabToPascalCase(normalizedName);
+  
+  const LucideIcon = icons[iconComponentName as keyof typeof icons];
+
+  // If the icon is not found in `lucide-react`, render the fallback
+  if (!LucideIcon) {
+    console.warn(`Icon not found: ${name} (resolved to ${iconComponentName})`);
+    const FallbackIcon = icons['Folder'];
+    return <FallbackIcon {...props} />;
   }
 
-  let iconName: DynamicIconName;
-
-  // 1. Check if `name` is a direct valid key
-  if (dynamicIconImports[name as DynamicIconName]) {
-    iconName = name as DynamicIconName;
-  } else {
-    // 2. If not, normalize and check the map for backward compatibility
-    const normalizedName = name.toLowerCase().replace(/\s+/g, '');
-    const mappedName = nameMap[normalizedName];
-
-    if (mappedName && dynamicIconImports[mappedName as DynamicIconName]) {
-      iconName = mappedName as DynamicIconName;
-    } else {
-      // 3. Fallback to folder if no valid icon is found
-      iconName = 'folder';
-    }
-  }
-
-  const LucideIcon = lazy(dynamicIconImports[iconName]);
-
-  return (
-    <Suspense fallback={fallback}>
-      <LucideIcon {...props} />
-    </Suspense>
-  );
+  return <LucideIcon {...props} />;
 };
 
 export default Icon;
