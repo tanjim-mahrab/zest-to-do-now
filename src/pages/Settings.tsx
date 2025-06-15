@@ -33,7 +33,7 @@ const Settings = () => {
     },
     {
       icon: Info,
-      label: 'About TaskFlow',
+      label: 'About DailyFlow',
       description: 'Version 1.0.0',
       action: () => navigate('/about'),
     },
