@@ -1,8 +1,8 @@
+
 import { useState } from 'react';
-import { useTask, Task, Project } from '@/contexts/TaskContext';
+import { useTask, Task } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
-import { Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
-import { format, isToday } from 'date-fns';
+import { Edit, Trash2, MoreHorizontal } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import Icon from './Icon';
 import AddTaskModal from '@/components/AddTaskModal';
 
 interface TaskListProps {
@@ -20,41 +19,14 @@ interface TaskListProps {
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-  const { projects, deleteTask, toggleTask } = useTask();
+  const { deleteTask, toggleTask } = useTask();
   const navigate = useNavigate();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-
-  const getProject = (projectId?: string): Project | undefined => {
-    if (!projectId) return undefined;
-    return projects.find(p => p.id === projectId);
-  };
-  
-  const formatDueDate = (date: Date) => {
-    const hasTime = date.getHours() !== 23 || date.getMinutes() !== 59;
-    let dateText = '';
-    if (isToday(date)) {
-      dateText = 'Today';
-    } else {
-      dateText = format(date, 'MMM d');
-    }
-
-    return {
-      date: dateText,
-      time: hasTime ? format(date, 'h:mm a') : null,
-      isUrgent: isToday(date)
-    };
-  };
 
   return (
     <>
       <div className="space-y-2">
         {tasks.map((task, index) => {
-          const project = getProject(task.projectId);
-          const projectColor = project?.color || '#6b7280';
-          const projectName = project?.name || 'No Project';
-          const projectIcon = project?.icon || 'Folder';
-          const dueDateInfo = task.dueDate ? formatDueDate(task.dueDate) : null;
-
           return (
             <div
               key={task.id}
@@ -98,38 +70,6 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                  </div>
-                </div>
-                
-                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium" onClick={(e) => e.stopPropagation()}>
-                  {dueDateInfo && (
-                    <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full transition-colors ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'border border-gray-200/80 hover:bg-gray-50'}`}>
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>{dueDateInfo.date}</span>
-                      {dueDateInfo.time && (
-                        <>
-                          <div className="w-px h-3 bg-gray-300 mx-0.5"></div>
-                          <Clock className="w-3.5 h-3.5" />
-                          <span>{dueDateInfo.time}</span>
-                        </>
-                      )}
-                    </div>
-                  )}
-
-                  {task.tags.map(tag => (
-                    <div key={tag} className="flex items-center gap-1.5 border border-gray-200/80 px-2 py-0.5 rounded-full hover:bg-gray-50 transition-colors">
-                      <Tag className="w-3.5 h-3.5" />
-                      <span>{tag}</span>
-                    </div>
-                  ))}
-                  
-                  <div className="flex items-center gap-2 min-w-0 border border-gray-200/80 px-2 py-1 rounded-full hover:bg-gray-50 transition-colors">
-                    {project ? (
-                      <Icon name={projectIcon} className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-                    ) : (
-                      <div className="w-2 h-2 rounded-full flex-shrink-0 bg-gray-500"></div>
-                    )}
-                    <p className="truncate text-gray-700">{projectName}</p>
                   </div>
                 </div>
               </div>
