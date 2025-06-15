@@ -55,9 +55,9 @@ const Calendar = () => {
             </div>
             <Button
               onClick={() => setShowAddTask(true)}
-              className="bg-black text-white rounded-full w-12 h-12 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4" />
             </Button>
           </div>
         </div>
