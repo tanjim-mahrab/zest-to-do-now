@@ -1,4 +1,6 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAuth } from './AuthContext';
 
 export interface Task {
   id: string;
@@ -54,41 +56,57 @@ export const useTask = () => {
 };
 
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [projects, setProjects] = useState<Project[]>([
-    { id: '1', name: 'Personal', color: '#6C47FF', icon: 'User', taskCount: 0 },
-    { id: '2', name: 'Work', color: '#00B5FF', icon: 'Briefcase', taskCount: 0 },
-    { id: '3', name: 'Shopping', color: '#FF68F0', icon: 'ShoppingCart', taskCount: 0 },
-  ]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  // Load data from localStorage on mount
+  // Load data from localStorage on user change
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    const savedProjects = localStorage.getItem('projects');
-    
-    if (savedTasks) {
-      const parsedTasks = JSON.parse(savedTasks).map((task: any) => ({
-        ...task,
-        dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
-        createdAt: new Date(task.createdAt),
-        updatedAt: new Date(task.updatedAt),
-      }));
-      setTasks(parsedTasks);
+    if (user) {
+      const savedTasks = localStorage.getItem(`tasks_${user.id}`);
+      const savedProjects = localStorage.getItem(`projects_${user.id}`);
+      
+      if (savedTasks) {
+        const parsedTasks = JSON.parse(savedTasks).map((task: any) => ({
+          ...task,
+          dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
+          createdAt: new Date(task.createdAt),
+          updatedAt: new Date(task.updatedAt),
+        }));
+        setTasks(parsedTasks);
+      } else {
+        setTasks([]);
+      }
+      
+      if (savedProjects) {
+        setProjects(JSON.parse(savedProjects));
+      } else {
+        // If no projects for this user, create default ones
+        setProjects([
+          { id: '1', name: 'Personal', color: '#6C47FF', icon: 'User', taskCount: 0 },
+          { id: '2', name: 'Work', color: '#00B5FF', icon: 'Briefcase', taskCount: 0 },
+          { id: '3', name: 'Shopping', color: '#FF68F0', icon: 'ShoppingCart', taskCount: 0 },
+        ]);
+      }
+    } else {
+      // No user, clear data
+      setTasks([]);
+      setProjects([]);
     }
-    
-    if (savedProjects) {
-      setProjects(JSON.parse(savedProjects));
-    }
-  }, []);
+  }, [user]);
 
   // Save to localStorage whenever tasks or projects change
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    if (user) {
+      localStorage.setItem(`tasks_${user.id}`, JSON.stringify(tasks));
+    }
+  }, [tasks, user]);
 
   useEffect(() => {
-    localStorage.setItem('projects', JSON.stringify(projects));
-  }, [projects]);
+    if (user) {
+      localStorage.setItem(`projects_${user.id}`, JSON.stringify(projects));
+    }
+  }, [projects, user]);
 
   const addTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
     const newTask: Task = {
