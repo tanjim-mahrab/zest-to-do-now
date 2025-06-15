@@ -1,5 +1,4 @@
 
-```tsx
 import React from 'react';
 import { icons, LucideProps } from 'lucide-react';
 
@@ -37,4 +36,3 @@ const Icon = ({ name, ...props }: IconProps) => {
 };
 
 export default Icon;
-```
