@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,6 @@ const iconList: { displayName: string; iconName: string }[] = [
   { displayName: 'Plane', iconName: 'plane' },
   { displayName: 'Health', iconName: 'heart-pulse' },
   { displayName: 'Dollar Sign', iconName: 'dollar-sign' },
-  { displayName: 'Shopping Bag', iconName: 'shopping-bag' },
   { displayName: 'User', iconName: 'user' },
   { displayName: 'Stethoscope', iconName: 'stethoscope' },
   { displayName: 'Users', iconName: 'users' },
