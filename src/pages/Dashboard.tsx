@@ -85,31 +85,34 @@ const Dashboard = () => {
       {/* Content */}
       <div className="px-4 sm:px-6 py-8 space-y-8">
         {/* Modern Filter Tabs - Segmented Control */}
-        <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm overflow-x-auto">
-          {filterTabs.map(tab => (
-            <Button
-              key={tab.key}
-              variant="ghost"
-              onClick={() => setFilter(tab.key as any)}
-              className={`flex-shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out ${
-                filter === tab.key 
-                  ? 'bg-white text-black shadow-sm' 
-                  : 'text-gray-500 hover:text-black hover:bg-white/60'
-              }`}
-            >
-              <tab.icon className="w-4 h-4 flex-shrink-0" />
-              <span>{tab.label}</span>
-              {tab.count > 0 && (
-                <span className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
+        <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm min-w-max">
+            {filterTabs.map(tab => (
+              <Button
+                key={tab.key}
+                variant="ghost"
+                onClick={() => setFilter(tab.key as any)}
+                className={`flex-shrink-0 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out whitespace-nowrap ${
                   filter === tab.key 
-                    ? 'bg-black/5 text-black'
-                    : 'bg-gray-200/70 text-gray-600'
-                }`}>
-                  {tab.count}
-                </span>
-              )}
-            </Button>
-          ))}
+                    ? 'bg-white text-black shadow-sm' 
+                    : 'text-gray-500 hover:text-black hover:bg-white/60'
+                }`}
+              >
+                <tab.icon className="w-4 h-4 flex-shrink-0" />
+                <span className="hidden xs:inline">{tab.label}</span>
+                <span className="inline xs:hidden">{tab.label.split(' ')[0]}</span>
+                {tab.count > 0 && (
+                  <span className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
+                    filter === tab.key 
+                      ? 'bg-black/5 text-black'
+                      : 'bg-gray-200/70 text-gray-600'
+                  }`}>
+                    {tab.count}
+                  </span>
+                )}
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* Task List */}
