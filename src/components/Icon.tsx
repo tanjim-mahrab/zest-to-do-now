@@ -15,7 +15,7 @@ const Icon = ({ name, ...props }: IconProps) => {
     return <FallbackIcon {...props} />;
   }
 
-  const nameMap: Record<string, IconName> = {
+  const nameMap: Record<string, string> = {
     home: 'Home',
     health: 'Heartbeat',
   };
@@ -27,10 +27,10 @@ const Icon = ({ name, ...props }: IconProps) => {
 
   // 2. If no mapping, try the name as-is (e.g., 'Briefcase')
   if (!iconKey) {
-    iconKey = name as IconName;
+    iconKey = name;
   }
   
-  let LucideIcon = icons[iconKey];
+  let LucideIcon = icons[iconKey as IconName];
 
   // 3. If that fails, try capitalizing the original name (for lowercase like 'book')
   if (!LucideIcon) {
