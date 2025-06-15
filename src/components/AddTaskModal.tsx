@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -32,12 +33,20 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
   useEffect(() => {
     // When the modal opens, synchronize the form state
     if (open) {
+      const formatDateForInput = (date: Date) => {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = (d.getMonth() + 1).toString().padStart(2, '0');
+        const day = d.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      };
+
       if (isEditing && task) {
         // Editing an existing task: populate from task data
         setTitle(task.title || '');
         setDescription(task.description || '');
-        setDueDate(task.dueDate ? task.dueDate.toISOString().split('T')[0] : '');
-        setDueTime(task.dueDate ? task.dueDate.toTimeString().split(':').slice(0, 2).join(':') : '');
+        setDueDate(task.dueDate ? formatDateForInput(task.dueDate) : '');
+        setDueTime(task.dueDate ? new Date(task.dueDate).toTimeString().split(':').slice(0, 2).join(':') : '');
         setPriority(task.priority || 'medium');
         setProjectId(task.projectId || 'none');
         setTags(task.tags || []);
@@ -46,7 +55,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
         // Adding a new task: reset to defaults and use selectedDate
         setTitle('');
         setDescription('');
-        setDueDate(selectedDate ? selectedDate.toISOString().split('T')[0] : '');
+        setDueDate(selectedDate ? formatDateForInput(selectedDate) : '');
         setDueTime('');
         setPriority('medium');
         setProjectId('none');
