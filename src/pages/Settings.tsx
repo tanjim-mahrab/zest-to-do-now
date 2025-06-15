@@ -1,31 +1,13 @@
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, Bell, LogOut, Info, HelpCircle, Send, type LucideProps } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
 import React, { useState } from 'react';
-
 type SettingsItem = {
   icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
   label: string;
@@ -33,56 +15,44 @@ type SettingsItem = {
   action?: () => void;
   isSwitch?: boolean;
 };
-
 const Settings = () => {
-  const { user, logout } = useAuth();
+  const {
+    user,
+    logout
+  } = useAuth();
   const navigate = useNavigate();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
   const handleLogout = () => {
     logout();
     navigate('/welcome');
     toast.success('Logged out successfully');
   };
-
-  const accountSettings: SettingsItem[] = [
-    {
-      icon: User,
-      label: 'Profile Settings',
-      description: user?.email || 'Manage your account',
-      action: () => toast.info('Profile editing coming soon!'),
-    },
-    {
-      icon: Bell,
-      label: 'Notifications',
-      description: 'Push notifications & reminders',
-      isSwitch: true,
-    },
-  ];
-
-  const moreSettings: SettingsItem[] = [
-    {
-      icon: Info,
-      label: 'About DailyFlow',
-      description: 'Version 1.0.0',
-      action: () => navigate('/about'),
-    },
-    {
-      icon: HelpCircle,
-      label: 'Help & Support',
-      description: 'Get help and find answers',
-      action: () => navigate('/help'),
-    },
-  ];
-
-  const renderSettingsList = (items: SettingsItem[]) => (
-    <div className="divide-y divide-gray-200">
-      {items.map((item) => {
-        const itemContent = (
-          <div className="flex items-center gap-4">
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600"
-            >
+  const accountSettings: SettingsItem[] = [{
+    icon: User,
+    label: 'Profile Settings',
+    description: user?.email || 'Manage your account',
+    action: () => toast.info('Profile editing coming soon!')
+  }, {
+    icon: Bell,
+    label: 'Notifications',
+    description: 'Push notifications & reminders',
+    isSwitch: true
+  }];
+  const moreSettings: SettingsItem[] = [{
+    icon: Info,
+    label: 'About DailyFlow',
+    description: 'Version 1.0.0',
+    action: () => navigate('/about')
+  }, {
+    icon: HelpCircle,
+    label: 'Help & Support',
+    description: 'Get help and find answers',
+    action: () => navigate('/help')
+  }];
+  const renderSettingsList = (items: SettingsItem[]) => <div className="divide-y divide-gray-200">
+      {items.map(item => {
+      const itemContent = <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
               <item.icon className="h-5 w-5" />
             </div>
             <div>
@@ -91,39 +61,22 @@ const Settings = () => {
               </p>
               <p className="text-sm text-gray-500">{item.description}</p>
             </div>
-          </div>
-        );
-
-        if (item.isSwitch) {
-          return (
-            <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
+          </div>;
+      if (item.isSwitch) {
+        return <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
                {itemContent}
-              <Switch
-                checked={notificationsEnabled}
-                onCheckedChange={(checked) => {
-                  setNotificationsEnabled(checked);
-                  toast.info(`Notifications ${checked ? 'enabled' : 'disabled'}.`);
-                }}
-              />
-            </div>
-          );
-        }
-
-        return (
-          <button
-            key={item.label}
-            onClick={item.action}
-            className="flex items-center justify-between w-full p-4 text-left transition-colors hover:bg-gray-50"
-          >
+              <Switch checked={notificationsEnabled} onCheckedChange={checked => {
+            setNotificationsEnabled(checked);
+            toast.info(`Notifications ${checked ? 'enabled' : 'disabled'}.`);
+          }} />
+            </div>;
+      }
+      return <button key={item.label} onClick={item.action} className="flex items-center justify-between w-full p-4 text-left transition-colors hover:bg-gray-50">
             {itemContent}
-          </button>
-        );
-      })}
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+          </button>;
+    })}
+    </div>;
+  return <div className="min-h-screen bg-gray-50 pb-20">
       {/* Modern Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
         <div className="px-4 sm:px-6 py-6">
@@ -164,10 +117,8 @@ const Settings = () => {
           {/* Logout Section */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <button
-                className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white py-2 pr-2 pl-6 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700"
-              >
-                <span className="font-medium">Sign Out</span>
+              <button className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white py-2 pr-2 pl-6 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700">
+                <span className="text-center py-0 font-extrabold px-[95px] text-white">Sign Out</span>
                 <div className="bg-white rounded-full p-2">
                   <Send className="w-5 h-5 text-black" />
                 </div>
@@ -182,7 +133,9 @@ const Settings = () => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleLogout} className={buttonVariants({ variant: "destructive" })}>
+                <AlertDialogAction onClick={handleLogout} className={buttonVariants({
+                variant: "destructive"
+              })}>
                   Sign Out
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -192,8 +145,6 @@ const Settings = () => {
       </div>
 
       <BottomNavigation />
-    </div>
-  );
+    </div>;
 };
-
 export default Settings;
