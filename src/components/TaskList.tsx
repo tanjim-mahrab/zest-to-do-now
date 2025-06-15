@@ -1,41 +1,23 @@
 
 import { useTask, Task } from '@/contexts/TaskContext';
 import { Card } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, Tag, ChevronRight } from 'lucide-react';
-import { format, isToday, isTomorrow, isPast } from 'date-fns';
+import { Check, Edit, Trash2 } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 
 interface TaskListProps {
   tasks: Task[];
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-  const { toggleTask, projects } = useTask();
+  const { projects, deleteTask, toggleTask } = useTask();
   const navigate = useNavigate();
-
-  const getPriorityColor = (priority: Task['priority']) => {
-    switch (priority) {
-      case 'high':
-        return 'text-red-700 bg-red-100';
-      case 'medium':
-        return 'text-orange-700 bg-orange-100';
-      case 'low':
-        return 'text-green-700 bg-green-100';
-      default:
-        return 'text-gray-600 bg-gray-100';
-    }
-  };
-
-  const formatDueDate = (date: Date) => {
-    if (isToday(date)) return 'Today';
-    if (isTomorrow(date)) return 'Tomorrow';
-    return format(date, 'MMM d');
-  };
-
-  const isDueSoon = (date: Date) => {
-    return isPast(date) && !isToday(date);
-  };
 
   const getProjectName = (projectId?: string) => {
     if (!projectId) return null;
@@ -48,109 +30,67 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
     const project = projects.find(p => p.id === projectId);
     return project?.color || '#6C47FF';
   };
+  
+  const formatTimeAgo = (date: Date) => {
+    if (!date) return '';
+    return formatDistanceToNow(new Date(date), { addSuffix: true });
+  };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {tasks.map((task, index) => (
-        <Card 
-          key={task.id} 
-          className="p-4 bg-white border rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 ease-in-out animate-slide-up cursor-pointer"
-          style={{ animationDelay: `${index * 0.05}s` }}
-          onClick={() => navigate(`/task/${task.id}`)}
-        >
-          <div className="flex items-start gap-4">
-            {/* Checkbox */}
-            <div className="pt-1">
-              <Checkbox
-                checked={task.completed}
-                onCheckedChange={() => toggleTask(task.id)}
-                className="w-6 h-6 rounded-full data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 transition-all hover:scale-110"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </div>
+        <ContextMenu key={task.id}>
+          <ContextMenuTrigger>
+            <Card 
+              className="p-4 bg-white border rounded-lg shadow-sm hover:shadow-md hover:border-purple-500 focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500/50 transition-all duration-200 ease-in-out cursor-pointer animate-slide-up"
+              style={{ animationDelay: `${index * 0.05}s` }}
+              onClick={() => navigate(`/task/${task.id}`)}
+              tabIndex={0}
+            >
+              <div className="flex items-center gap-4">
+                {/* Icon */}
+                <div 
+                  className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" 
+                  style={{ backgroundColor: getProjectColor(task.projectId) }}
+                >
+                  <span className="text-white font-bold text-xl">
+                    {getProjectName(task.projectId)?.charAt(0).toUpperCase() || ''}
+                  </span>
+                </div>
 
-            {/* Content */}
-            <div className="flex-1 min-w-0 space-y-2.5">
-              {/* Title and Priority */}
-              <div className="flex items-start justify-between gap-4">
-                <h3 className={`font-bold text-lg -mt-1 ${
-                  task.completed 
-                    ? 'text-gray-400 line-through' 
-                    : 'text-gray-900'
-                }`}>
-                  {task.title}
-                </h3>
-                
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  {task.priority !== 'low' && (
-                    <div className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${getPriorityColor(task.priority)}`}>
-                      {task.priority}
-                    </div>
-                  )}
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                {/* Main Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                      <h3 className={`font-semibold text-gray-800 truncate ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</h3>
+                      {task.tags.slice(0, 2).map(tag => (
+                          <span key={tag} className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap">{tag}</span>
+                      ))}
+                  </div>
+                  <p className="text-sm text-gray-500 truncate">{getProjectName(task.projectId) || 'No Project'}</p>
+                </div>
+
+                {/* Right Section */}
+                <div className="text-right flex-shrink-0 ml-auto pl-4">
+                   <p className="text-sm text-gray-500 whitespace-nowrap">{formatTimeAgo(task.createdAt)}</p>
                 </div>
               </div>
-
-              {/* Description */}
-              {task.description && (
-                <p className={`text-sm ${
-                  task.completed ? 'text-gray-400' : 'text-gray-600'
-                } line-clamp-2 break-words overflow-hidden`}>
-                  {task.description}
-                </p>
-              )}
-
-              {/* Meta Info */}
-              <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-sm text-gray-500 pt-1">
-                {/* Due Date */}
-                {task.dueDate && (
-                  <div className={`flex items-center gap-1.5 ${
-                    (isDueSoon(task.dueDate) || isToday(task.dueDate)) && !task.completed 
-                      ? 'text-red-600 font-semibold' 
-                      : 'text-gray-500'
-                  }`}>
-                    <Calendar className="w-4 h-4" />
-                    <span>{formatDueDate(task.dueDate)}</span>
-                  </div>
-                )}
-
-                {/* Project */}
-                {task.projectId && (
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-2.5 h-2.5 rounded-full" 
-                      style={{ backgroundColor: getProjectColor(task.projectId) }}
-                    />
-                    <span className="font-medium">{getProjectName(task.projectId)}</span>
-                  </div>
-                )}
-
-                {/* Tags */}
-                {task.tags.length > 0 && (
-                  <div className="flex items-center gap-1.5">
-                    <Tag className="w-4 h-4" />
-                    <div className="flex items-center gap-1.5">
-                      {task.tags.slice(0, 2).map(tag => (
-                        <span key={tag} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md text-xs">{tag}</span>
-                      ))}
-                      {task.tags.length > 2 && <span className="text-gray-400 font-medium text-xs">+{task.tags.length - 2}</span>}
-                    </div>
-                  </div>
-                )}
-
-                {/* Subtasks */}
-                {task.subtasks.length > 0 && (
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    <span>
-                      {task.subtasks.filter(st => st.completed).length}/{task.subtasks.length} done
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </Card>
+            </Card>
+          </ContextMenuTrigger>
+          <ContextMenuContent>
+            <ContextMenuItem onClick={(e) => { e.stopPropagation(); toggleTask(task.id) }}>
+                <Check className="mr-2 h-4 w-4" />
+                <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
+            </ContextMenuItem>
+            <ContextMenuItem onClick={(e) => { e.stopPropagation(); navigate(`/task/${task.id}`)}}>
+              <Edit className="mr-2 h-4 w-4" />
+              <span>Edit</span>
+            </ContextMenuItem>
+            <ContextMenuItem onClick={(e) => { e.stopPropagation(); deleteTask(task.id)}} className="text-red-600 focus:text-red-600">
+              <Trash2 className="mr-2 h-4 w-4" />
+              <span>Delete</span>
+            </ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
       ))}
     </div>
   );
