@@ -165,7 +165,7 @@ const Settings = () => {
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button
-                className="w-full flex items-center justify-center rounded-lg bg-gradient-to-r from-red-500 to-orange-400 text-white p-4 transition-opacity hover:opacity-90"
+                className="w-full flex items-center justify-center rounded-lg bg-red-500 text-white p-4 transition-colors hover:bg-red-600"
               >
                 <LogOut className="w-5 h-5 mr-2" />
                 <span className="font-medium">Sign Out</span>
