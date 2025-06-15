@@ -132,7 +132,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <DialogTitle className="text-xl font-bold text-black">
             {isEditing ? 'Edit Task' : 'Add New Task'}
           </DialogTitle>
         </DialogHeader>
