@@ -1,7 +1,13 @@
 
-import { Card, CardContent } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, Bell, LogOut, Info } from 'lucide-react';
+import { User, Bell, LogOut, Info, HelpCircle } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +35,7 @@ const Settings = () => {
     toast.success('Logged out successfully');
   };
 
-  const settingsItems = [
+  const accountSettings = [
     {
       icon: User,
       label: 'Profile Settings',
@@ -42,13 +48,63 @@ const Settings = () => {
       description: 'Push notifications & reminders',
       isSwitch: true,
     },
+  ];
+
+  const moreSettings = [
     {
       icon: Info,
       label: 'About DailyFlow',
       description: 'Version 1.0.0',
       action: () => navigate('/about'),
     },
+    {
+      icon: HelpCircle,
+      label: 'Help & Support',
+      description: 'Get help and find answers',
+      action: () => navigate('/help'),
+    },
   ];
+
+  const renderSettingsList = (items: typeof accountSettings) => (
+    <div className="divide-y divide-gray-200">
+      {items.map((item) => {
+        const itemContent = (
+          <div className="flex items-center gap-4">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600"
+            >
+              <item.icon className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-medium text-gray-800">
+                {item.label}
+              </p>
+              <p className="text-sm text-gray-500">{item.description}</p>
+            </div>
+          </div>
+        );
+
+        if (item.isSwitch) {
+          return (
+            <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
+               {itemContent}
+              <Switch checked disabled />
+            </div>
+          );
+        }
+
+        return (
+          <button
+            key={item.label}
+            onClick={item.action}
+            className="flex items-center justify-between w-full p-4 text-left transition-colors hover:bg-gray-50"
+          >
+            {itemContent}
+          </button>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
@@ -66,45 +122,26 @@ const Settings = () => {
       <div className="px-4 sm:px-6 py-8">
         <div className="max-w-3xl mx-auto space-y-8">
             <Card>
+              <CardHeader>
+                <CardTitle>Account</CardTitle>
+                <CardDescription>
+                  Manage your account and notification preferences.
+                </CardDescription>
+              </CardHeader>
               <CardContent className="p-0">
-                <div className="divide-y divide-gray-200">
-                  {settingsItems.map((item) => {
-                    const itemContent = (
-                      <div className="flex items-center gap-4">
-                        <div
-                          className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600"
-                        >
-                          <item.icon className="h-5 w-5" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-800">
-                            {item.label}
-                          </p>
-                          <p className="text-sm text-gray-500">{item.description}</p>
-                        </div>
-                      </div>
-                    );
+                {renderSettingsList(accountSettings)}
+              </CardContent>
+            </Card>
 
-                    if (item.isSwitch) {
-                      return (
-                        <div key={item.label} className="flex items-center justify-between w-full p-4 text-left">
-                           {itemContent}
-                          <Switch checked disabled />
-                        </div>
-                      );
-                    }
-
-                    return (
-                      <button
-                        key={item.label}
-                        onClick={item.action}
-                        className="flex items-center justify-between w-full p-4 text-left transition-colors hover:bg-gray-50"
-                      >
-                        {itemContent}
-                      </button>
-                    );
-                  })}
-                </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>More</CardTitle>
+                <CardDescription>
+                  Learn more about the app and get support.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                {renderSettingsList(moreSettings)}
               </CardContent>
             </Card>
 
