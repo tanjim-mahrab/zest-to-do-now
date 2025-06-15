@@ -81,10 +81,15 @@ const Dashboard = () => {
 
           {/* Modern Search Bar */}
           <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Search className="w-5 h-5 text-gray-400" />
+            <Input 
+              placeholder="Search" 
+              value={searchQuery} 
+              onChange={e => setSearchQuery(e.target.value)} 
+              className="h-12 w-full rounded-full border bg-white pl-5 pr-12 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400" />
             </div>
-            <Input placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-12 pr-4 h-14 rounded-none bg-transparent border-0 border-b focus-visible:ring-0 focus-visible:ring-offset-0 text-base" />
           </div>
         </div>
       </div>
