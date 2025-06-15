@@ -9,6 +9,12 @@ interface IconProps extends LucideProps {
 }
 
 const Icon = ({ name, ...props }: IconProps) => {
+  if (!name) {
+    console.warn(`Icon component received an undefined name. Falling back to Folder icon.`);
+    const FallbackIcon = icons['Folder'];
+    return <FallbackIcon {...props} />;
+  }
+
   let pascalCaseName: string;
 
   if (name.includes('-')) {
