@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
@@ -126,7 +125,7 @@ const Settings = () => {
                 </div>
               </button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="max-w-sm">
+            <AlertDialogContent className="max-w-xs">
               <AlertDialogHeader className="text-left">
                 <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
                 <AlertDialogDescription>
