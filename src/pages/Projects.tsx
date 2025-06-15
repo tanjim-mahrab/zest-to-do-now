@@ -48,7 +48,7 @@ const Projects = () => {
             <Button
               onClick={() => setShowAddProject(true)}
               size="sm"
-              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800"
+              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800 transition-all duration-200 hover:scale-110"
             >
               <Plus className="w-5 h-5" />
             </Button>
