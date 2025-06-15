@@ -15,19 +15,24 @@ const Icon = ({ name, ...props }: IconProps) => {
     return <FallbackIcon {...props} />;
   }
 
-  let iconNameToUse = name;
+  const nameMap: Record<string, IconName> = {
+    home: 'Home',
+    health: 'Heartbeat',
+  };
+
   const lowerCaseName = name.toLowerCase();
+  
+  // 1. Check mapped names first (for special cases like 'health')
+  let iconKey = nameMap[lowerCaseName];
 
-  if (lowerCaseName === 'home') {
-    iconNameToUse = 'Home';
-  } else if (lowerCaseName === 'health') {
-    iconNameToUse = 'Heartbeat';
+  // 2. If no mapping, try the name as-is (e.g., 'Briefcase')
+  if (!iconKey) {
+    iconKey = name as IconName;
   }
+  
+  let LucideIcon = icons[iconKey];
 
-  let LucideIcon = icons[iconNameToUse as IconName];
-
-  // If the icon isn't found, it might be because it's a single word in lowercase.
-  // Let's try capitalizing the first letter of the original name and searching again.
+  // 3. If that fails, try capitalizing the original name (for lowercase like 'book')
   if (!LucideIcon) {
     const pascalCaseName = name.charAt(0).toUpperCase() + name.slice(1);
     LucideIcon = icons[pascalCaseName as IconName];
