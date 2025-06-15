@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
@@ -109,8 +110,8 @@ const Settings = () => {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Modern Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-        <div className="px-6 py-6">
-          <div className="max-w-2xl mx-auto">
+        <div className="px-4 sm:px-6 py-6">
+          <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-black mb-2">Settings</h1>
             <p className="text-gray-600">Manage your account and app preferences</p>
           </div>
@@ -118,69 +119,78 @@ const Settings = () => {
       </div>
 
       {/* Content */}
-      <div className="px-6 py-8">
-        <div className="max-w-2xl mx-auto space-y-8">
+      <div className="px-4 sm:px-6 py-8">
+        <div className="max-w-3xl mx-auto space-y-10">
           {/* Settings Sections - Modern Layout */}
           {settingsSections.map((section, sectionIndex) => (
-            <Card 
+            <div
               key={section.title}
-              className="bg-white border border-gray-200 shadow-sm animate-slide-up overflow-hidden"
-              style={{ animationDelay: `${(sectionIndex + 1) * 0.1}s` }}
+              className="animate-slide-up"
+              style={{ animationDelay: `${sectionIndex * 100}ms` }}
             >
-              <div className="px-6 py-4 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-black">{section.title}</h2>
-              </div>
-              <div className="divide-y divide-gray-100">
-                {section.items.map((item, itemIndex) => (
-                  <Button
-                    key={itemIndex}
-                    variant="ghost"
-                    onClick={item.action}
-                    className={`w-full justify-start h-auto p-6 rounded-none hover:bg-gray-50 transition-colors duration-200 ${
-                      item.danger ? 'hover:bg-red-50' : ''
-                    }`}
-                  >
-                    <div className="flex items-center gap-4 w-full">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        item.danger 
-                          ? 'bg-red-100 text-red-600' 
-                          : 'bg-gray-100 text-black'
-                      }`}>
-                        <item.icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <div className={`font-medium text-base ${
-                          item.danger ? 'text-red-600' : 'text-black'
+              <h2 className="mb-4 text-base font-semibold text-gray-800">
+                {section.title}
+              </h2>
+              <Card
+                className="bg-white border border-gray-200 shadow-sm overflow-hidden"
+              >
+                <div className="divide-y divide-gray-100">
+                  {section.items.map((item, itemIndex) => (
+                    <Button
+                      key={itemIndex}
+                      variant="ghost"
+                      onClick={item.action}
+                      className={`w-full justify-start h-auto p-4 sm:p-6 rounded-none hover:bg-gray-50 transition-colors duration-200 ${
+                        item.danger ? 'hover:bg-red-50' : ''
+                      }`}
+                    >
+                      <div className="flex items-center gap-4 w-full">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                          item.danger 
+                            ? 'bg-red-100 text-red-600' 
+                            : 'bg-gray-100 text-black'
                         }`}>
-                          {item.label}
+                          <item.icon className="w-5 h-5" />
                         </div>
-                        <div className="text-sm text-gray-500 mt-1">{item.description}</div>
+                        <div className="flex-1 text-left">
+                          <div className={`font-medium text-base ${
+                            item.danger ? 'text-red-600' : 'text-black'
+                          }`}>
+                            {item.label}
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">{item.description}</div>
+                        </div>
                       </div>
-                    </div>
-                  </Button>
-                ))}
-              </div>
-            </Card>
+                    </Button>
+                  ))}
+                </div>
+              </Card>
+            </div>
           ))}
 
           {/* Logout Section - Prominent */}
-          <Card className="bg-white border border-gray-200 shadow-sm animate-slide-up overflow-hidden">
-            <Button
-              onClick={handleLogout}
-              variant="ghost"
-              className="w-full justify-start h-auto p-6 rounded-none hover:bg-red-50 transition-colors duration-200"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                  <LogOut className="w-5 h-5 text-red-600" />
+          <div 
+            className="animate-slide-up"
+            style={{ animationDelay: `${settingsSections.length * 100}ms` }}
+          >
+            <Card className="bg-white border border-gray-200 shadow-sm overflow-hidden">
+              <Button
+                onClick={handleLogout}
+                variant="ghost"
+                className="w-full justify-start h-auto p-4 sm:p-6 rounded-none hover:bg-red-50 transition-colors duration-200"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                    <LogOut className="w-5 h-5 text-red-600" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-medium text-base text-red-600">Sign Out</div>
+                    <div className="text-sm text-gray-500 mt-1">Sign out of your account</div>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <div className="font-medium text-base text-red-600">Sign Out</div>
-                  <div className="text-sm text-gray-500 mt-1">Sign out of your account</div>
-                </div>
-              </div>
-            </Button>
-          </Card>
+              </Button>
+            </Card>
+          </div>
 
           {/* App Info */}
           <div className="text-center text-sm text-gray-400 space-y-2 pt-4">
