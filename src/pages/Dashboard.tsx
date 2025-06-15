@@ -84,7 +84,7 @@ const Dashboard = () => {
             <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
               <Search className="w-5 h-5 text-gray-400" />
             </div>
-            <Input placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-12 pr-4 h-14 rounded-full bg-transparent border focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" />
+            <Input placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-12 pr-4 h-14 rounded-none bg-transparent border-0 border-b focus-visible:ring-0 focus-visible:ring-offset-0 text-base" />
           </div>
         </div>
       </div>
