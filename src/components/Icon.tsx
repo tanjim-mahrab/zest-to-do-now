@@ -1,4 +1,5 @@
 
+```tsx
 import React from 'react';
 import { icons, LucideProps } from 'lucide-react';
 
@@ -15,21 +16,19 @@ const Icon = ({ name, ...props }: IconProps) => {
     return <FallbackIcon {...props} />;
   }
 
-  let pascalCaseName: string;
+  // First, try to find the icon with the provided name as is.
+  let LucideIcon = icons[name as IconName];
 
-  if (name.includes('-')) {
-    // Convert kebab-case to PascalCase (e.g., 'pie-chart' to 'PieChart')
-    pascalCaseName = name.replace(/(^\w|-\w)/g, (g) => g.replace(/-/, "").toUpperCase());
-  } else {
-    // Ensure first letter is capitalized for single-word icons (e.g., 'home' to 'Home')
-    pascalCaseName = name.charAt(0).toUpperCase() + name.slice(1);
+  // If the icon isn't found, it might be because it's a single word in lowercase (e.g., "home").
+  // Let's try capitalizing the first letter and searching again.
+  if (!LucideIcon) {
+    const pascalCaseName = name.charAt(0).toUpperCase() + name.slice(1);
+    LucideIcon = icons[pascalCaseName as IconName];
   }
-  
-  const LucideIcon = icons[pascalCaseName as IconName];
 
   if (!LucideIcon) {
-    // Fallback to a default icon if name is not found
-    console.warn(`Icon "${name}" (parsed as "${pascalCaseName}") not found. Falling back to Folder icon.`);
+    // If we still can't find it, log a warning and use a fallback icon.
+    console.warn(`Icon "${name}" not found. Falling back to Folder icon.`);
     const FallbackIcon = icons['Folder'];
     return <FallbackIcon {...props} />;
   }
@@ -38,3 +37,4 @@ const Icon = ({ name, ...props }: IconProps) => {
 };
 
 export default Icon;
+```
