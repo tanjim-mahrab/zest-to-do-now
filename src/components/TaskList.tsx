@@ -100,7 +100,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                   </div>
                 </div>
                 
-                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium">
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-500 font-medium">
                   {dueDateInfo && (
                     <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full transition-colors ${dueDateInfo.isUrgent ? 'bg-red-100 text-red-700' : 'border border-gray-200/80 hover:bg-gray-50'}`}>
                       <Calendar className="w-3.5 h-3.5" />
