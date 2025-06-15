@@ -7,10 +7,10 @@ import { Label } from '@/components/ui/label';
 import { useTask } from '@/contexts/TaskContext';
 import { toast } from 'sonner';
 import { FolderPlus, X } from 'lucide-react';
-import Icon, { IconName } from '@/components/Icon';
+import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
-const iconList: IconName[] = ['Folder', 'User', 'Briefcase', 'ShoppingCart', 'Mail', 'Code', 'Database', 'Server', 'Cloud', 'Settings', 'Terminal', 'PieChart'];
+const iconList: string[] = ['Folder', 'User', 'Briefcase', 'ShoppingCart', 'Mail', 'Code', 'Database', 'Server', 'Cloud', 'Settings', 'Terminal', 'pie-chart'];
 
 interface AddProjectModalProps {
   open: boolean;
@@ -20,7 +20,7 @@ interface AddProjectModalProps {
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange }) => {
   const { addProject } = useTask();
   const [name, setName] = useState('');
-  const [icon, setIcon] = useState<IconName>('Folder');
+  const [icon, setIcon] = useState<string>('Folder');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

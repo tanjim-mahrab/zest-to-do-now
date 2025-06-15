@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import Icon, { IconName } from './Icon';
+import Icon from './Icon';
 
 interface TaskListProps {
   tasks: Task[];
@@ -33,7 +33,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
         const project = getProject(task.projectId);
         const projectColor = project?.color || '#6C47FF';
         const projectName = project?.name || 'No Project';
-        const projectIcon = (project?.icon as IconName) || 'Folder';
+        const projectIcon = project?.icon || 'Folder';
 
         return (
           <div
