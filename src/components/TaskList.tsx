@@ -63,7 +63,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 animationDelay: `${index * 0.05}s`
               }}
             >
-              <div className="flex-shrink-0 pt-0.5">
+              <div className="flex-shrink-0">
                 <Checkbox
                   id={`task-${task.id}`}
                   checked={task.completed}
