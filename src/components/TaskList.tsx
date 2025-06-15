@@ -36,7 +36,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                 animationDelay: `${index * 0.05}s`
               }}
             >
-              <div className="flex-shrink-0 -mt-1">
+              <div className="flex-shrink-0 -mt-1" onClick={(e) => e.stopPropagation()}>
                 <Checkbox
                   id={`task-${task.id}`}
                   checked={task.completed}
@@ -47,11 +47,11 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
 
               <div className="flex-1 min-w-0" >
                 <div className="flex justify-between items-start gap-2">
-                   <div className="flex-1" onClick={(e) => e.stopPropagation()}>
+                   <div className="flex-1">
                       <p className={`font-medium text-gray-800 break-all ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
                       {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 break-all ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
                    </div>
-                   <div className="flex-shrink-0 -mt-1 -mr-2">
+                   <div className="flex-shrink-0 -mt-1 -mr-2" onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
