@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import BottomNavigation from '@/components/BottomNavigation';
 import AddProjectModal from '@/components/AddProjectModal';
 import { toast } from 'sonner';
+import Icon from '@/components/Icon';
 
 const Projects = () => {
   const { projects, tasks, deleteProject } = useTask();
@@ -111,7 +112,7 @@ const Projects = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center shadow-sm">
-                        <div className="w-6 h-6 rounded-full bg-white" />
+                        <Icon name={project.icon} className="w-6 h-6 text-white" />
                       </div>
                       <div>
                         <h3 className="font-bold text-lg text-black group-hover:text-black transition-colors">
