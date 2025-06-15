@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -64,9 +65,9 @@ const Dashboard = () => {
     count: completedTasks.length,
     icon: CheckCircle2
   }];
-  return <div className="min-h-screen bg-gray-50 pb-20">
+  return <div className="h-screen bg-gray-50 flex flex-col">
       {/* Modern Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+      <div className="bg-white border-b border-gray-200 z-10 shadow-sm flex-shrink-0">
         <div className="px-4 sm:px-6 py-6">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -94,7 +95,7 @@ const Dashboard = () => {
       </div>
 
       {/* Content */}
-      <div className="px-4 sm:px-6 py-8 space-y-8">
+      <div className="flex-grow overflow-y-auto px-4 sm:px-6 py-8 space-y-8 pb-20">
         {/* Modern Filter Tabs - Segmented Control */}
         <div className="w-full overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
           <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm min-w-max">
