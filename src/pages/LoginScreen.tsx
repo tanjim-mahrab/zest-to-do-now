@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -115,20 +114,20 @@ const LoginScreen = () => {
             <div className="space-y-4 text-center">
               <Button 
                 variant="link"
-                onClick={() => navigate('/forgot-password')} 
+                asChild
                 className="text-black hover:text-gray-600 p-0 h-auto hover:no-underline font-medium"
               >
-                Forgot your password?
+                <Link to="/forgot-password">Forgot your password?</Link>
               </Button>
               
               <div className="text-gray-600">
                 Don't have an account?{' '}
                 <Button 
                   variant="link"
-                  onClick={() => navigate('/signup')} 
+                  asChild
                   className="text-black hover:text-gray-600 p-0 h-auto hover:no-underline font-medium"
                 >
-                  Sign up
+                  <Link to="/signup">Sign up</Link>
                 </Button>
               </div>
             </div>
