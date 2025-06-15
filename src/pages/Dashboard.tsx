@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -80,6 +79,12 @@ const Dashboard = () => {
                 You have {tasks.filter(t => !t.completed).length} tasks remaining.
               </p>
             </div>
+            <Button 
+              onClick={() => setShowAddTask(true)} 
+              className="bg-black text-white w-12 h-12 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center animate-scale-in flex-shrink-0" 
+              aria-label="Add new task">
+              <Plus className="w-5 h-5" />
+            </Button>
           </div>
 
           {/* Modern Search Bar */}
@@ -134,13 +139,7 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Floating Action Button */}
-      <Button 
-        onClick={() => setShowAddTask(true)} 
-        className="fixed z-30 bottom-20 right-4 sm:right-6 bg-black text-white w-14 h-14 p-0 rounded-full hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center" 
-        aria-label="Add new task">
-        <Plus className="w-6 h-6" />
-      </Button>
+      {/* Floating Action Button has been moved to the header */}
 
       <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} />
       <BottomNavigation />
