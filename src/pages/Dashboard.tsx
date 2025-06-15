@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -83,9 +84,11 @@ const Dashboard = () => {
             <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
               <Search className="w-5 h-5 text-gray-400" />
             </div>
-            <Input placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-12 pr-14 h-14 rounded-full bg-white shadow-sm focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" />
+            <Input placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-12 pr-14 h-14 rounded-full bg-gray-100 border-0 focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" />
             <div className="absolute right-2 top-1/2 -translate-y-1/2">
-              
+              <Button variant="ghost" size="icon" className="rounded-full w-11 h-11 hover:bg-gray-100">
+                <Mic className="w-5 h-5 text-gray-500" />
+              </Button>
             </div>
           </div>
         </div>
