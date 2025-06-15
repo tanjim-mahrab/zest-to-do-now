@@ -39,7 +39,7 @@ const Projects = () => {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <div className="bg-white border-b border-black sticky top-0 z-10">
+      <div className="bg-muted sticky top-0 z-10">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div>
@@ -62,7 +62,7 @@ const Projects = () => {
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-6 pr-12 h-12 rounded-full bg-muted shadow-sm focus-visible:ring-1 focus-visible:ring-black"
+              className="pl-6 pr-12 h-12 rounded-full bg-white shadow-sm focus-visible:ring-1 focus-visible:ring-black border-0"
             />
           </div>
         </div>
