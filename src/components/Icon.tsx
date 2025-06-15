@@ -11,22 +11,21 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
   name: string;
 }
 
-// Mapping from PascalCase/custom names from iconList to kebab-case lucide names
-// Using Record<string, string> to work around a TypeScript type inference issue.
+// For backward compatibility with old data ('Home', 'ShoppingCart')
 const nameMap: Record<string, string> = {
-    home: 'home',
-    briefcase: 'briefcase',
-    dumbbell: 'dumbbell',
-    shoppingcart: 'shopping-cart',
-    book: 'book',
-    plane: 'plane',
-    health: 'heart-pulse', // Using heart-pulse for "Health"
-    dollarsign: 'dollar-sign',
-    shoppingbag: 'shopping-bag',
-    user: 'user',
-    stethoscope: 'stethoscope',
-    users: 'users',
-    folder: 'folder',
+  home: 'home',
+  briefcase: 'briefcase',
+  dumbbell: 'dumbbell',
+  shoppingcart: 'shopping-cart',
+  book: 'book',
+  plane: 'plane',
+  health: 'heart-pulse',
+  dollarsign: 'dollar-sign',
+  shoppingbag: 'shopping-bag',
+  user: 'user',
+  stethoscope: 'stethoscope',
+  users: 'users',
+  folder: 'folder',
 };
 
 const Icon = ({ name, ...props }: IconProps) => {
@@ -39,21 +38,18 @@ const Icon = ({ name, ...props }: IconProps) => {
     );
   }
 
-  // Normalize name from AddProjectModal: remove spaces, lowercase.
-  const normalizedName = name.toLowerCase().replace(/\s+/g, '');
-  
-  // Find the kebab-case name, or default to 'folder', and cast to the correct type.
-  const iconName = (nameMap[normalizedName] || 'folder') as DynamicIconName;
-  
-  // Check if the icon name is valid before trying to import
+  // Assume `name` is a valid kebab-case icon name first.
+  let iconName = name as DynamicIconName;
+
+  // If it's not a valid icon name, try mapping it from the old format for backward compatibility.
   if (!dynamicIconImports[iconName]) {
-    console.warn(`Icon "${name}" (resolved to "${iconName}") not found in dynamic imports. Falling back to folder.`);
-    const LucideIcon = lazy(dynamicIconImports['folder']);
-    return (
-      <Suspense fallback={fallback}>
-        <LucideIcon {...props} />
-      </Suspense>
-    );
+    const normalizedName = name.toLowerCase().replace(/\s+/g, '');
+    iconName = (nameMap[normalizedName] || 'folder') as DynamicIconName;
+  }
+  
+  // As a final check, if the icon name is still not valid, default to folder.
+  if (!dynamicIconImports[iconName]) {
+    iconName = 'folder' as DynamicIconName;
   }
 
   const LucideIcon = lazy(dynamicIconImports[iconName]);

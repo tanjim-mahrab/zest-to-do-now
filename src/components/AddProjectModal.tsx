@@ -10,7 +10,21 @@ import { FolderPlus, X } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
-const iconList: string[] = ['Home', 'Briefcase', 'Dumbbell', 'ShoppingCart', 'Book', 'Plane', 'Health', 'DollarSign', 'ShoppingBag', 'User', 'Stethoscope', 'Users', 'Folder'];
+const iconList: { displayName: string; iconName: string }[] = [
+  { displayName: 'Home', iconName: 'home' },
+  { displayName: 'Briefcase', iconName: 'briefcase' },
+  { displayName: 'Dumbbell', iconName: 'dumbbell' },
+  { displayName: 'Shopping Cart', iconName: 'shopping-cart' },
+  { displayName: 'Book', iconName: 'book' },
+  { displayName: 'Plane', iconName: 'plane' },
+  { displayName: 'Health', iconName: 'heart-pulse' },
+  { displayName: 'Dollar Sign', iconName: 'dollar-sign' },
+  { displayName: 'Shopping Bag', iconName: 'shopping-bag' },
+  { displayName: 'User', iconName: 'user' },
+  { displayName: 'Stethoscope', iconName: 'stethoscope' },
+  { displayName: 'Users', iconName: 'users' },
+  { displayName: 'Folder', iconName: 'folder' },
+];
 
 interface AddProjectModalProps {
   open: boolean;
@@ -20,7 +34,7 @@ interface AddProjectModalProps {
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange }) => {
   const { addProject } = useTask();
   const [name, setName] = useState('');
-  const [icon, setIcon] = useState<string>('Folder');
+  const [icon, setIcon] = useState<string>('folder');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +56,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   const handleClose = () => {
     setName('');
-    setIcon('Folder');
+    setIcon('folder');
     onOpenChange(false);
   };
 
@@ -91,7 +105,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
           <div className="space-y-3">
             <Label className="text-base font-medium text-black">Icon</Label>
             <div className="grid grid-cols-8 gap-2">
-              {iconList.map((iconName) => (
+              {iconList.map(({ iconName }) => (
                 <Button
                   key={iconName}
                   type="button"
