@@ -1,4 +1,3 @@
-
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
 import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
@@ -60,11 +59,6 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
               animationDelay: `${index * 0.05}s`
             }}
           >
-            <div 
-              className="w-1.5 flex-shrink-0 self-stretch rounded-full" 
-              style={{ backgroundColor: projectColor }}
-            />
-
             <div className="flex-shrink-0 pt-0.5">
               <Checkbox
                 id={`task-${task.id}`}
