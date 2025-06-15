@@ -56,7 +56,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Modern Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-        <div className="px-6 py-6">
+        <div className="px-4 sm:px-6 py-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-black mb-2">
@@ -83,7 +83,7 @@ const Dashboard = () => {
       </div>
 
       {/* Content */}
-      <div className="px-6 py-8 space-y-8">
+      <div className="px-4 sm:px-6 py-8 space-y-8">
         {/* Modern Filter Tabs - Segmented Control */}
         <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm overflow-x-auto">
           {filterTabs.map(tab => (
@@ -152,7 +152,7 @@ const Dashboard = () => {
       {/* Floating Action Button */}
       <Button 
         onClick={() => setShowAddTask(true)} 
-        className="fixed z-30 top-6 right-6 bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center animate-bounce-check"
+        className="fixed z-30 top-6 right-4 sm:right-6 bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center animate-bounce-check"
         aria-label="Add new task"
       >
         <Plus className="w-5 h-5" />
