@@ -111,7 +111,7 @@ const Calendar = () => {
                         }
                       }}
                       className={`
-                        h-11 w-11 flex items-center justify-center relative rounded-full transition-colors duration-200
+                        w-full h-full flex items-center justify-center relative rounded-full transition-colors duration-200
                         ${!isCurrentMonth ? 'text-gray-300 pointer-events-none' : ''}
                         ${isSelected ? 'bg-black text-white' : ''}
                         ${!isSelected && isCurrentMonth ? 'hover:bg-gray-100 text-gray-800' : ''}
