@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Calendar, FolderOpen, Settings } from 'lucide-react';
@@ -31,7 +30,7 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-sm border-t border-border z-50 animate-slide-up">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-sm border-t border-border z-50">
       <div className="grid grid-cols-4 h-full max-w-sm mx-auto">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
