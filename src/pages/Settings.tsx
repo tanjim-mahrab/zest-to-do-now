@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
@@ -5,7 +6,7 @@ import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import React, { useState } from 'react';
 
@@ -116,32 +117,34 @@ const Settings = () => {
             </Card>
 
           {/* Logout Section */}
-          <Sheet>
-            <SheetTrigger asChild>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
               <button className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white pr-2 pl-4 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700 mx-0 py-[6px] px-[18px]">
                 <span className="text-center py-0 font-extrabold px-[95px] text-white">Sign Out</span>
                 <div className="bg-gradient-to-br from-gray-200 to-gray-400 rounded-full p-1">
                   <LogOut className="w-4 h-4 text-black" />
                 </div>
               </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="rounded-t-lg">
-              <SheetHeader className="text-left">
-                <SheetTitle>Are you sure you want to sign out?</SheetTitle>
-                <SheetDescription>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader className="text-left">
+                <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
+                <AlertDialogDescription>
                   This will log you out of your account. You can always log back in.
-                </SheetDescription>
-              </SheetHeader>
-              <SheetFooter className="flex-col gap-2 pt-4">
-                <Button variant="destructive" onClick={handleLogout} className="w-full">
-                  Sign Out
-                </Button>
-                <SheetClose asChild>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex-col sm:flex-col gap-2 pt-4">
+                <AlertDialogAction asChild>
+                  <Button variant="destructive" onClick={handleLogout} className="w-full">
+                    Sign Out
+                  </Button>
+                </AlertDialogAction>
+                <AlertDialogCancel asChild>
                   <Button variant="outline" className="w-full">Cancel</Button>
-                </SheetClose>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
