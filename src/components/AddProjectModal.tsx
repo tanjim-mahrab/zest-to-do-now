@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTask } from '@/contexts/TaskContext';
 import { toast } from 'sonner';
-import { Plus } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
@@ -76,16 +75,9 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-xs bg-white border border-black rounded-2xl">
         <DialogHeader className="pb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-                <Plus className="w-5 h-5 text-white" />
-              </div>
-              <DialogTitle className="text-xl font-bold text-black">
-                Create New Project
-              </DialogTitle>
-            </div>
-          </div>
+          <DialogTitle className="text-xl font-bold text-black text-left">
+            Create New Project
+          </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
