@@ -1,7 +1,6 @@
-
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
-import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
+import { Edit, Trash2, MoreHorizontal, Tag, Calendar, Clock } from 'lucide-react';
 import { format, isToday } from 'date-fns';
 import {
   DropdownMenu,
@@ -83,10 +82,6 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                        <DropdownMenuItem onClick={() => toggleTask(task.id)}>
-                          <Check className="mr-2 h-4 w-4" />
-                          <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
-                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => navigate(`/task/${task.id}`)}>
                           <Edit className="mr-2 h-4 w-4" />
                           <span>Edit</span>
