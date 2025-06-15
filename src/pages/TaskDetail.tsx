@@ -119,14 +119,14 @@ const TaskDetail = () => {
                 onCheckedChange={() => updateTask(task.id, { completed: !task.completed })}
                 className="w-6 h-6 rounded-full mt-1 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
               />
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <h1 className={`text-2xl font-bold ${
                   task.completed ? 'text-gray-500 line-through' : 'text-gray-900'
                 }`}>
                   {task.title}
                 </h1>
                 {task.description && (
-                  <p className={`mt-2 ${
+                  <p className={`mt-2 break-words ${
                     task.completed ? 'text-gray-400' : 'text-gray-600'
                   }`}>
                     {task.description}
