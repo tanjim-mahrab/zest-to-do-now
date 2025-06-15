@@ -1,19 +1,11 @@
-
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HelpPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleBack = () => {
-    // A more robust check to see if we can go back.
-    if (location.key !== 'default') {
-      navigate(-1);
-    } else {
-      // Fallback to settings page if no history is available
-      navigate('/settings');
-    }
+    navigate('/settings');
   };
 
   return (
@@ -78,7 +70,7 @@ const HelpPage = () => {
 
           <div className="mt-10 border-t pt-8">
               <p className="text-gray-600">
-                  DailyFlow is built to simplify your life — and we're always here to make sure it does. If something isn’t working the way it should, or if you just have a question, don’t hesitate to reach out.
+                  DailyFlow is built to simplify your life — and we're always here to make sure it does. If something isn’t working the way it should, or if you just have a question, don't hesitate to reach out.
               </p>
 
               <p className="mt-4 font-semibold text-gray-800">
