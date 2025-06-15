@@ -29,8 +29,8 @@ const WelcomeScreen = () => {
         <div className="max-w-md w-full space-y-8 text-center">
           {/* Logo and Title */}
           <div className="space-y-4">
-            <div className="mx-auto w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg bg-white">
-              <img src="/lovable-uploads/032edfd7-839a-442d-9946-bb1e9059f576.png" className="w-20 h-20" />
+            <div className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-white">
+              <img src="/lovable-uploads/032edfd7-839a-442d-9946-bb1e9059f576.png" className="w-16 h-16" />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-black">
