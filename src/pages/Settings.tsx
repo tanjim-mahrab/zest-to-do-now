@@ -127,10 +127,10 @@ const Settings = () => {
               <CardContent className="p-0">
                 <div className="divide-y divide-gray-200">
                   {section.items.map((item) => (
-                    <div
+                    <button
                       key={item.label}
                       onClick={item.action}
-                      className={`flex items-center justify-between p-4 cursor-pointer transition-colors ${
+                      className={`flex items-center justify-between w-full p-4 text-left transition-colors ${
                         item.danger
                           ? 'hover:bg-red-50'
                           : 'hover:bg-gray-50'
@@ -157,7 +157,7 @@ const Settings = () => {
                           <p className="text-sm text-gray-500">{item.description}</p>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </CardContent>
@@ -165,14 +165,13 @@ const Settings = () => {
           ))}
 
           {/* Logout Section */}
-          <Card className="cursor-pointer text-red-600 hover:bg-red-50 transition-colors" onClick={handleLogout}>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-center">
-                <LogOut className="w-5 h-5 mr-2" />
-                <span className="font-medium">Sign Out</span>
-              </div>
-            </CardContent>
-          </Card>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center rounded-lg border bg-card text-red-600 shadow-sm p-4 hover:bg-red-50 transition-colors"
+          >
+            <LogOut className="w-5 h-5 mr-2" />
+            <span className="font-medium">Sign Out</span>
+          </button>
 
           {/* App Info */}
           <div className="text-center text-sm text-gray-500 space-y-1 pt-6 pb-4">
