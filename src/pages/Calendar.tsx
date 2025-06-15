@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, isToday, startOfWeek, endOfWeek } from 'date-fns';
 import { Button } from '@/components/ui/button';
@@ -6,12 +7,14 @@ import { useTask } from '@/contexts/TaskContext';
 import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import AddTaskModal from '@/components/AddTaskModal';
+import { useNavigate } from 'react-router-dom';
 
 const Calendar = () => {
   const { tasks } = useTask();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showAddTask, setShowAddTask] = useState(false);
+  const navigate = useNavigate();
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -189,8 +192,9 @@ const Calendar = () => {
               <div className="space-y-3">
                 {selectedDateTasks.map(task => (
                   <div 
-                    key={task.id} 
-                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-sm transition-shadow duration-200"
+                    key={task.id}
+                    onClick={() => navigate(`/task/${task.id}`)}
+                    className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-sm transition-shadow duration-200 cursor-pointer"
                   >
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                       task.completed 
