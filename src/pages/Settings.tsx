@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
 import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info, ChevronRight } from 'lucide-react';
@@ -111,8 +111,8 @@ const Settings = () => {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
         <div className="px-4 sm:px-6 py-6">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold text-black mb-2">Settings</h1>
-            <p className="text-gray-600">Manage your account and app preferences</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">Settings</h1>
+            <p className="text-gray-500">Manage your account and app preferences</p>
           </div>
         </div>
       </div>
@@ -120,72 +120,61 @@ const Settings = () => {
       {/* Content */}
       <div className="px-4 sm:px-6 py-8">
         <div className="max-w-3xl mx-auto space-y-8">
-          {/* Settings Sections - New Layout */}
-          {settingsSections.map((section, sectionIndex) => (
-            <div
-              key={section.title}
-              className="animate-slide-up"
-              style={{ animationDelay: `${sectionIndex * 100}ms` }}
-            >
-              <h2 className="mb-3 px-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                {section.title}
-              </h2>
-              <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm overflow-hidden">
-                <div className="divide-y divide-gray-200/80">
-                  {section.items.map((item, itemIndex) => (
-                    <Button
-                      key={itemIndex}
-                      variant="ghost"
+          {settingsSections.map((section) => (
+            <Card key={section.title}>
+              <CardHeader>
+                <CardTitle>{section.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <div className="divide-y divide-gray-200">
+                  {section.items.map((item) => (
+                    <div
+                      key={item.label}
                       onClick={item.action}
-                      className={`w-full justify-start h-auto p-4 rounded-none hover:bg-gray-50/70 transition-colors duration-150 ${
-                        item.danger ? 'hover:bg-red-50/70' : ''
+                      className={`flex items-center justify-between p-4 cursor-pointer transition-colors ${
+                        item.danger
+                          ? 'hover:bg-red-50'
+                          : 'hover:bg-gray-50'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full gap-4">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                            item.danger 
-                              ? 'bg-red-100 text-red-600' 
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-lg ${
+                            item.danger
+                              ? 'bg-red-100 text-red-600'
                               : 'bg-gray-100 text-gray-600'
-                          }`}>
-                            <item.icon className="w-5 h-5" />
-                          </div>
-                          <div className="flex-1 text-left">
-                            <div className={`font-medium ${
-                              item.danger ? 'text-red-600' : 'text-gray-800'
-                            }`}>
-                              {item.label}
-                            </div>
-                            <div className="text-sm text-gray-500 mt-0.5">{item.description}</div>
-                          </div>
+                          }`}
+                        >
+                          <item.icon className="h-5 w-5" />
                         </div>
-                        {!item.danger && <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />}
+                        <div>
+                          <p
+                            className={`font-medium ${
+                              item.danger ? 'text-red-600' : 'text-gray-800'
+                            }`}
+                          >
+                            {item.label}
+                          </p>
+                          <p className="text-sm text-gray-500">{item.description}</p>
+                        </div>
                       </div>
-                    </Button>
+                      {!item.danger && <ChevronRight className="w-5 h-5 text-gray-400" />}
+                    </div>
                   ))}
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
 
           {/* Logout Section */}
-          <div 
-            className="animate-slide-up pt-4"
-            style={{ animationDelay: `${settingsSections.length * 100}ms` }}
-          >
-            <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm overflow-hidden">
-              <Button
-                onClick={handleLogout}
-                variant="ghost"
-                className="w-full h-auto p-4 rounded-none hover:bg-red-50/70 transition-colors duration-150 text-red-600"
-              >
-                <div className="flex items-center justify-center gap-3 w-full font-medium">
-                  <LogOut className="w-5 h-5" />
-                  Sign Out
-                </div>
-              </Button>
-            </div>
-          </div>
+          <Card className="cursor-pointer text-red-600 hover:bg-red-50 transition-colors" onClick={handleLogout}>
+            <CardContent className="p-4">
+              <div className="flex items-center justify-center">
+                <LogOut className="w-5 h-5 mr-2" />
+                <span className="font-medium">Sign Out</span>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* App Info */}
           <div className="text-center text-sm text-gray-500 space-y-1 pt-6 pb-4">
