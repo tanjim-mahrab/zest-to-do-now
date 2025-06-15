@@ -70,7 +70,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
             </div>
 
             {/* Content */}
-            <div className="flex-1 space-y-2.5">
+            <div className="flex-1 min-w-0 space-y-2.5">
               {/* Title and Priority */}
               <div className="flex items-start justify-between gap-4">
                 <h3 className={`font-bold text-lg -mt-1 ${
@@ -95,7 +95,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
               {task.description && (
                 <p className={`text-sm ${
                   task.completed ? 'text-gray-400' : 'text-gray-600'
-                } truncate`}>
+                } line-clamp-2 break-words overflow-hidden`}>
                   {task.description}
                 </p>
               )}
