@@ -225,7 +225,7 @@ const Calendar = () => {
         </Card>
       </div>
 
-      <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} />
+      <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} selectedDate={selectedDate} />
       <BottomNavigation />
     </div>
   );

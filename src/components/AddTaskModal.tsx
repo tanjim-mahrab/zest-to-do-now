@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,20 +13,48 @@ interface AddTaskModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   task?: Task;
+  selectedDate?: Date;
 }
 
-const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task }) => {
+const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, selectedDate }) => {
   const { addTask, updateTask, projects } = useTask();
-  const [title, setTitle] = useState(task?.title || '');
-  const [description, setDescription] = useState(task?.description || '');
-  const [dueDate, setDueDate] = useState(task?.dueDate ? task.dueDate.toISOString().split('T')[0] : '');
-  const [dueTime, setDueTime] = useState(task?.dueDate ? task.dueDate.toTimeString().split(':').slice(0, 2).join(':') : '');
-  const [priority, setPriority] = useState<Task['priority']>(task?.priority || 'medium');
-  const [projectId, setProjectId] = useState(task?.projectId || 'none');
-  const [tags, setTags] = useState<string[]>(task?.tags || []);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [dueTime, setDueTime] = useState('');
+  const [priority, setPriority] = useState<Task['priority']>('medium');
+  const [projectId, setProjectId] = useState('none');
+  const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
 
   const isEditing = !!task;
+
+  useEffect(() => {
+    // When the modal opens, synchronize the form state
+    if (open) {
+      if (isEditing && task) {
+        // Editing an existing task: populate from task data
+        setTitle(task.title || '');
+        setDescription(task.description || '');
+        setDueDate(task.dueDate ? task.dueDate.toISOString().split('T')[0] : '');
+        setDueTime(task.dueDate ? task.dueDate.toTimeString().split(':').slice(0, 2).join(':') : '');
+        setPriority(task.priority || 'medium');
+        setProjectId(task.projectId || 'none');
+        setTags(task.tags || []);
+        setNewTag('');
+      } else {
+        // Adding a new task: reset to defaults and use selectedDate
+        setTitle('');
+        setDescription('');
+        setDueDate(selectedDate ? selectedDate.toISOString().split('T')[0] : '');
+        setDueTime('');
+        setPriority('medium');
+        setProjectId('none');
+        setTags([]);
+        setNewTag('');
+      }
+    }
+  }, [open, task, isEditing, selectedDate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +79,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task })
       subtasks: task?.subtasks || [],
     };
 
-    if (isEditing) {
+    if (isEditing && task) {
       updateTask(task.id, taskData);
       toast.success('Task updated successfully!');
     } else {
