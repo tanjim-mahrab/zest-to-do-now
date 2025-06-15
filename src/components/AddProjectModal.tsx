@@ -18,10 +18,10 @@ const iconList: { displayName: string; iconName: string }[] = [
   { displayName: 'Plane', iconName: 'plane' },
   { displayName: 'Health', iconName: 'heart-pulse' },
   { displayName: 'Dollar Sign', iconName: 'dollar-sign' },
+  { displayName: 'Shopping Bag', iconName: 'shopping-bag' },
   { displayName: 'User', iconName: 'user' },
   { displayName: 'Stethoscope', iconName: 'stethoscope' },
   { displayName: 'Users', iconName: 'users' },
-  { displayName: 'Folder', iconName: 'folder' },
 ];
 
 interface AddProjectModalProps {
@@ -32,7 +32,7 @@ interface AddProjectModalProps {
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange }) => {
   const { addProject } = useTask();
   const [name, setName] = useState('');
-  const [icon, setIcon] = useState<string>('folder');
+  const [icon, setIcon] = useState<string>('house');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   const handleClose = () => {
     setName('');
-    setIcon('folder');
+    setIcon('house');
     onOpenChange(false);
   };
 
