@@ -1,13 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, Bell, LogOut, Info, HelpCircle, Send, type LucideProps } from 'lucide-react';
+import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Switch } from '@/components/ui/switch';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { buttonVariants } from "@/components/ui/button";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import React, { useState } from 'react';
+
 type SettingsItem = {
   icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
   label: string;
@@ -115,32 +116,32 @@ const Settings = () => {
             </Card>
 
           {/* Logout Section */}
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <button className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white pr-2 pl-4 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700 mx-0 py-[9px] px-[22px]">
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="w-full flex items-center justify-between rounded-full bg-gradient-to-b from-gray-800 to-black text-white pr-2 pl-4 text-left transition-shadow hover:shadow-xl shadow-lg border border-gray-700 mx-0 py-[6px] px-[18px]">
                 <span className="text-center py-0 font-extrabold px-[95px] text-white">Sign Out</span>
-                <div className="bg-gradient-to-br from-gray-100 to-gray-300 rounded-full p-1">
+                <div className="bg-gradient-to-br from-gray-200 to-gray-400 rounded-full p-1">
                   <LogOut className="w-4 h-4 text-black" />
                 </div>
               </button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
-                <AlertDialogDescription>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="rounded-t-lg">
+              <SheetHeader className="text-left">
+                <SheetTitle>Are you sure you want to sign out?</SheetTitle>
+                <SheetDescription>
                   This will log you out of your account. You can always log back in.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleLogout} className={buttonVariants({
-                variant: "destructive"
-              })}>
+                </SheetDescription>
+              </SheetHeader>
+              <SheetFooter className="flex-col gap-2 pt-4">
+                <Button variant="destructive" onClick={handleLogout} className="w-full">
                   Sign Out
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                </Button>
+                <SheetClose asChild>
+                  <Button variant="outline" className="w-full">Cancel</Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
 
