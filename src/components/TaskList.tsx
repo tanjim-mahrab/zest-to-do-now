@@ -1,6 +1,5 @@
 
 import { useTask, Task } from '@/contexts/TaskContext';
-import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { Check, Edit, Trash2, MoreHorizontal, Tag, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -35,83 +34,85 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
   };
   
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {tasks.map((task, index) => (
-        <Card
+        <div
           key={task.id}
-          className={`group relative border rounded-lg shadow-sm hover:shadow-lg transition-all duration-200 ease-in-out animate-slide-up border-l-4 ${task.completed ? 'bg-zinc-50' : 'bg-white'}`}
+          className={`group relative bg-white border border-gray-200/80 rounded-lg shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-center p-3 gap-3 ${task.completed ? 'bg-zinc-50/70' : 'hover:shadow-md hover:border-gray-300/80'}`}
           style={{
-            borderLeftColor: getProjectColor(task.projectId),
             animationDelay: `${index * 0.05}s`
           }}
         >
-          <div className="p-4 flex items-start gap-4">
-            <div
-              className="flex items-center h-full pt-1 cursor-pointer"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleTask(task.id);
-              }}
-            >
-              <Checkbox
-                id={`task-${task.id}`}
-                checked={task.completed}
-                className="w-5 h-5 rounded-full data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600 focus:ring-purple-500 transition-all"
-              />
-            </div>
+          <div 
+            className="w-1 flex-shrink-0 self-stretch rounded-full" 
+            style={{ backgroundColor: getProjectColor(task.projectId) }}
+          />
 
-            <div className="flex-1 min-w-0 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
-              <p className={`font-medium text-gray-900 ${task.completed ? 'line-through text-gray-500' : ''}`}>{task.title}</p>
-              {task.description && <p className={`text-sm text-gray-500 mt-1 line-clamp-2 ${task.completed ? 'line-through' : ''}`}>{task.description}</p>}
-              
-              <div className="flex items-center flex-wrap gap-x-4 gap-y-1.5 mt-2 text-sm text-gray-600">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: getProjectColor(task.projectId) }}></div>
-                  <p className="truncate">{getProjectName(task.projectId) || 'No Project'}</p>
-                </div>
-                
-                {task.tags.slice(0, 2).map(tag => (
-                  <div key={tag} className="flex items-center gap-1">
-                    <Tag className="w-3.5 h-3.5 text-gray-400" />
-                    <span className="font-medium whitespace-nowrap">{tag}</span>
-                  </div>
-                ))}
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleTask(task.id);
+            }}
+          >
+            <Checkbox
+              id={`task-${task.id}`}
+              checked={task.completed}
+              className="w-5 h-5 rounded-full data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600 focus:ring-offset-2 focus:ring-purple-400 transition-all"
+            />
+          </div>
 
-                {task.dueDate && (
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3.5 h-3.5 text-gray-400" />
-                    <span className="font-medium whitespace-nowrap">{format(new Date(task.dueDate), 'MMM d')}</span>
-                  </div>
-                )}
+          <div className="flex-1 min-w-0 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
+            <p className={`font-medium text-gray-800 truncate ${task.completed ? 'line-through text-gray-500' : ''}`}>{task.title}</p>
+            {task.description && <p className={`text-sm text-gray-500 mt-0.5 line-clamp-1 ${task.completed ? 'line-through' : ''}`}>{task.description}</p>}
+          </div>
+
+          <div className="flex items-center gap-4 text-gray-500 text-xs font-medium ml-auto pl-2">
+            {task.tags.slice(0, 1).map(tag => (
+              <div key={tag} className="hidden lg:flex items-center gap-1.5">
+                <Tag className="w-3.5 h-3.5" />
+                <span>{tag}</span>
               </div>
-            </div>
+            ))}
 
-            <div className="absolute top-1 right-1">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
-                    <MoreHorizontal className="w-4 h-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                  <DropdownMenuItem onClick={() => toggleTask(task.id)}>
-                    <Check className="mr-2 h-4 w-4" />
-                    <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate(`/task/${task.id}`)}>
-                    <Edit className="mr-2 h-4 w-4" />
-                    <span>Edit</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => deleteTask(task.id)} className="text-red-600 focus:text-red-600">
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    <span>Delete</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            {task.dueDate && (
+              <div className="hidden sm:flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{format(new Date(task.dueDate), 'MMM d')}</span>
+              </div>
+            )}
+
+            <div className="hidden xs:flex items-center gap-2 min-w-[80px] bg-gray-100/60 px-2 py-1 rounded-full">
+              <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: getProjectColor(task.projectId) }}></div>
+              <p className="truncate">{getProjectName(task.projectId) || 'No Project'}</p>
             </div>
           </div>
-        </Card>
+          
+          <div className="flex-shrink-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
+                  <MoreHorizontal className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                <DropdownMenuItem onClick={() => toggleTask(task.id)}>
+                  <Check className="mr-2 h-4 w-4" />
+                  <span>{task.completed ? 'Mark as incomplete' : 'Mark as complete'}</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate(`/task/${task.id}`)}>
+                  <Edit className="mr-2 h-4 w-4" />
+                  <span>Edit</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => deleteTask(task.id)} className="text-red-600 focus:text-red-600">
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  <span>Delete</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
       ))}
     </div>
   );
