@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { icons, LucideProps } from 'lucide-react';
 
@@ -31,6 +32,11 @@ const nameMap: Record<string, string> = {
   folder: 'Folder',
   bus: 'Bus',
   'train-front': 'TrainFront',
+  baby: 'Baby',
+  fuel: 'Fuel',
+  meal: 'Meal',
+  'glass-water': 'GlassWater',
+  glassofwater: 'GlassWater',
 };
 
 const Icon = ({ name, ...props }: IconProps) => {
