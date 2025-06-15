@@ -91,26 +91,26 @@ const Dashboard = () => {
       {/* Content */}
       <div className="px-6 py-8 space-y-8">
         {/* Modern Filter Tabs - Fixed UI */}
-        <div className="bg-white rounded-2xl p-3 border border-gray-200 shadow-sm">
-          <div className="grid grid-cols-4 gap-2">
+        <div className="bg-white rounded-2xl p-2 border border-gray-200 shadow-sm">
+          <div className="grid grid-cols-4 gap-1">
             {filterTabs.map(tab => (
               <Button
                 key={tab.key}
                 variant="ghost"
                 onClick={() => setFilter(tab.key as any)}
-                className={`flex flex-col items-center justify-center gap-1.5 p-3 h-auto min-h-[80px] rounded-xl transition-all duration-200 ${
+                className={`flex flex-col items-center justify-center gap-1 p-2 h-auto rounded-lg transition-all duration-200 ${
                   filter === tab.key 
                     ? 'bg-black text-white shadow-sm' 
                     : 'text-black hover:bg-gray-50'
                 }`}
               >
-                <div className="flex items-center justify-center w-8 h-8">
+                <div className="flex items-center justify-center w-6 h-6">
                   <tab.icon className="w-4 h-4 flex-shrink-0" />
                 </div>
-                <div className="text-center space-y-1">
+                <div className="text-center space-y-0.5">
                   <div className="text-xs font-medium leading-tight">{tab.label}</div>
                   {tab.count > 0 && (
-                    <div className={`text-xs px-2 py-0.5 rounded-full min-w-[20px] flex items-center justify-center ${
+                    <div className={`text-xs px-1.5 py-0.5 rounded-full min-w-[18px] flex items-center justify-center ${
                       filter === tab.key 
                         ? 'bg-white text-black' 
                         : 'bg-gray-100 text-gray-600'
