@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils';
 
 const iconList: { displayName: string; iconName: string }[] = [
   { displayName: 'Home', iconName: 'house' },
-  { displayName: 'Briefcase', iconName: 'briefcase' },
   { displayName: 'Dumbbell', iconName: 'dumbbell' },
   { displayName: 'Shopping Cart', iconName: 'shopping-cart' },
   { displayName: 'Book', iconName: 'book' },
