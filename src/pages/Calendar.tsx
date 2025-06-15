@@ -137,16 +137,16 @@ const Calendar = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  isToday(selectedDate) ? 'bg-black text-white' : 'bg-gray-100 text-gray-700'
+                  isToday(selectedDate) ? 'bg-black text-white' : 'bg-gray-100 text-gray-500'
                 }`}>
                   <CalendarIcon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-700 text-lg">
+                  <h3 className="font-bold text-gray-500 text-lg">
                     {format(selectedDate, 'EEEE, MMMM d')}
                   </h3>
                   {isToday(selectedDate) && (
-                    <p className="text-sm text-gray-600">Today</p>
+                    <p className="text-sm text-gray-500">Today</p>
                   )}
                 </div>
               </div>
