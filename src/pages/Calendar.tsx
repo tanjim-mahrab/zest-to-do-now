@@ -99,6 +99,7 @@ const Calendar = () => {
                 const isSelected = isSameDay(day, selectedDate);
                 const isTodayDate = isToday(day);
                 const isCurrentMonth = isSameMonth(day, currentDate);
+                const hasTasks = getTasksForDate(day).length > 0;
                 
                 return (
                   <div key={day.toISOString()} className="aspect-square flex items-center justify-center">
@@ -119,6 +120,9 @@ const Calendar = () => {
                       <span className={`w-8 h-8 flex items-center justify-center rounded-full text-sm ${isTodayDate && !isSelected ? 'bg-sky-100 text-sky-700 font-semibold' : ''}`}>
                         {format(day, 'd')}
                       </span>
+                      {hasTasks && isCurrentMonth && (
+                        <div className={`absolute bottom-1.5 w-1 h-1 rounded-full ${isSelected ? 'bg-white' : 'bg-black'}`}></div>
+                      )}
                     </button>
                   </div>
                 );
