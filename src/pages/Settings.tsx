@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { User, Bell, LogOut, Info, HelpCircle } from 'lucide-react';
+import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +24,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
+import React from 'react';
+
+type SettingsItem = {
+  icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+  label: string;
+  description: string;
+  action?: () => void;
+  isSwitch?: boolean;
+};
 
 const Settings = () => {
   const { user, logout } = useAuth();
@@ -35,7 +44,7 @@ const Settings = () => {
     toast.success('Logged out successfully');
   };
 
-  const accountSettings = [
+  const accountSettings: SettingsItem[] = [
     {
       icon: User,
       label: 'Profile Settings',
@@ -50,7 +59,7 @@ const Settings = () => {
     },
   ];
 
-  const moreSettings = [
+  const moreSettings: SettingsItem[] = [
     {
       icon: Info,
       label: 'About DailyFlow',
@@ -65,7 +74,7 @@ const Settings = () => {
     },
   ];
 
-  const renderSettingsList = (items: typeof accountSettings) => (
+  const renderSettingsList = (items: SettingsItem[]) => (
     <div className="divide-y divide-gray-200">
       {items.map((item) => {
         const itemContent = (
