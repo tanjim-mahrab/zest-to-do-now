@@ -126,7 +126,7 @@ const Settings = () => {
                 </div>
               </button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="max-w-sm">
               <AlertDialogHeader className="text-left">
                 <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
                 <AlertDialogDescription>
