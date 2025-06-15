@@ -69,7 +69,7 @@ const Dashboard = () => {
   return <div className="h-screen bg-gray-50 flex flex-col">
       <div className="flex-grow overflow-y-auto">
         {/* Modern Header */}
-        <header className="bg-white border-b border-gray-200 z-10 shadow-sm">
+        <header className="bg-white border-b border-gray-200 z-10 shadow-sm relative">
           <div className="px-4 sm:px-6 py-8">
             <div className="flex items-start justify-between mb-6">
               <div>
@@ -82,7 +82,7 @@ const Dashboard = () => {
               </div>
               <Button 
                 onClick={() => setShowAddTask(true)} 
-                className="bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center flex-shrink-0" 
+                className="absolute top-8 right-4 sm:right-6 bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center" 
                 aria-label="Add new task">
                 <Plus className="w-4 h-4" />
               </Button>
