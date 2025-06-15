@@ -118,11 +118,9 @@ const Settings = () => {
           {/* Logout Section */}
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <button className="w-full flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-gray-800 to-black text-white transition-shadow hover:shadow-xl shadow-lg border border-gray-700 py-2 px-4">
-                <span className="font-extrabold">Sign Out</span>
-                <div className="bg-gradient-to-br from-gray-200 to-gray-400 rounded-full p-1">
-                  <LogOut className="w-4 h-4 text-black" />
-                </div>
+              <button className="w-full flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gray-900 via-red-900 to-gray-900 bg-[length:200%_auto] text-white transition-all hover:shadow-xl shadow-lg border-gray-700 py-2 px-4 animate-animated-gradient">
+                <LogOut className="w-4 h-4" />
+                <span className="font-semibold">Sign Out</span>
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent className="max-w-xs rounded-lg">
