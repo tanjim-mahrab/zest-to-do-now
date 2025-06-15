@@ -1,9 +1,8 @@
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
-import { User, Bell, Download, LogOut, Trash2, Shield, HelpCircle, Info, BarChart3 } from 'lucide-react';
+import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -50,12 +49,6 @@ const Settings = () => {
       window.location.reload();
     }
   };
-
-  const stats = [
-    { label: 'Total Tasks', value: tasks.length, icon: BarChart3 },
-    { label: 'Completed', value: tasks.filter(t => t.completed).length, icon: Shield },
-    { label: 'Active', value: tasks.filter(t => !t.completed).length, icon: Info },
-  ];
 
   const settingsSections = [
     {
@@ -127,23 +120,6 @@ const Settings = () => {
       {/* Content */}
       <div className="px-6 py-8">
         <div className="max-w-2xl mx-auto space-y-8">
-          {/* User Stats - Modern Cards */}
-          <div className="grid grid-cols-3 gap-4">
-            {stats.map((stat, index) => (
-              <Card 
-                key={index}
-                className="p-6 text-center bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 animate-scale-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-black mb-1">{stat.value}</div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
-              </Card>
-            ))}
-          </div>
-
           {/* Settings Sections - Modern Layout */}
           {settingsSections.map((section, sectionIndex) => (
             <Card 
