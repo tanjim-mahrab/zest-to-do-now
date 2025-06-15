@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
@@ -27,8 +28,8 @@ const WelcomeScreen = () => {
         <div className="max-w-md w-full space-y-8 text-center">
           {/* Logo and Title */}
           <div className="space-y-4">
-            <div className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg bg-white">
-              <CheckCircle className="w-10 h-10 text-white" />
+            <div className="mx-auto w-32 h-32 rounded-2xl flex items-center justify-center shadow-lg bg-white">
+              <img src="/lovable-uploads/032edfd7-839a-442d-9946-bb1e9059f576.png" className="w-28 h-28" />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-black">
