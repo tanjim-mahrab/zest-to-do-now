@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useTask, Task, Project } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +48,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
 
   return (
     <>
-      <div className="space-y-3">
+      <div className="space-y-2">
         {tasks.map((task, index) => {
           const project = getProject(task.projectId);
           const projectColor = project?.color || '#6b7280';
