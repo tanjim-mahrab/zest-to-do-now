@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -85,7 +84,7 @@ const Dashboard = () => {
               placeholder="Search" 
               value={searchQuery} 
               onChange={e => setSearchQuery(e.target.value)} 
-              className="h-12 w-full rounded-full border-0 bg-gray-100 pl-5 pr-12 text-base transition-colors focus-visible:ring-1 focus-visible:ring-ring"
+              className="h-12 w-full rounded-full border bg-white pl-5 pr-12 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring"
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
