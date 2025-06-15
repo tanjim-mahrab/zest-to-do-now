@@ -10,6 +10,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface TaskListProps {
   tasks: Task[];
@@ -41,36 +42,42 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
       {tasks.map((task, index) => (
         <ContextMenu key={task.id}>
           <ContextMenuTrigger>
-            <Card 
-              className="p-4 bg-white border rounded-lg shadow-sm hover:shadow-md hover:border-purple-500 focus-within:border-purple-500 focus-within:ring-1 focus-within:ring-purple-500/50 transition-all duration-200 ease-in-out cursor-pointer animate-slide-up"
-              style={{ animationDelay: `${index * 0.05}s` }}
-              onClick={() => navigate(`/task/${task.id}`)}
-              tabIndex={0}
+            <Card
+              className={`border rounded-lg shadow-sm hover:shadow-md transition-all duration-200 ease-in-out animate-slide-up border-l-4 ${task.completed ? 'bg-gray-50 opacity-70' : 'bg-white'}`}
+              style={{
+                borderLeftColor: getProjectColor(task.projectId),
+                animationDelay: `${index * 0.05}s`
+              }}
             >
-              <div className="flex items-center gap-4">
-                {/* Icon */}
-                <div 
-                  className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" 
-                  style={{ backgroundColor: getProjectColor(task.projectId) }}
+              <div className="p-3 sm:p-4 flex items-start gap-3 sm:gap-4">
+                <div
+                  className="flex items-center h-full pt-1 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleTask(task.id);
+                  }}
                 >
-                  <span className="text-white font-bold text-xl">
-                    {getProjectName(task.projectId)?.charAt(0).toUpperCase() || ''}
-                  </span>
+                  <Checkbox
+                    id={`task-${task.id}`}
+                    checked={task.completed}
+                    className="w-5 h-5 rounded-full data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600 focus:ring-purple-500"
+                  />
                 </div>
 
-                {/* Main Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                      <h3 className={`font-semibold text-gray-800 truncate ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</h3>
+                <div className="flex-1 min-w-0 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
+                  <h3 className={`font-medium text-gray-800 truncate ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</h3>
+                  <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-1 text-sm text-gray-500">
+                    <p className="truncate">{getProjectName(task.projectId) || 'No Project'}</p>
+                    {task.tags.slice(0, 2).length > 0 && <span className="text-gray-300 hidden sm:inline">&middot;</span>}
+                    <div className="flex items-center gap-1.5">
                       {task.tags.slice(0, 2).map(tag => (
-                          <span key={tag} className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap">{tag}</span>
+                          <span key={tag} className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-xs font-medium whitespace-nowrap">{tag}</span>
                       ))}
+                    </div>
                   </div>
-                  <p className="text-sm text-gray-500 truncate">{getProjectName(task.projectId) || 'No Project'}</p>
                 </div>
 
-                {/* Right Section */}
-                <div className="text-right flex-shrink-0 ml-auto pl-4">
+                <div className="text-right flex-shrink-0 ml-auto pl-2 cursor-pointer" onClick={() => navigate(`/task/${task.id}`)}>
                    <p className="text-sm text-gray-500 whitespace-nowrap">{formatTimeAgo(task.createdAt)}</p>
                 </div>
               </div>
