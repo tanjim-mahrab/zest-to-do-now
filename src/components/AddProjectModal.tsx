@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -6,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTask } from '@/contexts/TaskContext';
 import { toast } from 'sonner';
-import { FolderPlus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { cn } from '@/lib/utils';
 
@@ -80,7 +79,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-                <FolderPlus className="w-5 h-5 text-white" />
+                <Plus className="w-5 h-5 text-white" />
               </div>
               <DialogTitle className="text-xl font-bold text-black">
                 Create New Project
