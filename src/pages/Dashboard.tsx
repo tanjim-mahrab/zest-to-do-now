@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useTask } from '@/contexts/TaskContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Plus, Search, Calendar, CheckCircle2, Clock, Star, Target } from 'lucide-react';
+import { Plus, Search, Calendar, CheckCircle2, Clock, Star, Target, Mic } from 'lucide-react';
 import TaskList from '@/components/TaskList';
 import AddTaskModal from '@/components/AddTaskModal';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -69,15 +69,20 @@ const Dashboard = () => {
 
           {/* Modern Search Bar */}
           <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
               <Search className="w-5 h-5 text-gray-400" />
             </div>
             <Input 
-              placeholder="Search your tasks..." 
+              placeholder="Search..." 
               value={searchQuery} 
               onChange={(e) => setSearchQuery(e.target.value)} 
-              className="pl-12 pr-4 h-14 rounded-2xl bg-gray-100 border-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" 
+              className="pl-12 pr-14 h-14 rounded-full bg-white shadow-sm focus-visible:ring-2 focus-visible:ring-black text-base transition-colors" 
             />
+            <div className="absolute right-2 top-1/2 -translate-y-1/2">
+              <Button variant="ghost" className="rounded-full w-10 h-10 p-0 bg-gray-900 hover:bg-gray-700 text-white">
+                <Mic className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
