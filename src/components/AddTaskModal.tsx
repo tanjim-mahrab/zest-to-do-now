@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -175,7 +174,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
                   variant="outline"
                   size="sm"
                   onClick={() => setDueDate(option.value)}
-                  className={`rounded-full ${dueDate === option.value ? 'bg-purple-50 border-purple-200' : ''}`}
+                  className={`rounded-full ${dueDate === option.value ? 'bg-accent border' : ''}`}
                 >
                   {option.label}
                 </Button>
@@ -273,7 +272,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
                 {tags.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-1 px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm"
+                    className="flex items-center gap-1 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm"
                   >
                     <span>{tag}</span>
                     <Button
@@ -281,7 +280,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
                       onClick={() => removeTag(tag)}
                       size="sm"
                       variant="ghost"
-                      className="p-0 h-4 w-4 hover:bg-purple-100 rounded-full"
+                      className="p-0 h-4 w-4 hover:bg-accent rounded-full"
                     >
                       <X className="w-3 h-3" />
                     </Button>
@@ -303,7 +302,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
             </Button>
             <Button
               type="submit"
-              className="flex-1 h-12 gradient-purple-blue text-white rounded-xl"
+              className="flex-1 h-12 rounded-xl"
             >
               {isEditing ? 'Update Task' : 'Add Task'}
             </Button>
