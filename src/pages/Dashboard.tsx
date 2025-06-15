@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useTask } from '@/contexts/TaskContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Plus, Search, Calendar, CheckCircle2, Clock, Star, Target, TrendingUp, Zap } from 'lucide-react';
+import { Plus, Search, Calendar, CheckCircle2, Clock, Star, Target } from 'lucide-react';
 import TaskList from '@/components/TaskList';
 import AddTaskModal from '@/components/AddTaskModal';
 import BottomNavigation from '@/components/BottomNavigation';
@@ -20,7 +20,6 @@ const Dashboard = () => {
   const todayTasks = getTodayTasks();
   const upcomingTasks = getUpcomingTasks();
   const completedTasks = tasks.filter(task => task.completed);
-  const activeTasks = tasks.filter(task => !task.completed);
 
   const getFilteredTasks = () => {
     let filtered = tasks;
@@ -45,27 +44,6 @@ const Dashboard = () => {
     }
     return filtered;
   };
-
-  const stats = [
-    {
-      label: 'Today',
-      value: todayTasks.length,
-      icon: Calendar,
-      description: 'Due today'
-    },
-    {
-      label: 'Active',
-      value: activeTasks.length,
-      icon: Zap,
-      description: 'In progress'
-    },
-    {
-      label: 'Done',
-      value: completedTasks.length,
-      icon: CheckCircle2,
-      description: 'Completed'
-    }
-  ];
 
   const filterTabs = [
     { key: 'all', label: 'All Tasks', count: tasks.length, icon: Target },
@@ -112,24 +90,6 @@ const Dashboard = () => {
 
       {/* Content */}
       <div className="px-6 py-8 space-y-8">
-        {/* Modern Stats Cards */}
-        <div className="grid grid-cols-3 gap-4">
-          {stats.map((stat, index) => (
-            <Card 
-              key={index} 
-              className="p-6 text-center bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 animate-scale-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-3">
-                <stat.icon className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-black mb-1">{stat.value}</p>
-              <p className="text-sm font-medium text-gray-900">{stat.label}</p>
-              <p className="text-xs text-gray-500 mt-1">{stat.description}</p>
-            </Card>
-          ))}
-        </div>
-
         {/* Modern Filter Tabs - Fixed UI */}
         <div className="bg-white rounded-2xl p-3 border border-gray-200 shadow-sm">
           <div className="grid grid-cols-4 gap-2">
