@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -71,22 +70,14 @@ const Dashboard = () => {
         <div className="px-4 sm:px-6 py-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-black mb-2">
-                Good morning, {user?.name || 'User'}! 
-                <span className="ml-2">✨</span>
-              </h1>
-              <p className="text-gray-600 text-lg">Let's make today productive</p>
+              
+              
             </div>
           </div>
 
           {/* Modern Search Bar */}
           <div className="relative">
-            <Input 
-              placeholder="Search" 
-              value={searchQuery} 
-              onChange={e => setSearchQuery(e.target.value)} 
-              className="h-12 w-full rounded-full border bg-white pl-5 pr-12 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring"
-            />
+            <Input placeholder="Search" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="h-12 w-full rounded-full border bg-white pl-5 pr-12 text-base shadow-sm transition-colors focus-visible:ring-1 focus-visible:ring-ring" />
             <div className="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
