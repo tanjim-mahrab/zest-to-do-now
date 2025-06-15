@@ -56,9 +56,10 @@ const Calendar = () => {
             </div>
             <Button
               onClick={() => setShowAddTask(true)}
-              className="bg-black text-white rounded-full w-10 h-10 p-0 hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-black text-white w-12 h-12 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center animate-scale-in flex-shrink-0"
+              aria-label="Add new task"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-5 h-5" />
             </Button>
           </div>
         </div>
