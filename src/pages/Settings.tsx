@@ -134,7 +134,7 @@ const Settings = () => {
               </AlertDialogHeader>
               <AlertDialogFooter className="flex-col sm:flex-col gap-2 pt-4">
                 <AlertDialogAction asChild>
-                  <Button onClick={handleLogout} className="w-full bg-gradient-to-br from-red-900 to-red-700 text-white font-bold hover:from-red-800 hover:to-red-600">
+                  <Button onClick={handleLogout} className="w-full bg-gradient-to-r from-red-500 to-red-700 bg-[length:200%_auto] text-white font-bold animate-animated-gradient transition-opacity hover:opacity-90">
                     Sign Out
                   </Button>
                 </AlertDialogAction>
