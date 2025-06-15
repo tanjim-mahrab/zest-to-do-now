@@ -74,15 +74,26 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
       return;
     }
 
+    let finalDueDate: Date | undefined = undefined;
+    if (dueDate) {
+      // Create date from parts to avoid timezone issues with string parsing
+      const [year, month, day] = dueDate.split('-').map(Number);
+      
+      let hours = 23, minutes = 59; // Default to end of day if no time is specified
+      if (dueTime) {
+        const [h, m] = dueTime.split(':').map(Number);
+        hours = h;
+        minutes = m;
+      }
+      // JS month is 0-indexed, so we subtract 1 from the month
+      finalDueDate = new Date(year, month - 1, day, hours, minutes);
+    }
+
     const taskData = {
       title: title.trim(),
       description: description.trim() || undefined,
       completed: task?.completed || false,
-      dueDate: dueDate && dueTime 
-        ? new Date(`${dueDate}T${dueTime}`) 
-        : dueDate 
-          ? new Date(`${dueDate}T23:59`) 
-          : undefined,
+      dueDate: finalDueDate,
       priority,
       tags,
       projectId: projectId === 'none' ? undefined : projectId,
