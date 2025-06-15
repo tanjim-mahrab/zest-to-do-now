@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -240,12 +239,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ open, onOpenChange, task, s
               <Label>Project</Label>
               <Select value={projectId} onValueChange={setProjectId}>
                 <SelectTrigger className="h-12 rounded-xl">
-                  <div className="flex items-center gap-2 overflow-hidden">
-                    {selectedProject && (
-                      <Icon name={selectedProject.icon} className="h-4 w-4 flex-shrink-0" />
-                    )}
-                    <SelectValue placeholder="Select project" />
-                  </div>
+                  <SelectValue placeholder="Select project" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">No Project</SelectItem>
