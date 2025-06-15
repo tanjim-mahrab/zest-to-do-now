@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, Bell, LogOut, Info, HelpCircle, type LucideProps } from 'lucide-react';
@@ -126,21 +125,21 @@ const Settings = () => {
                 </div>
               </button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="max-w-xs rounded-lg bg-gradient-to-br from-red-800 to-yellow-500 text-white border-none">
+            <AlertDialogContent className="max-w-xs rounded-lg">
               <AlertDialogHeader className="text-left">
-                <AlertDialogTitle className="text-white">Are you sure you want to sign out?</AlertDialogTitle>
-                <AlertDialogDescription className="text-white/80">
+                <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
+                <AlertDialogDescription>
                   This will log you out of your account. You can always log back in.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="flex-col sm:flex-col gap-2 pt-4">
                 <AlertDialogAction asChild>
-                  <Button variant="ghost" onClick={handleLogout} className="w-full bg-white/20 hover:bg-white/30 border-white/30 border text-white font-bold">
+                  <Button variant="destructive" onClick={handleLogout} className="w-full">
                     Sign Out
                   </Button>
                 </AlertDialogAction>
                 <AlertDialogCancel asChild>
-                  <Button variant="ghost" className="w-full hover:bg-black/20 text-white">Cancel</Button>
+                  <Button variant="outline" className="w-full">Cancel</Button>
                 </AlertDialogCancel>
               </AlertDialogFooter>
             </AlertDialogContent>
