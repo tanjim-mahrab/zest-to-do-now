@@ -34,7 +34,7 @@ const nameMap: Record<string, string> = {
   'train-front': 'TrainFront',
   baby: 'Baby',
   fuel: 'Fuel',
-  meal: 'Meal',
+  meal: 'Utensils',
   'glass-water': 'GlassWater',
   glassofwater: 'GlassWater',
 };
@@ -65,3 +65,4 @@ const Icon = ({ name, ...props }: IconProps) => {
 };
 
 export default Icon;
+
