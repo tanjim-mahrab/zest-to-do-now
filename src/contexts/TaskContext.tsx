@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export interface Task {
@@ -25,6 +24,7 @@ export interface Project {
   id: string;
   name: string;
   color: string;
+  icon: string;
   taskCount: number;
 }
 
@@ -56,9 +56,9 @@ export const useTask = () => {
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [projects, setProjects] = useState<Project[]>([
-    { id: '1', name: 'Personal', color: '#6C47FF', taskCount: 0 },
-    { id: '2', name: 'Work', color: '#00B5FF', taskCount: 0 },
-    { id: '3', name: 'Shopping', color: '#FF68F0', taskCount: 0 },
+    { id: '1', name: 'Personal', color: '#6C47FF', icon: 'User', taskCount: 0 },
+    { id: '2', name: 'Work', color: '#00B5FF', icon: 'Briefcase', taskCount: 0 },
+    { id: '3', name: 'Shopping', color: '#FF68F0', icon: 'ShoppingCart', taskCount: 0 },
   ]);
 
   // Load data from localStorage on mount

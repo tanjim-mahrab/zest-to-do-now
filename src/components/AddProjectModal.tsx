@@ -7,6 +7,10 @@ import { Label } from '@/components/ui/label';
 import { useTask } from '@/contexts/TaskContext';
 import { toast } from 'sonner';
 import { FolderPlus, X } from 'lucide-react';
+import Icon, { IconName } from '@/components/Icon';
+import { cn } from '@/lib/utils';
+
+const iconList: IconName[] = ['Folder', 'User', 'Briefcase', 'ShoppingCart', 'Home', 'Book', 'Heart', 'Star', 'CheckSquare', 'Calendar', 'Flag', 'Award'];
 
 interface AddProjectModalProps {
   open: boolean;
@@ -16,6 +20,7 @@ interface AddProjectModalProps {
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange }) => {
   const { addProject } = useTask();
   const [name, setName] = useState('');
+  const [icon, setIcon] = useState<IconName>('Folder');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +33,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
     addProject({
       name: name.trim(),
       color: '#000000', // Always use black
+      icon,
     });
 
     toast.success('Project created successfully!');
@@ -36,6 +42,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   const handleClose = () => {
     setName('');
+    setIcon('Folder');
     onOpenChange(false);
   };
 
@@ -80,14 +87,37 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
             />
           </div>
 
+          {/* Icon Picker */}
+          <div className="space-y-3">
+            <Label className="text-base font-medium text-black">Icon</Label>
+            <div className="grid grid-cols-8 gap-2">
+              {iconList.map((iconName) => (
+                <Button
+                  key={iconName}
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setIcon(iconName)}
+                  className={cn(
+                    "h-10 w-10 rounded-lg border-2 border-gray-200",
+                    icon === iconName && "border-black ring-2 ring-black"
+                  )}
+                >
+                  <Icon name={iconName} className="w-5 h-5" />
+                </Button>
+              ))}
+            </div>
+          </div>
+
           {/* Preview */}
           <div className="space-y-3">
             <Label className="text-base font-medium text-black">Preview</Label>
             <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
-              <div className="w-4 h-4 bg-black rounded-full" />
-              <span className="font-medium text-black">
+              <Icon name={icon} className="w-5 h-5 text-black" />
+              <span className="font-medium text-black truncate">
                 {name || 'Your Project Name'}
               </span>
+              <div className="w-4 h-4 bg-black rounded-full ml-auto flex-shrink-0" />
             </div>
           </div>
 
