@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { icons, LucideProps } from 'lucide-react';
 
@@ -13,7 +12,7 @@ const kebabToPascalCase = (str: string) => {
 
 // Maps common names to the correct PascalCase component name from `lucide-react`
 const nameMap: Record<string, string> = {
-  home: 'Home',
+  house: 'Home',
   briefcase: 'Briefcase',
   dumbbell: 'Dumbbell',
   shoppingcart: 'ShoppingCart',
