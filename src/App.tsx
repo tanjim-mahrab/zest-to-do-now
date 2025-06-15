@@ -13,7 +13,6 @@ import SignupScreen from "./pages/SignupScreen";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Projects from "./pages/Projects";
-import TaskDetail from "./pages/TaskDetail";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -44,11 +43,6 @@ const App = () => (
               <Route path="/projects" element={
                 <ProtectedRoute>
                   <Projects />
-                </ProtectedRoute>
-              } />
-              <Route path="/task/:id" element={
-                <ProtectedRoute>
-                  <TaskDetail />
                 </ProtectedRoute>
               } />
               <Route path="/settings" element={
