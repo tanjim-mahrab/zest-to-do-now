@@ -38,18 +38,22 @@ const Icon = ({ name, ...props }: IconProps) => {
     );
   }
 
-  // Assume `name` is a valid kebab-case icon name first.
-  let iconName = name as DynamicIconName;
+  let iconName: DynamicIconName;
 
-  // If it's not a valid icon name, try mapping it from the old format for backward compatibility.
-  if (!dynamicIconImports[iconName]) {
+  // 1. Check if `name` is a direct valid key
+  if (dynamicIconImports[name as DynamicIconName]) {
+    iconName = name as DynamicIconName;
+  } else {
+    // 2. If not, normalize and check the map for backward compatibility
     const normalizedName = name.toLowerCase().replace(/\s+/g, '');
-    iconName = (nameMap[normalizedName] || 'folder') as DynamicIconName;
-  }
-  
-  // As a final check, if the icon name is still not valid, default to folder.
-  if (!dynamicIconImports[iconName]) {
-    iconName = 'folder' as DynamicIconName;
+    const mappedName = nameMap[normalizedName];
+
+    if (mappedName && dynamicIconImports[mappedName as DynamicIconName]) {
+      iconName = mappedName as DynamicIconName;
+    } else {
+      // 3. Fallback to folder if no valid icon is found
+      iconName = 'folder';
+    }
   }
 
   const LucideIcon = lazy(dynamicIconImports[iconName]);
