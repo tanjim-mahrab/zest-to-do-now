@@ -1,13 +1,14 @@
 
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const HelpPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBack = () => {
-    // A simple check to see if there's a history to go back to.
-    if (window.history.state && window.history.state.idx > 0) {
+    // A more robust check to see if we can go back.
+    if (location.key !== 'default') {
       navigate(-1);
     } else {
       // Fallback to settings page if no history is available
