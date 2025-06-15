@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
@@ -27,7 +28,7 @@ const SignupScreen = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!email || !password || !fullName) {
       toast.error('Please fill in all fields');
       return;
     }
@@ -39,7 +40,7 @@ const SignupScreen = () => {
 
     setIsLoading(true);
     try {
-      await signup(email, password);
+      await signup(email, password, fullName);
       toast.success('Account created successfully!');
       navigate('/');
     } catch (error) {
@@ -78,6 +79,18 @@ const SignupScreen = () => {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Full Name</Label>
+                <Input
+                  id="fullName"
+                  type="text"
+                  placeholder="Enter your full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="h-12 rounded-xl border-black"
+                  required
+                />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input

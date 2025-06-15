@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,7 +12,8 @@ import BottomNavigation from '@/components/BottomNavigation';
 
 const Dashboard = () => {
   const {
-    user
+    user,
+    profile
   } = useAuth();
   const {
     tasks,
@@ -74,7 +76,7 @@ const Dashboard = () => {
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">
-                  Welcome back, {user?.email?.split('@')[0] || 'friend'}!
+                  Welcome back, {profile?.full_name || user?.email?.split('@')[0] || 'friend'}!
                 </h1>
                 <p className="text-gray-500 mt-1">
                   You have {tasks.filter(t => !t.completed).length} tasks remaining.
