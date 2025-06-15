@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -84,13 +85,13 @@ const Dashboard = () => {
       {/* Content */}
       <div className="px-6 py-8 space-y-8">
         {/* Modern Filter Tabs - Segmented Control */}
-        <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm">
+        <div className="bg-gray-100 p-1 rounded-full flex items-center space-x-1 border border-gray-200/80 shadow-sm overflow-x-auto">
           {filterTabs.map(tab => (
             <Button
               key={tab.key}
               variant="ghost"
               onClick={() => setFilter(tab.key as any)}
-              className={`flex-1 flex items-center justify-center gap-2 px-2 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out ${
+              className={`flex-shrink-0 flex items-center justify-center gap-2 px-4 py-2 h-auto rounded-full text-sm font-medium transition-all duration-300 ease-in-out ${
                 filter === tab.key 
                   ? 'bg-white text-black shadow-sm' 
                   : 'text-gray-500 hover:text-black hover:bg-white/60'
