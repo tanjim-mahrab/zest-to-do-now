@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useTask, Task } from '@/contexts/TaskContext';
 import { useNavigate } from 'react-router-dom';
@@ -31,12 +30,12 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
             <div
               key={task.id}
               onClick={() => navigate(`/task/${task.id}`)}
-              className={`group relative bg-white border border-gray-200/80 rounded-xl shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-start p-4 gap-4 cursor-pointer ${task.completed ? 'bg-zinc-50/70 opacity-70' : 'hover:shadow-md hover:border-gray-300/80'}`}
+              className={`group relative bg-white border border-gray-200/80 rounded-xl shadow-sm transition-all duration-300 ease-in-out animate-slide-up flex items-center p-4 gap-4 cursor-pointer ${task.completed ? 'bg-zinc-50/70 opacity-70' : 'hover:shadow-md hover:border-gray-300/80'}`}
               style={{
                 animationDelay: `${index * 0.05}s`
               }}
             >
-              <div className="flex-shrink-0 -mt-1" onClick={(e) => e.stopPropagation()}>
+              <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                 <Checkbox
                   id={`task-${task.id}`}
                   checked={task.completed}
