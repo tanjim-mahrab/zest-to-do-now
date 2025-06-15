@@ -6,21 +6,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTask } from '@/contexts/TaskContext';
 import { toast } from 'sonner';
+import { FolderPlus, X } from 'lucide-react';
 
 interface AddProjectModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-const colors = [
-  '#6C47FF', '#00B5FF', '#FF68F0', '#34C759', '#FFA500', '#FF3B30',
-  '#8B5CF6', '#06B6D4', '#F59E0B', '#10B981', '#EF4444', '#EC4899'
-];
-
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange }) => {
   const { addProject } = useTask();
   const [name, setName] = useState('');
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +27,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
     addProject({
       name: name.trim(),
-      color: selectedColor,
+      color: '#000000', // Always use black
     });
 
     toast.success('Project created successfully!');
@@ -41,78 +36,74 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ open, onOpenChange })
 
   const handleClose = () => {
     setName('');
-    setSelectedColor(colors[0]);
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-            Create New Project
-          </DialogTitle>
+      <DialogContent className="sm:max-w-md bg-white border border-black">
+        <DialogHeader className="pb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+                <FolderPlus className="w-5 h-5 text-white" />
+              </div>
+              <DialogTitle className="text-xl font-bold text-black">
+                Create New Project
+              </DialogTitle>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClose}
+              className="w-8 h-8 p-0 text-gray-500 hover:text-black hover:bg-gray-100"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Project Name */}
-          <div className="space-y-2">
-            <Label htmlFor="name">Project Name *</Label>
+          <div className="space-y-3">
+            <Label htmlFor="name" className="text-base font-medium text-black">
+              Project Name
+            </Label>
             <Input
               id="name"
-              placeholder="Enter project name"
+              placeholder="Enter your project name..."
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="h-12 rounded-xl"
+              className="h-12 rounded-xl border-2 border-gray-200 focus:border-black transition-colors text-base"
               required
+              autoFocus
             />
           </div>
 
-          {/* Color Selection */}
-          <div className="space-y-2">
-            <Label>Choose Color</Label>
-            <div className="grid grid-cols-6 gap-3">
-              {colors.map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => setSelectedColor(color)}
-                  className={`w-8 h-8 rounded-full transition-all duration-200 ${
-                    selectedColor === color 
-                      ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' 
-                      : 'hover:scale-105'
-                  }`}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-          </div>
-
           {/* Preview */}
-          <div className="space-y-2">
-            <Label>Preview</Label>
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-              <div 
-                className="w-4 h-4 rounded-full" 
-                style={{ backgroundColor: selectedColor }}
-              />
-              <span className="font-medium">{name || 'Project Name'}</span>
+          <div className="space-y-3">
+            <Label className="text-base font-medium text-black">Preview</Label>
+            <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
+              <div className="w-4 h-4 bg-black rounded-full" />
+              <span className="font-medium text-black">
+                {name || 'Your Project Name'}
+              </span>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-3 pt-6">
             <Button
               type="button"
               variant="outline"
               onClick={handleClose}
-              className="flex-1 h-12 rounded-xl"
+              className="flex-1 h-12 rounded-xl border-2 border-gray-200 hover:bg-gray-50 text-black font-medium"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="flex-1 h-12 gradient-purple-blue text-white rounded-xl"
+              className="flex-1 h-12 bg-black text-white rounded-xl hover:bg-gray-800 font-medium"
             >
               Create Project
             </Button>
