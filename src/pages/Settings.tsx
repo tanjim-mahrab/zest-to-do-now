@@ -1,9 +1,8 @@
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTask } from '@/contexts/TaskContext';
-import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info } from 'lucide-react';
+import { User, Bell, Download, LogOut, Trash2, HelpCircle, Info, ChevronRight } from 'lucide-react';
 import BottomNavigation from '@/components/BottomNavigation';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
@@ -120,80 +119,76 @@ const Settings = () => {
 
       {/* Content */}
       <div className="px-4 sm:px-6 py-8">
-        <div className="max-w-3xl mx-auto space-y-10">
-          {/* Settings Sections - Modern Layout */}
+        <div className="max-w-3xl mx-auto space-y-8">
+          {/* Settings Sections - New Layout */}
           {settingsSections.map((section, sectionIndex) => (
             <div
               key={section.title}
               className="animate-slide-up"
               style={{ animationDelay: `${sectionIndex * 100}ms` }}
             >
-              <h2 className="mb-4 text-base font-semibold text-gray-800">
+              <h2 className="mb-3 px-4 text-sm font-semibold text-gray-500 uppercase tracking-wider">
                 {section.title}
               </h2>
-              <Card
-                className="bg-white border border-gray-200 shadow-sm overflow-hidden"
-              >
-                <div className="divide-y divide-gray-100">
+              <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm overflow-hidden">
+                <div className="divide-y divide-gray-200/80">
                   {section.items.map((item, itemIndex) => (
                     <Button
                       key={itemIndex}
                       variant="ghost"
                       onClick={item.action}
-                      className={`w-full justify-start h-auto p-4 sm:p-6 rounded-none hover:bg-gray-50 transition-colors duration-200 ${
-                        item.danger ? 'hover:bg-red-50' : ''
+                      className={`w-full justify-start h-auto p-4 rounded-none hover:bg-gray-50/70 transition-colors duration-150 ${
+                        item.danger ? 'hover:bg-red-50/70' : ''
                       }`}
                     >
-                      <div className="flex items-center gap-4 w-full">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                          item.danger 
-                            ? 'bg-red-100 text-red-600' 
-                            : 'bg-gray-100 text-black'
-                        }`}>
-                          <item.icon className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 text-left">
-                          <div className={`font-medium text-base ${
-                            item.danger ? 'text-red-600' : 'text-black'
+                      <div className="flex items-center justify-between w-full gap-4">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                            item.danger 
+                              ? 'bg-red-100 text-red-600' 
+                              : 'bg-gray-100 text-gray-600'
                           }`}>
-                            {item.label}
+                            <item.icon className="w-5 h-5" />
                           </div>
-                          <div className="text-sm text-gray-500 mt-1">{item.description}</div>
+                          <div className="flex-1 text-left">
+                            <div className={`font-medium ${
+                              item.danger ? 'text-red-600' : 'text-gray-800'
+                            }`}>
+                              {item.label}
+                            </div>
+                            <div className="text-sm text-gray-500 mt-0.5">{item.description}</div>
+                          </div>
                         </div>
+                        {!item.danger && <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />}
                       </div>
                     </Button>
                   ))}
                 </div>
-              </Card>
+              </div>
             </div>
           ))}
 
-          {/* Logout Section - Prominent */}
+          {/* Logout Section */}
           <div 
-            className="animate-slide-up"
+            className="animate-slide-up pt-4"
             style={{ animationDelay: `${settingsSections.length * 100}ms` }}
           >
-            <Card className="bg-white border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-xl border border-gray-200/80 shadow-sm overflow-hidden">
               <Button
                 onClick={handleLogout}
                 variant="ghost"
-                className="w-full justify-start h-auto p-4 sm:p-6 rounded-none hover:bg-red-50 transition-colors duration-200"
+                className="w-full h-auto p-4 rounded-none hover:bg-red-50/70 transition-colors duration-150 text-red-600"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                    <LogOut className="w-5 h-5 text-red-600" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-medium text-base text-red-600">Sign Out</div>
-                    <div className="text-sm text-gray-500 mt-1">Sign out of your account</div>
-                  </div>
+                <div className="flex items-center justify-center gap-3 w-full font-medium">
+                  <LogOut className="w-5 h-5" />
+                  Sign Out
                 </div>
               </Button>
-            </Card>
+            </div>
           </div>
 
           {/* App Info */}
-          <div className="text-center text-sm text-gray-400 space-y-2 pt-4">
+          <div className="text-center text-sm text-gray-500 space-y-1 pt-6 pb-4">
             <p>TaskFlow v1.0.0</p>
             <p>Made with ❤️ for productivity enthusiasts</p>
           </div>
