@@ -142,9 +142,9 @@ const Dashboard = () => {
       {/* Floating Action Button - Bottom Right Corner */}
       <Button 
         onClick={() => setShowAddTask(true)} 
-        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-black text-white w-14 h-14 p-0 rounded-full hover:bg-gray-800 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center z-50" 
+        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-black text-white w-12 h-12 p-0 rounded-full hover:bg-gray-800 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center z-50" 
         aria-label="Add new task">
-        <Plus className="w-6 h-6" />
+        <Plus className="w-5 h-5" />
       </Button>
 
       <AddTaskModal open={showAddTask} onOpenChange={setShowAddTask} />
