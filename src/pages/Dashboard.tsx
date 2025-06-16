@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -83,7 +84,7 @@ const Dashboard = () => {
               </div>
               <Button 
                 onClick={() => setShowAddTask(true)} 
-                className="absolute top-8 right-4 sm:right-6 bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center" 
+                className="absolute top-16 right-4 sm:right-6 bg-black text-white w-10 h-10 p-0 rounded-full hover:bg-gray-800 shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 flex items-center justify-center" 
                 aria-label="Add new task">
                 <Plus className="w-4 h-4" />
               </Button>
