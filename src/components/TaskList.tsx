@@ -61,9 +61,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
 
                 <div className="flex-1 min-w-0" >
                   <div className="flex justify-between items-start gap-2">
-                     <div className="flex-1">
-                        <p className={`font-medium text-gray-800 break-all ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
-                        {task.description && <p className={`text-sm text-gray-500 mt-1 break-all ${!isSelected ? 'line-clamp-1' : ''} ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
+                     <div className="flex-1 min-w-0">
+                        <p className={`font-medium text-gray-800 break-words ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.title}</p>
+                        {task.description && <p className={`text-sm text-gray-500 mt-1 break-words overflow-hidden ${!isSelected ? 'line-clamp-1' : ''} ${task.completed ? 'line-through text-gray-400' : ''}`}>{task.description}</p>}
                      </div>
                      <div className="flex-shrink-0 -mt-1 -mr-2" onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu>
@@ -94,7 +94,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
               </div>
 
               {isSelected && (
-                <div className="pl-9 pt-3 mt-3 border-t border-gray-100 space-y-3 animate-slide-up" style={{animationDuration: '0.2s'}}>
+                <div className="pl-9 pt-3 mt-3 border-t border-gray-100 space-y-3 animate-slide-up" style={{animationDelay: '0.2s'}}>
                   {project && (
                     <div className="flex items-center gap-3 text-sm text-gray-600">
                       <Icon name={project.icon} className="w-4 h-4 text-gray-500 flex-shrink-0" />
