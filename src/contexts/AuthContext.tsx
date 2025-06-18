@@ -33,13 +33,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        // Fetch profile data without affecting loading state
+        supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .maybeSingle()
+          .then(({ data }) => {
+            setProfile(data);
+          });
+      } else {
+        setProfile(null);
+      }
+      
+      setIsLoading(false);
+    });
+
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        // Use setTimeout to avoid potential deadlocks with Supabase auth
+        // Fetch profile data when user signs in
         setTimeout(() => {
           supabase
             .from('profiles')
@@ -48,19 +70,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .maybeSingle()
             .then(({ data }) => {
               setProfile(data);
-              setIsLoading(false);
             });
         }, 0);
       } else {
         setProfile(null);
-        setIsLoading(false);
       }
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        setIsLoading(false)
-      }
+      
+      // Only set loading to false if we haven't already
+      setIsLoading(false);
     });
 
     return () => {
