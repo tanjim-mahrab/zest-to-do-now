@@ -1,9 +1,7 @@
-
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Calendar, Bell, Smartphone } from 'lucide-react';
-
 const WelcomeScreen = () => {
   const navigate = useNavigate();
   const features = [{
@@ -33,9 +31,7 @@ const WelcomeScreen = () => {
               <img src="/lovable-uploads/032edfd7-839a-442d-9946-bb1e9059f576.png" className="w-16 h-16" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-black">
-                TaskFlow
-              </h1>
+              <h1 className="text-4xl font-bold text-black text-center">DailyFlow</h1>
               <p className="text-lg text-gray-600 mt-2">
                 Organize your tasks and boost productivity
               </p>
